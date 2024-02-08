@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] CharacterController playerController; //the character controller for the player
     //a camera field may be added later 
     [SerializeField] float movementSpeed = 5f; //the movement speed tuning variable for the player
+    [SerializeField] float sprintSpeed = 10f; //the movement speed while sprinting
     [SerializeField] int maxJumps = 2; //the amount of times the player can jump
     [SerializeField] float jumpForce = 7f; //this controls how high a player can jump
     [SerializeField] float gravity = -9.8f; //gravity is used for determining verticle velocity (falling)
@@ -19,11 +20,15 @@ public class PlayerController : MonoBehaviour
     Vector3 movement; //this vector handles movement along the X and Z axis (WASD, Up Down Left Right)
     Vector3 verticleVelocity; //this vector handles verticle velocity (jumping or falling)
     int currentJumps; //the current amount of jumps the player has made
+    float currentSpeed; //the players current speed (switches between sprint speed and mvoement speed)
     bool isShooting; //this bool determines whether the player is currently shooting or not (you cant shoot again while this is true)
+    bool isSpeedChangeable; //this bool determines if the speed can currently be changed or not (you cant change speed when jumping)
+
 
     void Start()
     {
         playerController = GetComponent<CharacterController>(); //searches the current gameObject and returns the CharacterController
+        currentSpeed = movementSpeed; //to avoid issues the default current speed is the same as movement when the program starts
     }
 
     
@@ -45,15 +50,29 @@ public class PlayerController : MonoBehaviour
         {
             currentJumps = 0; //reset their current jumps
             verticleVelocity = Vector3.zero; //zero out their verticleVelocity so it doesnt build force while grounded
+            isSpeedChangeable = true;
         }
         //GetAxis returns the direction value along the given axis. transform.right and transform.forward return a Vector3 value for the given axis (X,0,0) and (0,0,Z)
         //When added together they give the final Vector which will represent movement on the X and Z axis (X, 0, Z)
         movement = Input.GetAxis("Horizontal") * transform.right + Input.GetAxis("Vertical") * transform.forward;
 
-        playerController.Move(movement * movementSpeed * Time.deltaTime); //use the player controller to move the object based on the movement direction above multiplied by the speed (velocity). Time.deltaTime makes it frame rate independant
-
-        if (Input.GetButtonDown("Jump") && currentJumps <= maxJumps) //if the jump button is pressed and the current jumps coount isn't more than the max jumps
+        if (isSpeedChangeable) //if the speed is changeable
         {
+            if (Input.GetKey(KeyCode.LeftShift)) //check if the player is sprinting
+            {
+                currentSpeed = sprintSpeed; //change the current speed to sprint speed
+            }
+            else
+            {
+                currentSpeed = movementSpeed; //otherwise keep at at movement speed
+            }
+        }
+
+        playerController.Move(movement * currentSpeed * Time.deltaTime); //use the player controller to move the object based on the movement direction above multiplied by the speed (velocity). Time.deltaTime makes it frame rate independan
+
+        if (Input.GetButtonDown("Jump") && currentJumps < maxJumps) //if the jump button is pressed and the current jumps coount isn't more than the max jumps
+        {
+            isSpeedChangeable = false;
             verticleVelocity.y = jumpForce; //set the verticle velocity to the jump force (this makes the player go up)
             currentJumps++; //increment the current jump count
         }
