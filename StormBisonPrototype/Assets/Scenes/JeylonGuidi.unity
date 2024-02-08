@@ -135,6 +135,8 @@ GameObject:
   - component: {fileID: 442326523}
   - component: {fileID: 442326522}
   - component: {fileID: 442326521}
+  - component: {fileID: 442326525}
+  - component: {fileID: 442326526}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -231,6 +233,52 @@ Transform:
   - {fileID: 963194228}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &442326525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 442326520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84169eb5684e4614fbdacc1f178a7911, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerController: {fileID: 442326526}
+  movementSpeed: 5
+  maxJumps: 2
+  jumpForce: 7
+  gravity: -9.8
+  shootDamage: 1
+  shootRange: 20
+  firingRate: 0.2
+--- !u!143 &442326526
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 442326520}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -439,7 +487,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8996321218289514549, guid: a35b27f7b89b23246b9545bd38a1894b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 14.5
       objectReference: {fileID: 0}
     - target: {fileID: 8996321218289514549, guid: a35b27f7b89b23246b9545bd38a1894b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -492,7 +540,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3501274844694528973, guid: b275552ed1840b9459a1bdf118cab824, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 17.5
       objectReference: {fileID: 0}
     - target: {fileID: 3501274844694528973, guid: b275552ed1840b9459a1bdf118cab824, type: 3}
       propertyPath: m_LocalRotation.w
@@ -549,7 +597,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5450820975429538823, guid: efed45079b100e5438061d213936afe5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 9.75
       objectReference: {fileID: 0}
     - target: {fileID: 5450820975429538823, guid: efed45079b100e5438061d213936afe5, type: 3}
       propertyPath: m_LocalRotation.w
