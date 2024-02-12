@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDamage 
 {
     [SerializeField] CharacterController playerController; //the character controller for the player
     //a camera field may be added later 
@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float jumpForce = 7f; //this controls how high a player can jump
     [SerializeField] float gravity = -9.8f; //gravity is used for determining verticle velocity (falling)
 
+    [SerializeField] int HP = 10; //the player health points
     [SerializeField] int shootDamage = 1; //how much damage is done by each shot
     [SerializeField] int shootRange = 20; //how far the player can shoot (this is the raycast range)
     [SerializeField] float firingRate = .2f; //the time between shots (determines how many times the player can fire in a specified time frame)
@@ -34,13 +35,16 @@ public class PlayerController : MonoBehaviour
     
     void Update()
     {
-        Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootRange, Color.blue); //show the rayCast for debug purposes
-
-        ProcessMovement(); //process any current movement
-
-        if (Input.GetButton("Shoot") && !isShooting) //check if the player is trying to shoot and if it is currently allowed (if they arent already shooting)
+        if (!gameManager.instance.isPaused) //if the gameManager is not set to paused 
         {
-            StartCoroutine(Shoot()); //start the shoot coroutine
+            Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootRange, Color.blue); //show the rayCast for debug purposes
+
+            ProcessMovement(); //process any current movement
+
+            if (Input.GetButton("Shoot") && !isShooting) //check if the player is trying to shoot and if it is currently allowed (if they arent already shooting)
+            {
+                StartCoroutine(Shoot()); //start the shoot coroutine
+            }
         }
     }
 
@@ -50,11 +54,12 @@ public class PlayerController : MonoBehaviour
         {
             currentJumps = 0; //reset their current jumps
             verticleVelocity = Vector3.zero; //zero out their verticleVelocity so it doesnt build force while grounded
-            isSpeedChangeable = true;
+            isSpeedChangeable = true; //you can only change from normal speed to sprinting while on the ground
         }
         //GetAxis returns the direction value along the given axis. transform.right and transform.forward return a Vector3 value for the given axis (X,0,0) and (0,0,Z)
         //When added together they give the final Vector which will represent movement on the X and Z axis (X, 0, Z)
         movement = Input.GetAxis("Horizontal") * transform.right + Input.GetAxis("Vertical") * transform.forward;
+        if(movement.magnitude > 1) { movement.Normalize(); } //diagonal movement returns a magnitude of 1.41 meaning the player moves faster than normal in that direction. If thats not intended then this line normalizes it to 1.
 
         if (isSpeedChangeable) //if the speed is changeable
         {
@@ -72,7 +77,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetButtonDown("Jump") && currentJumps < maxJumps) //if the jump button is pressed and the current jumps coount isn't more than the max jumps
         {
-            isSpeedChangeable = false;
+            isSpeedChangeable = false; //you cant change speed when already in the air
             verticleVelocity.y = jumpForce; //set the verticle velocity to the jump force (this makes the player go up)
             currentJumps++; //increment the current jump count
         }
@@ -102,5 +107,14 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(firingRate); //halt the function for the firingRate duration
 
         isShooting = false; //set is shooting to false which means the player can shoot again
+    }
+
+    public void TakeDamage(int damageTaken) //this is the player implementation of the IDamage interface
+    {
+        HP -= damageTaken; //reduce the players current HP by the damage pass in
+        if (HP <= 0) //if the players HP is less than or equal to zero
+        {
+            gameManager.instance.youLose(); //tell the game manager to display the Loss screen
+        }
     }
 }
