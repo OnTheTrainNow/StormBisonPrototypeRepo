@@ -131,7 +131,7 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         currentJumps = 0; //launching from a pipe resets the jump count
         movement += new Vector3(LaunchMovement.x, 0, LaunchMovement.z); //get the non vertical movement of the player from the launch force
-        verticleVelocity += new Vector3(0, LaunchMovement.y, 0); //get the vertical movement from the launch force 
+        verticleVelocity = new Vector3(0, LaunchMovement.y, 0); //get the vertical movement from the launch force 
         isLaunching = true; //set is launching to true
     }
 }
