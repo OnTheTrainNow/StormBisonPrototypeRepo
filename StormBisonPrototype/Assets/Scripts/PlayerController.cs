@@ -7,13 +7,14 @@ public class PlayerController : MonoBehaviour, IDamage
 {
     [SerializeField] CharacterController playerController; //the character controller for the player
     //a camera field may be added later 
+    [SerializeField] int HP = 10; //the player health points
     [SerializeField] float movementSpeed = 5f; //the movement speed tuning variable for the player
     [SerializeField] float sprintSpeed = 10f; //the movement speed while sprinting
     [SerializeField] int maxJumps = 2; //the amount of times the player can jump
     [SerializeField] float jumpForce = 7f; //this controls how high a player can jump
     [SerializeField] float gravity = -9.8f; //gravity is used for determining verticle velocity (falling)
 
-    [SerializeField] int HP = 10; //the player health points
+    
     [SerializeField] int shootDamage = 1; //how much damage is done by each shot
     [SerializeField] int shootRange = 20; //how far the player can shoot (this is the raycast range)
     [SerializeField] float firingRate = .2f; //the time between shots (determines how many times the player can fire in a specified time frame)
@@ -25,6 +26,8 @@ public class PlayerController : MonoBehaviour, IDamage
     bool isShooting; //this bool determines whether the player is currently shooting or not (you cant shoot again while this is true)
     bool isSpeedChangeable; //this bool determines if the speed can currently be changed or not (you cant change speed when jumping)
 
+    //LaunchControls
+    bool isLaunching;
 
     void Start()
     {
@@ -55,11 +58,16 @@ public class PlayerController : MonoBehaviour, IDamage
             currentJumps = 0; //reset their current jumps
             verticleVelocity = Vector3.zero; //zero out their verticleVelocity so it doesnt build force while grounded
             isSpeedChangeable = true; //you can only change from normal speed to sprinting while on the ground
+            isLaunching = false; //if you are grounded then you would be at the end of a launch
         }
-        //GetAxis returns the direction value along the given axis. transform.right and transform.forward return a Vector3 value for the given axis (X,0,0) and (0,0,Z)
-        //When added together they give the final Vector which will represent movement on the X and Z axis (X, 0, Z)
-        movement = Input.GetAxis("Horizontal") * transform.right + Input.GetAxis("Vertical") * transform.forward;
-        if(movement.magnitude > 1) { movement.Normalize(); } //diagonal movement returns a magnitude of 1.41 meaning the player moves faster than normal in that direction. If thats not intended then this line normalizes it to 1.
+
+        if (!isLaunching) //if the player is launching out of a pipe then ignore new inputs until they land or jump
+        {
+            //GetAxis returns the direction value along the given axis. transform.right and transform.forward return a Vector3 value for the given axis (X,0,0) and (0,0,Z)
+            //When added together they give the final Vector which will represent movement on the X and Z axis (X, 0, Z)
+            movement = Input.GetAxis("Horizontal") * transform.right + Input.GetAxis("Vertical") * transform.forward;
+            if (movement.magnitude > 1) { movement.Normalize(); } //diagonal movement returns a magnitude of 1.41 meaning the player moves faster than normal in that direction. If thats not intended then this line normalizes it to 1.
+        }
 
         if (isSpeedChangeable) //if the speed is changeable
         {
@@ -78,6 +86,7 @@ public class PlayerController : MonoBehaviour, IDamage
         if (Input.GetButtonDown("Jump") && currentJumps < maxJumps) //if the jump button is pressed and the current jumps coount isn't more than the max jumps
         {
             isSpeedChangeable = false; //you cant change speed when already in the air
+            isLaunching = false; //jumping cancels out the launch
             verticleVelocity.y = jumpForce; //set the verticle velocity to the jump force (this makes the player go up)
             currentJumps++; //increment the current jump count
         }
@@ -116,5 +125,13 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             gameManager.instance.youLose(); //tell the game manager to display the Loss screen
         }
+    }
+
+    public void PipeLaunch(Vector3 LaunchMovement)
+    {
+        currentJumps = 0; //launching from a pipe resets the jump count
+        movement += new Vector3(LaunchMovement.x, 0, LaunchMovement.z); //get the non vertical movement of the player from the launch force
+        verticleVelocity += new Vector3(0, LaunchMovement.y, 0); //get the vertical movement from the launch force 
+        isLaunching = true; //set is launching to true
     }
 }
