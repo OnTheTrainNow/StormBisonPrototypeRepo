@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 4013128310524657863}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -238,6 +238,7 @@ MonoBehaviour:
   maxJumps: 2
   jumpForce: 7
   gravity: -9.8
+  HP: 10
   shootDamage: 1
   shootRange: 20
   firingRate: 0.2
