@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class enemyAI : MonoBehaviour, IDamage
 {
@@ -19,6 +20,11 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] GameObject bullet;
     [SerializeField] float shootRate;
 
+    [SerializeField] Canvas HPUI; //the enemy HP UI canvas
+    [SerializeField] Image HPCircle; //the enemy HP circle
+
+    float HPOriginal;
+
     bool isShooting;
     bool playerInRange;
     float angleToPlayer;
@@ -26,6 +32,8 @@ public class enemyAI : MonoBehaviour, IDamage
 
     void Start()
     {
+        HPOriginal = HP;
+        updateUI();
         gameManager.instance.updateGameGoal(1);
     }
 
@@ -93,8 +101,10 @@ public class enemyAI : MonoBehaviour, IDamage
 
     public void TakeDamage(float amount)
     {
+        agent.SetDestination(gameManager.instance.player.transform.position); //have the enemy move to the position they were shot from
         HP -= amount;
 
+        updateUI();
         StartCoroutine(flashMat());
 
         if (HP <= 0)
@@ -129,5 +139,18 @@ public class enemyAI : MonoBehaviour, IDamage
 
         yield return new WaitForSeconds(shootRate);
         isShooting = false;
+    }
+
+    void updateUI()
+    {
+        HPCircle.fillAmount = HP / HPOriginal; //change the fill percentage on the HP bar image to match the current HP percentage
+        if (HP < HPOriginal)
+        {
+            HPUI.enabled = true; //set the UI components to enabled
+        }
+        else
+        {
+            HPUI.enabled = false;  //set the UI components to disabled
+        }
     }
 }
