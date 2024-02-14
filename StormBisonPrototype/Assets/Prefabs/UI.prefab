@@ -2403,7 +2403,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 5069844316476815849}
         m_TargetAssemblyTypeName: buttonFunctions, Assembly-CSharp
-        m_MethodName: resume
+        m_MethodName: respawn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2595,7 +2595,13 @@ MonoBehaviour:
   menuPause: {fileID: 8709103048487816823}
   menuWin: {fileID: 5560791654594255639}
   menuLose: {fileID: 7987452656049477148}
+  enemyCountText: {fileID: 4995923645980054731}
+  playerHPCircle: {fileID: 7371761194677513177}
+  playerHPCircleBackground: {fileID: 6597863196126741964}
+  playerDamageFlash: {fileID: 2087430184625093618}
+  playerSpawnPosition: {fileID: 0}
   player: {fileID: 0}
+  playerScript: {fileID: 0}
   isPaused: 0
 --- !u!114 &5069844316476815849
 MonoBehaviour:

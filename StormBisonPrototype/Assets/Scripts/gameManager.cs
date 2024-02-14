@@ -15,6 +15,7 @@ public class gameManager : MonoBehaviour
 
     [SerializeField] TMP_Text enemyCountText; //enemy count text component
     public Image playerHPCircle; //player HP circle image
+    public Image playerHPCircleBackground; //player HP circle image background
     public GameObject playerDamageFlash; //the damage effect panel
     public GameObject playerSpawnPosition; //the player spawn position
 

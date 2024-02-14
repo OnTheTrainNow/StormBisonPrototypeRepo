@@ -33,13 +33,17 @@ public class PlayerController : MonoBehaviour, IDamage
     bool isShooting; //this bool determines whether the player is currently shooting or not (you cant shoot again while this is true)
     bool isSpeedChangeable; //this bool determines if the speed can currently be changed or not (you cant change speed when jumping)
 
+    float HPOriginal; //player starting HP
+
     //LaunchControls
-    bool isLaunching;
+    bool isLaunching; //bool for if the player is launching
 
     void Start()
     {
+        HPOriginal = HP; //set the original HP to the initial HP value set
         playerController = GetComponent<CharacterController>(); //searches the current gameObject and returns the CharacterController
         currentSpeed = movementSpeed; //to avoid issues the default current speed is the same as movement when the program starts
+        respawn();
     }
 
     
@@ -174,10 +178,46 @@ public class PlayerController : MonoBehaviour, IDamage
     public void TakeDamage(float damageTaken) //this is the player implementation of the IDamage interface
     {
         HP -= damageTaken; //reduce the players current HP by the damage pass in
+
+        UpdatePlayerUI(); //update the player UI
+        StartCoroutine(flashDamage()); //flash the damage effect panel with a coroutine
+
         if (HP <= 0) //if the players HP is less than or equal to zero
         {
             gameManager.instance.youLose(); //tell the game manager to display the Loss screen
         }
+    }
+
+    void UpdatePlayerUI()
+    {
+        gameManager.instance.playerHPCircle.fillAmount = HP / HPOriginal; //get the HP percentage and set the HP bar fill percentage to match it
+        if (HP < HPOriginal) //if the player HP is less than the original HP value
+        {
+            gameManager.instance.playerHPCircleBackground.enabled = true; //set the parent HP circle object to enabled
+            gameManager.instance.playerHPCircle.enabled = true; //set the HP circle object to enabled
+        }
+        else
+        {
+            gameManager.instance.playerHPCircleBackground.enabled = false; //otherwise disable it
+            gameManager.instance.playerHPCircle.enabled = false; //otherwise disable it
+        }
+    }
+
+    IEnumerator flashDamage()
+    {
+        gameManager.instance.playerDamageFlash.SetActive(true); //set the damage effect panel to active
+        yield return new WaitForSeconds(0.1f); //wait for a moment
+        gameManager.instance.playerDamageFlash.SetActive(false); //set the damage effect panel to inactive
+    }
+
+    public void respawn()
+    {
+        HP = HPOriginal; //reset the players HP
+        UpdatePlayerUI(); //update the players UI
+
+        playerController.enabled = false; //disable the controller
+        transform.position = gameManager.instance.playerSpawnPosition.transform.position; //change the players position to the spawn point position
+        playerController.enabled = true; //re enable the controller
     }
 
     public void PipeLaunch(Vector3 LaunchMovement)
