@@ -216,6 +216,7 @@ public class PlayerController : MonoBehaviour, IDamage
         UpdatePlayerUI(); //update the players UI
 
         playerController.enabled = false; //disable the controller
+        transform.SetParent(null); //this fixes any issues where the player dies on a moving platform
         transform.position = gameManager.instance.playerSpawnPosition.transform.position; //change the players position to the spawn point position
         playerController.enabled = true; //re enable the controller
     }

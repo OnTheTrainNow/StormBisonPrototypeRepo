@@ -13,11 +13,8 @@ public class PipeTeleport : MonoBehaviour
         {
             gameManager.instance.player.transform.position = teleportPosition.position; //set their position to that of the exit position
             Physics.SyncTransforms(); //tell the physics systems to sync transforms in order for the teleport to work
-            PlayerController PC = gameManager.instance.player.GetComponent<PlayerController>(); //get the player script component
-            if (PC != null) //this check shoudlnt really be needed but is here just in case
-            {
-                PC.PipeLaunch(LaunchForce); //call the pipe launch method on the player passing it the launch force
-            }
+            gameManager.instance.playerScript.PipeLaunch(LaunchForce); //call the pipe launch method on the player passing it the launch force
+            
         }
 
     }
