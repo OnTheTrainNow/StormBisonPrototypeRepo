@@ -12358,6 +12358,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 427915747836835134, guid: fbf486c5c2e000c409108f5bcdd19c49, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 427915747836835134, guid: fbf486c5c2e000c409108f5bcdd19c49, type: 3}
+      propertyPath: m_PreviousLayer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 3901616942316194201, guid: fbf486c5c2e000c409108f5bcdd19c49, type: 3}
       propertyPath: pellets
       value: 8
@@ -12369,6 +12377,50 @@ PrefabInstance:
     - target: {fileID: 3901616942316194201, guid: fbf486c5c2e000c409108f5bcdd19c49, type: 3}
       propertyPath: isShotgunEquipped
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5429629153115185322, guid: fbf486c5c2e000c409108f5bcdd19c49, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6197029746120057353, guid: fbf486c5c2e000c409108f5bcdd19c49, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6197029746120057353, guid: fbf486c5c2e000c409108f5bcdd19c49, type: 3}
+      propertyPath: debugLayer.frameWidth
+      value: 1454
+      objectReference: {fileID: 0}
+    - target: {fileID: 6197029746120057353, guid: fbf486c5c2e000c409108f5bcdd19c49, type: 3}
+      propertyPath: debugLayer.frameHeight
+      value: 601
+      objectReference: {fileID: 0}
+    - target: {fileID: 6197029746120057353, guid: fbf486c5c2e000c409108f5bcdd19c49, type: 3}
+      propertyPath: dithering.m_NoiseTextureIndex
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6197029746120057353, guid: fbf486c5c2e000c409108f5bcdd19c49, type: 3}
+      propertyPath: <cameraDepthFlags>k__BackingField
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6197029746120057353, guid: fbf486c5c2e000c409108f5bcdd19c49, type: 3}
+      propertyPath: temporalAntialiasing.m_ResetHistory
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6197029746120057353, guid: fbf486c5c2e000c409108f5bcdd19c49, type: 3}
+      propertyPath: <haveBundlesBeenInited>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6197029746120057353, guid: fbf486c5c2e000c409108f5bcdd19c49, type: 3}
+      propertyPath: temporalAntialiasing.<jitter>k__BackingField.x
+      value: -0.00017193948
+      objectReference: {fileID: 0}
+    - target: {fileID: 6197029746120057353, guid: fbf486c5c2e000c409108f5bcdd19c49, type: 3}
+      propertyPath: temporalAntialiasing.<jitter>k__BackingField.y
+      value: 0.00027731562
+      objectReference: {fileID: 0}
+    - target: {fileID: 6197029746120057353, guid: fbf486c5c2e000c409108f5bcdd19c49, type: 3}
+      propertyPath: temporalAntialiasing.<sampleIndex>k__BackingField
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8214468546571601349, guid: fbf486c5c2e000c409108f5bcdd19c49, type: 3}
       propertyPath: m_LocalPosition.x
