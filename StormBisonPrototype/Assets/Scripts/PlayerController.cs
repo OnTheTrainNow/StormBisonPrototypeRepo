@@ -107,7 +107,7 @@ public class PlayerController : MonoBehaviour, IDamage
             Debug.Log(hit.collider.name); //out put the hit object for testing purposes. this can be removed later
             IDamage dmg = hit.collider.GetComponent<IDamage>(); //get the IDamage component from the hit collider
 
-            if (dmg != null) //if the IDamage componenet was found
+            if (hit.transform != transform && dmg != null) //if the IDamage componenet was found
             {
                 dmg.TakeDamage(shootDamage); //then call the takeDamage method for the hit object
             }

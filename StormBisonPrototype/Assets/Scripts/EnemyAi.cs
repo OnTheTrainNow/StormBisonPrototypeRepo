@@ -8,6 +8,8 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] Renderer model;
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Transform shootPos;
+    [SerializeField] Transform shootPos2;
+    [SerializeField] Transform shootPos3;
     [SerializeField] Transform headPos;
 
     [SerializeField] int HP;
@@ -114,6 +116,15 @@ public class enemyAI : MonoBehaviour, IDamage
         isShooting = true;
 
         Instantiate(bullet, shootPos.position, transform.rotation);
+
+        if (shootPos2 != null)
+        {
+            Instantiate(bullet, shootPos2.position, shootPos2.transform.localRotation);
+        }
+        if (shootPos3 != null)
+        {
+            Instantiate(bullet, shootPos3.position, shootPos3.transform.localRotation);
+        }
 
         yield return new WaitForSeconds(shootRate);
         isShooting = false;
