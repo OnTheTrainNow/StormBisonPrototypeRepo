@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class gameManager : MonoBehaviour
 {
@@ -11,7 +13,13 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
 
+    [SerializeField] TMP_Text enemyCountText; //enemy count text component
+    public Image playerHPCircle; //player HP circle image
+    public GameObject playerDamageFlash; //the damage effect panel
+    public GameObject playerSpawnPosition; //the player spawn position
+
     public GameObject player;
+    public PlayerController playerScript; //the player script component
 
     public bool isPaused;
     int enemyCount;
@@ -20,6 +28,9 @@ public class gameManager : MonoBehaviour
     {
         instance = this;
         player = GameObject.FindWithTag("Player");
+        playerScript = player.GetComponent<PlayerController>(); //get the player controller script
+        playerSpawnPosition = GameObject.FindWithTag("PlayerSpawnPos"); //get the player spawn position
+
     }
 
     void Update()
@@ -56,6 +67,8 @@ public class gameManager : MonoBehaviour
     public void updateGameGoal(int amount)
     {
         enemyCount += amount;
+        enemyCountText.text = enemyCount.ToString("F0"); //set the enemy count text
+
         // Player Win condition is met when all enemies are dead
         if (enemyCount <= 0)
         {
