@@ -12,7 +12,7 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] Transform shootPos3;
     [SerializeField] Transform headPos;
 
-    [SerializeField] int HP;
+    [SerializeField] float HP;
     [SerializeField] int viewCone;
     [SerializeField] int targetFaceSpeed;
 
@@ -91,7 +91,7 @@ public class enemyAI : MonoBehaviour, IDamage
         }
     }
 
-    public void TakeDamage(int amount)
+    public void TakeDamage(float amount)
     {
         HP -= amount;
 

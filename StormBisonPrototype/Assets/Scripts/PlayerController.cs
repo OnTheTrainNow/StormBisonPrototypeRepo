@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour, IDamage
 {
     [SerializeField] CharacterController playerController; //the character controller for the player
     //a camera field may be added later 
-    [SerializeField] int HP = 10; //the player health points
+    [SerializeField] float HP = 10; //the player health points
     [SerializeField] float movementSpeed = 5f; //the movement speed tuning variable for the player
     [SerializeField] float sprintSpeed = 10f; //the movement speed while sprinting
     [SerializeField] int maxJumps = 2; //the amount of times the player can jump
@@ -18,6 +18,13 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] int shootDamage = 1; //how much damage is done by each shot
     [SerializeField] int shootRange = 20; //how far the player can shoot (this is the raycast range)
     [SerializeField] float firingRate = .2f; //the time between shots (determines how many times the player can fire in a specified time frame)
+
+    // shotgun test
+    [SerializeField] float pelletDmg = 0.4f; // controls the damage each individual pellet does
+    [SerializeField] int pellets = 8; // this controls the number of pellets in each shot (the lower the amount the lower the damage, the higher the amount the higher the damage)
+    [SerializeField] float pelletsSpreadAngle = 0.1f; // this sets the spread angle (smaller values = tighter spread, higher values = wider spread)
+    [SerializeField] float shotgunFiringRate = .7f; // Shotgun fire rate
+    [SerializeField] bool isShotgunEquipped = false; // bool to help check if shotgun is equipped
 
     Vector3 movement; //this vector handles movement along the X and Z axis (WASD, Up Down Left Right)
     Vector3 verticleVelocity; //this vector handles verticle velocity (jumping or falling)
@@ -46,7 +53,14 @@ public class PlayerController : MonoBehaviour, IDamage
 
             if (Input.GetButton("Shoot") && !isShooting) //check if the player is trying to shoot and if it is currently allowed (if they arent already shooting)
             {
-                StartCoroutine(Shoot()); //start the shoot coroutine
+                if (isShotgunEquipped) // Will Check if the bool for isShotgunEquipped is true. If true then the shotgun coroutine is started otherwise it will resort to our default shoot
+                {
+                    StartCoroutine(shotgunShoot()); // starts the shotgunShoot coroutine
+                }
+                else
+                {
+                    StartCoroutine(Shoot()); //start the shoot coroutine
+                }
             }
         }
     }
@@ -118,7 +132,46 @@ public class PlayerController : MonoBehaviour, IDamage
         isShooting = false; //set is shooting to false which means the player can shoot again
     }
 
-    public void TakeDamage(int damageTaken) //this is the player implementation of the IDamage interface
+    IEnumerator shotgunShoot()
+    {
+        isShooting = true;
+
+        // This is so that the pelletRays have the same ray origin as Shoot()'s rays
+        Ray pelletRay = Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f));
+
+        for (int i = 0; i < pellets; i++)
+        {
+            // This is to calculate the spread direction within a cone
+            Vector3 spread = pelletRay.direction + UnityEngine.Random.insideUnitSphere * pelletsSpreadAngle;
+            spread.Normalize();
+
+            RaycastHit hit;
+            if (Physics.Raycast(pelletRay.origin, spread, out hit, shootRange))
+            {
+                Debug.Log(hit.collider.name);
+
+                IDamage dmg = hit.collider.GetComponent<IDamage>();
+
+                if (hit.transform != transform && dmg != null)
+                {
+                    dmg.TakeDamage(pelletDmg);
+                }
+
+                // This is for Debugging purposes
+                Debug.DrawLine(pelletRay.origin, hit.point, Color.red, 0.5f);
+            }
+            else
+            {
+                // This is for Debuggin purposes
+                Debug.DrawLine(pelletRay.origin, pelletRay.origin + spread * shootRange, Color.red, 0.5f);
+            }
+        }
+
+        yield return new WaitForSeconds(shotgunFiringRate);
+        isShooting = false;
+    }
+
+    public void TakeDamage(float damageTaken) //this is the player implementation of the IDamage interface
     {
         HP -= damageTaken; //reduce the players current HP by the damage pass in
         if (HP <= 0) //if the players HP is less than or equal to zero
