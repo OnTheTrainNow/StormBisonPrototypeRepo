@@ -119,11 +119,12 @@ public class enemyAI : MonoBehaviour, IDamage
 
         if (shootPos2 != null)
         {
-            Instantiate(bullet, shootPos2.position, shootPos2.transform.localRotation);
+ 
+            Instantiate(bullet, shootPos2.position, shootPos2.transform.rotation);
         }
         if (shootPos3 != null)
         {
-            Instantiate(bullet, shootPos3.position, shootPos3.transform.localRotation);
+            Instantiate(bullet, shootPos3.position, shootPos3.transform.rotation);
         }
 
         yield return new WaitForSeconds(shootRate);
