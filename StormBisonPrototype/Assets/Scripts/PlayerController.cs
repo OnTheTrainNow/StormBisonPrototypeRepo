@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour, IDamage
     bool isSpeedChangeable; //this bool determines if the speed can currently be changed or not (you cant change speed when jumping)
 
     float HPOriginal; //player starting HP
+    bool isDead; //a bool that checks if the player is dead already when processing bullet hits
 
     //LaunchControls
     bool isLaunching; //bool for if the player is launching
@@ -182,8 +183,9 @@ public class PlayerController : MonoBehaviour, IDamage
         UpdatePlayerUI(); //update the player UI
         StartCoroutine(flashDamage()); //flash the damage effect panel with a coroutine
 
-        if (HP <= 0) //if the players HP is less than or equal to zero
+        if (HP <= 0 && !isDead) //if the players HP is less than or equal to zero (and if they arent already dead to prevent double triggers)
         {
+            isDead = true; //set the player to dead
             gameManager.instance.youLose(); //tell the game manager to display the Loss screen
         }
     }
@@ -212,6 +214,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     public void respawn()
     {
+        isDead = false;
         HP = HPOriginal; //reset the players HP
         UpdatePlayerUI(); //update the players UI
 
