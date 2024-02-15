@@ -578,7 +578,7 @@ Transform:
   m_GameObject: {fileID: 38477726}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 113, y: 45, z: 95.5}
+  m_LocalPosition: {x: 108.25, y: 45, z: 105.75}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1339,7 +1339,7 @@ GameObject:
   - component: {fileID: 1722504780}
   - component: {fileID: 1722504779}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: BigPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1927,6 +1927,63 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1001 &182900238941718477
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6004940385999153727, guid: 90154377376ae8f458387ce13c251478, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 96.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 6004940385999153727, guid: 90154377376ae8f458387ce13c251478, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 6004940385999153727, guid: 90154377376ae8f458387ce13c251478, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 117.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6004940385999153727, guid: 90154377376ae8f458387ce13c251478, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6004940385999153727, guid: 90154377376ae8f458387ce13c251478, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6004940385999153727, guid: 90154377376ae8f458387ce13c251478, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6004940385999153727, guid: 90154377376ae8f458387ce13c251478, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6004940385999153727, guid: 90154377376ae8f458387ce13c251478, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6004940385999153727, guid: 90154377376ae8f458387ce13c251478, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6004940385999153727, guid: 90154377376ae8f458387ce13c251478, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6528199386768778233, guid: 90154377376ae8f458387ce13c251478, type: 3}
+      propertyPath: m_Name
+      value: MovingPlatformToIsland
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 90154377376ae8f458387ce13c251478, type: 3}
 --- !u!1001 &4418705881809596103
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2014,6 +2071,7 @@ SceneRoots:
   - {fileID: 1919634574}
   - {fileID: 1819048634}
   - {fileID: 1020394847}
+  - {fileID: 182900238941718477}
   - {fileID: 1722504782}
   - {fileID: 38477732}
   - {fileID: 4418705881809596103}
