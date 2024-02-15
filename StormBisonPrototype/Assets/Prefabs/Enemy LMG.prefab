@@ -169,7 +169,6 @@ MonoBehaviour:
   targetFaceSpeed: 5
   bullet: {fileID: 6309969512564079822, guid: 1dea0cdbb01acb047beb8b99ba8a11c2, type: 3}
   shootRate: 0.25
-  UIDisplayTime: 0
   HPUI: {fileID: 6111295214184303583}
   HPCircle: {fileID: 6011626314513186182}
 --- !u!195 &1491595514291117509
@@ -222,7 +221,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 05a413a88cd867046a47cdf081a38f9b, type: 2}
+  - {fileID: 2100000, guid: bb444f4f62350f54c9e1a63c1f874d3a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
