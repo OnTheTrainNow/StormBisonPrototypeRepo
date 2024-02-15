@@ -202,7 +202,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9f26e52de1e43246a9a3ec1eb471df6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pixelSize: -2
+  pixelSize: 2
   gamma: 1.24
   gradation: 33.9
   dither: 1
@@ -273,7 +273,8 @@ MonoBehaviour:
   firingRate: 0.2
   pelletDmg: 0
   pellets: 0
-  spreadAngle: 0
+  pelletsSpreadAngle: 0.1
+  shotgunFiringRate: 0.7
   isShotgunEquipped: 0
 --- !u!33 &6581359598466913242
 MeshFilter:

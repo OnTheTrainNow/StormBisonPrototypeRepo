@@ -5,20 +5,21 @@ using UnityEngine;
 [RequireComponent(typeof(MeshCollider))]
 public class ExitPipe : MonoBehaviour
 {
-    [SerializeField] bool isExitPipe;
-    [SerializeField] MeshCollider pipeCover;
+    [SerializeField] bool isExitPipe; //this bool toggles the functionality for testing
+    [SerializeField] MeshCollider pipeCover; //the reference to the corresponding mesh collider for the cover
+    [SerializeField] float disableTime; //how long the pipe gets disables
 
-    // Update is called once per frame
-    void Update()
+    public void disableCover() 
     {
-        if (!isExitPipe) { return; } //if its not an exit pipe than ignore the rest of the code
-        if (gameManager.instance.player.transform.position.y > transform.position.y) //if the player is above the pipe
-        {
-            pipeCover.enabled = true; //turn the collider off
-        }
-        else //otherwise
-        {
-            pipeCover.enabled = false; //turn the collider off
-        }
+        if (!isExitPipe) { return; } //ignore the script if exit pipe is turned off
+
+        StartCoroutine(disableTimer()); //start the disable timer coroutine
+    }
+
+    IEnumerator disableTimer() 
+    {
+        pipeCover.enabled = false; //disable the mesh collider
+        yield return new WaitForSeconds(disableTime); //wait for the disable time
+        pipeCover.enabled = true; //re enable it after the wait
     }
 }
