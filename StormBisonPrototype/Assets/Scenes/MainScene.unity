@@ -5659,18 +5659,6 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3901616942316194201, guid: fbf486c5c2e000c409108f5bcdd19c49, type: 3}
-      propertyPath: pellets
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3901616942316194201, guid: fbf486c5c2e000c409108f5bcdd19c49, type: 3}
-      propertyPath: pelletDmg
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3901616942316194201, guid: fbf486c5c2e000c409108f5bcdd19c49, type: 3}
-      propertyPath: isShotgunEquipped
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5429629153115185322, guid: fbf486c5c2e000c409108f5bcdd19c49, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -29034,7 +29022,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4936426232572654255, guid: c519b78693e7c254c912b2dc908785de, type: 3}
       propertyPath: m_text
-      value: Defeat all the enemies in the level to win.
+      value: 'Defeat all the enemies in the level to win.
+
+        1 for primary.
+
+        2
+        for secondary.'
       objectReference: {fileID: 0}
     - target: {fileID: 6928893448522593164, guid: c519b78693e7c254c912b2dc908785de, type: 3}
       propertyPath: m_Mesh
