@@ -30,17 +30,11 @@ public class enemyAI : MonoBehaviour, IDamage
     float angleToPlayer;
     Vector3 playerDir;
 
-    private Color originalColor;
-    private Renderer rend;
-
     void Start()
     {
         HPOriginal = HP;
         updateUI();
         gameManager.instance.updateGameGoal(1);
-
-        rend = GetComponent<Renderer>();
-        originalColor = rend.material.color;
     }
 
     void Update()
@@ -124,7 +118,7 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         model.material.color = Color.red;
         yield return new WaitForSeconds(0.1f);
-        rend.material.color = originalColor;
+        model.material.color = Color.white;
     }
 
     IEnumerator shoot()
