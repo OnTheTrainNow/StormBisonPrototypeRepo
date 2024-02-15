@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] int pellets = 8; // this controls the number of pellets in each shot (the lower the amount the lower the damage, the higher the amount the higher the damage)
     [SerializeField] float pelletsSpreadAngle = 0.1f; // this sets the spread angle (smaller values = tighter spread, higher values = wider spread)
     [SerializeField] float shotgunFiringRate = .7f; // Shotgun fire rate
-    [SerializeField] bool isShotgunEquipped = false; // bool to help check if shotgun is equipped
+    public bool isShotgunEquipped = true; // bool to help check if shotgun is equipped
 
     Vector3 movement; //this vector handles movement along the X and Z axis (WASD, Up Down Left Right)
     Vector3 verticleVelocity; //this vector handles verticle velocity (jumping or falling)
@@ -45,11 +45,22 @@ public class PlayerController : MonoBehaviour, IDamage
         playerController = GetComponent<CharacterController>(); //searches the current gameObject and returns the CharacterController
         currentSpeed = movementSpeed; //to avoid issues the default current speed is the same as movement when the program starts
         respawn();
+        gameManager.instance.updateWeaponEquipped();
     }
 
     
     void Update()
     {
+        if (Input.GetKeyDown("1"))
+        {
+            isShotgunEquipped = true;
+            gameManager.instance.updateWeaponEquipped();
+        }
+        else if (Input.GetKeyDown("2"))
+        {
+            isShotgunEquipped = false;
+            gameManager.instance.updateWeaponEquipped();
+        }
         if (!gameManager.instance.isPaused) //if the gameManager is not set to paused 
         {
             Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootRange, Color.blue); //show the rayCast for debug purposes
