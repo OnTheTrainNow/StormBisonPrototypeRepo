@@ -30,8 +30,10 @@ public class enemyAI : MonoBehaviour, IDamage
     float angleToPlayer;
     Vector3 playerDir;
 
-    private Color originalColor;
-    private Renderer rend;
+    Color originalColor;
+    Renderer rend;
+
+    bool isDead; // bool to prevent player shotgun pellets from causing issue with enemycount
 
     void Start()
     {
@@ -113,8 +115,9 @@ public class enemyAI : MonoBehaviour, IDamage
         updateUI();
         StartCoroutine(flashMat());
 
-        if (HP <= 0)
+        if (HP <= 0 && !isDead)
         {
+            isDead = true;
             gameManager.instance.updateGameGoal(-1);
             Destroy(gameObject);
         }
