@@ -271,11 +271,11 @@ MonoBehaviour:
   shootDamage: 1
   shootRange: 20
   firingRate: 0.2
-  pelletDmg: 0
-  pellets: 0
+  pelletDmg: 0.4
+  pellets: 8
   pelletsSpreadAngle: 0.1
   shotgunFiringRate: 0.7
-  isShotgunEquipped: 0
+  isShotgunEquipped: 1
 --- !u!33 &6581359598466913242
 MeshFilter:
   m_ObjectHideFlags: 0

@@ -13,6 +13,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
 
+    [SerializeField] TMP_Text weaponEquipped; // weapon equipped text component
     [SerializeField] TMP_Text enemyCountText; //enemy count text component
     public Image playerHPCircle; //player HP circle image
     public Image playerHPCircleBackground; //player HP circle image background
@@ -85,5 +86,17 @@ public class gameManager : MonoBehaviour
         statePaused();
         menuActive = menuLose;
         menuActive.SetActive(true);
+    }
+
+    public void updateWeaponEquipped()
+    {
+        if (playerScript.isShotgunEquipped == true)
+        {
+            weaponEquipped.text = "Shotgun";
+        }
+        else if (playerScript.isShotgunEquipped == false)
+        {
+            weaponEquipped.text = "Pistol";
+        }
     }
 }
