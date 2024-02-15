@@ -5659,6 +5659,18 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3901616942316194201, guid: fbf486c5c2e000c409108f5bcdd19c49, type: 3}
+      propertyPath: pellets
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3901616942316194201, guid: fbf486c5c2e000c409108f5bcdd19c49, type: 3}
+      propertyPath: pelletDmg
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3901616942316194201, guid: fbf486c5c2e000c409108f5bcdd19c49, type: 3}
+      propertyPath: isShotgunEquipped
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5429629153115185322, guid: fbf486c5c2e000c409108f5bcdd19c49, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -9228,10 +9240,6 @@ PrefabInstance:
     - target: {fileID: 2114204845445975418, guid: a07d8ec929bbc3d4cbe92712fda89a2e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2989175880873032739, guid: a07d8ec929bbc3d4cbe92712fda89a2e, type: 3}
-      propertyPath: viewCone
-      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 4954764016122542132, guid: a07d8ec929bbc3d4cbe92712fda89a2e, type: 3}
       propertyPath: m_Name
