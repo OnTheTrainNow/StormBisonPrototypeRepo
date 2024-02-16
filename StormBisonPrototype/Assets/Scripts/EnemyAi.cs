@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class enemyAI : MonoBehaviour, IDamage
 {
@@ -21,7 +23,7 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] float shootRate;
 
     [SerializeField] Canvas HPUI; //the enemy HP UI canvas
-    [SerializeField] Image HPCircle; //the enemy HP circle
+    [SerializeField] UnityEngine.UI.Image HPCircle; //the enemy HP circle
 
     float HPOriginal;
 
@@ -29,6 +31,7 @@ public class enemyAI : MonoBehaviour, IDamage
     bool playerInRange;
     float angleToPlayer;
     Vector3 playerDir;
+    Vector3 playerDir2;
 
     Color originalColor;
     Renderer rend;
@@ -133,12 +136,15 @@ public class enemyAI : MonoBehaviour, IDamage
     IEnumerator shoot()
     {
         isShooting = true;
-
-        Instantiate(bullet, shootPos.position, transform.rotation);
-
+        playerDir2 = playerDir;//copy player direction
+        playerDir2.y = playerDir2.y + 1; //raise target by 1
+        //rotate shootPos to player
+        Quaternion rot1 = Quaternion.LookRotation(new Vector3(transform.rotation.x + playerDir2.x, playerDir2.y, playerDir2.z));
+        shootPos.transform.rotation = rot1;
+        //shootPos 2 and 3 rotate with shootPos1 because they are attached to it
+        Instantiate(bullet, shootPos.position, shootPos.transform.rotation);
         if (shootPos2 != null)
         {
- 
             Instantiate(bullet, shootPos2.position, shootPos2.transform.rotation);
         }
         if (shootPos3 != null)
