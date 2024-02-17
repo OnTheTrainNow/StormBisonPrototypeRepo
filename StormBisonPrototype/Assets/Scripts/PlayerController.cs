@@ -36,6 +36,8 @@ public class PlayerController : MonoBehaviour, IDamage
     float HPOriginal; //player starting HP
     bool isDead; //a bool that checks if the player is dead already when processing bullet hits
 
+    float jumpTimer; //jump timer is a float that increases with time and is reset when the player jumps (this functionality will be used for the jump mechanic)
+
     //LaunchControls
     bool isLaunching; //bool for if the player is launching
 
@@ -80,6 +82,8 @@ public class PlayerController : MonoBehaviour, IDamage
                 }
             }
         }
+
+        jumpTimer += Time.deltaTime;
     }
 
     private void ProcessMovement()
@@ -119,6 +123,7 @@ public class PlayerController : MonoBehaviour, IDamage
             isSpeedChangeable = false; //you cant change speed when already in the air
             isLaunching = false; //jumping cancels out the launch
             verticleVelocity.y = jumpForce; //set the verticle velocity to the jump force (this makes the player go up)
+            jumpTimer = 0;
             currentJumps++; //increment the current jump count
         }
 
