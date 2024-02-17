@@ -10,8 +10,17 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] float HP = 10; //the player health points
     [SerializeField] float movementSpeed = 5f; //the movement speed tuning variable for the player
     [SerializeField] float sprintSpeed = 10f; //the movement speed while sprinting
+
+    //jumping and gravity 
     [SerializeField] int maxJumps = 2; //the amount of times the player can jump
     [SerializeField] float jumpForce = 7f; //this controls how high a player can jump
+    [SerializeField] float jump2Force = 10.5f;
+    [SerializeField] float jump3Force = 14;
+
+    //jump timers
+    [SerializeField] float jump2Time; //how long the jump timer can last in between jump 1 and jump 2
+    [SerializeField] float jump3Time; //how long the jump timer can last in between jump 2 and jump 3
+
     [SerializeField] float gravity = -9.8f; //gravity is used for determining verticle velocity (falling)
 
     
@@ -36,7 +45,7 @@ public class PlayerController : MonoBehaviour, IDamage
     float HPOriginal; //player starting HP
     bool isDead; //a bool that checks if the player is dead already when processing bullet hits
 
-    float jumpTimer; //jump timer is a float that increases with time and is reset when the player jumps (this functionality will be used for the jump mechanic)
+    float jumpTimer; //jump timer is a float that increases with time and is reset when the player jumps (this functionality will be used for the jump mechanic
 
     //LaunchControls
     bool isLaunching; //bool for if the player is launching
@@ -83,7 +92,7 @@ public class PlayerController : MonoBehaviour, IDamage
             }
         }
 
-        jumpTimer += Time.deltaTime;
+        jumpTimer += Time.deltaTime; 
     }
 
     private void ProcessMovement()
@@ -123,9 +132,35 @@ public class PlayerController : MonoBehaviour, IDamage
             isSpeedChangeable = false; //you cant change speed when already in the air
             isLaunching = false; //jumping cancels out the launch
             verticleVelocity.y = jumpForce; //set the verticle velocity to the jump force (this makes the player go up)
-            jumpTimer = 0;
             currentJumps++; //increment the current jump count
+            jumpTimer = 0; //reset the jump timer if the player is grounded
         }
+
+        /*if (playerController.isGrounded && currentJumps == 0 && Input.GetButtonDown("Jump"))
+        {
+            currentJumps = 0;
+            isSpeedChangeable = false; //you cant change speed when already in the air
+            isLaunching = false; //jumping cancels out the launch
+            verticleVelocity.y = jumpForce; //set the verticle velocity to the jump force (this makes the player go up)
+            currentJumps++; //increment the current jump count
+            jumpTimer = 0; //reset the jump timer if the player is grounded
+        }
+        else if (playerController.isGrounded && currentJumps == 1 && jumpTimer <= jump2Time && Input.GetButtonDown("Jump"))
+        {
+            isSpeedChangeable = false; //you cant change speed when already in the air
+            isLaunching = false; //jumping cancels out the launch
+            verticleVelocity.y = jump2Force; //set the verticle velocity to the jump force (this makes the player go up)
+            currentJumps++; //increment the current jump count
+            jumpTimer = 0; //reset the jump timer if the player is grounded
+        }
+        else if (playerController.isGrounded && currentJumps == 2 && jumpTimer <= jump3Time && Input.GetButtonDown("Jump"))
+        {
+            isSpeedChangeable = false; //you cant change speed when already in the air
+            isLaunching = false; //jumping cancels out the launch
+            verticleVelocity.y = jump3Force; //set the verticle velocity to the jump force (this makes the player go up)
+            currentJumps = 0; //return the current jumps back to 0
+            jumpTimer = 0; //reset the jump timer if the player is grounded
+        }*/
 
         verticleVelocity.y += gravity * Time.deltaTime; //apply gravity to the verticle velocity and make sure its frame rate independant 
         playerController.Move(verticleVelocity * Time.deltaTime); //use the player controller to move the object based on vertical velocity
