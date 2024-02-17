@@ -12,13 +12,13 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] float sprintSpeed = 10f; //the movement speed while sprinting
 
     //jumping and gravity 
-    [SerializeField] int maxJumps = 2; //the amount of times the player can jump
-    [SerializeField] float jumpForce = 7f; //this controls how high a player can jump
-    [SerializeField] float jump2Force = 10.5f;
-    [SerializeField] float jump3Force = 14;
+    //[SerializeField] int maxJumps = 2; //the amount of times the player can jump (this is for the old system)
+    [SerializeField] float jumpForce = 10f; //this controls how high a player can jump
+    [SerializeField] float jump2Force = 15f; //this is how high the player jumps in combo jump 2
+    [SerializeField] float jump3Force = 20f; //this is how high the player jumps in combo jump 3
 
     //jump timers
-    [SerializeField] float jump2Time; //how long the jump timer can last in between jump 1 and jump 2
+    [SerializeField] float jump2Time; //how long the jump timer can last in between jump 1 and jump 2 (this is the time the player has to combo into the next jump)
     [SerializeField] float jump3Time; //how long the jump timer can last in between jump 2 and jump 3
 
     [SerializeField] float gravity = -9.8f; //gravity is used for determining verticle velocity (falling)
@@ -45,9 +45,10 @@ public class PlayerController : MonoBehaviour, IDamage
     float HPOriginal; //player starting HP
     bool isDead; //a bool that checks if the player is dead already when processing bullet hits
 
+    //JumpControls
     float jumpTimer; //jump timer is a float that increases with time and is reset when the player jumps (this functionality will be used for the jump mechanic
+    bool canJump; //a bool used to determine whether the player can currently jump
 
-    bool canJump;
     //LaunchControls
     bool isLaunching; //bool for if the player is launching
 
@@ -100,11 +101,11 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         if (playerController.isGrounded) //if the player touches the ground
         {
-            currentJumps = 0; //reset their current jumps
+            //currentJumps = 0; //reset their current jumps
             verticleVelocity = Vector3.zero; //zero out their verticleVelocity so it doesnt build force while grounded
             isSpeedChangeable = true; //you can only change from normal speed to sprinting while on the ground
             isLaunching = false; //if you are grounded then you would be at the end of a launch
-            canJump = true;
+            canJump = true; //isGrounded is kinda buggy to use on its own for jumping, so a can jump bool is set to true when the player touches the ground
         }
 
         if (!isLaunching) //if the player is launching out of a pipe then ignore new inputs until they land or jump
@@ -129,43 +130,43 @@ public class PlayerController : MonoBehaviour, IDamage
 
         playerController.Move(movement * currentSpeed * Time.deltaTime); //use the player controller to move the object based on the movement direction above multiplied by the speed (velocity). Time.deltaTime makes it frame rate independan
 
-        if (canJump && Input.GetButtonDown("Jump") && currentJumps < maxJumps) //if the jump button is pressed and the current jumps coount isn't more than the max jumps
+        //this is the old jump system
+        /*if (canJump && Input.GetButtonDown("Jump") && currentJumps < maxJumps) //if the jump button is pressed and the current jumps coount isn't more than the max jumps
         {
             isSpeedChangeable = false; //you cant change speed when already in the air
             isLaunching = false; //jumping cancels out the launch
             verticleVelocity.y = jumpForce; //set the verticle velocity to the jump force (this makes the player go up)
             currentJumps++; //increment the current jump count
-            jumpTimer = 0; //reset the jump timer if the player is grounded
-        }
-
-        /*if (playerController.isGrounded && currentJumps == 0 && Input.GetButtonDown("Jump"))
-        {
-            currentJumps = 0;
-            isSpeedChangeable = false; //you cant change speed when already in the air
-            isLaunching = false; //jumping cancels out the launch
-            verticleVelocity.y = jumpForce; //set the verticle velocity to the jump force (this makes the player go up)
-            currentJumps++; //increment the current jump count
-            jumpTimer = 0; //reset the jump timer if the player is grounded
-        }
-        else if (playerController.isGrounded && currentJumps == 1 && jumpTimer <= jump2Time && Input.GetButtonDown("Jump"))
-        {
-            isSpeedChangeable = false; //you cant change speed when already in the air
-            isLaunching = false; //jumping cancels out the launch
-            verticleVelocity.y = jump2Force; //set the verticle velocity to the jump force (this makes the player go up)
-            currentJumps++; //increment the current jump count
-            jumpTimer = 0; //reset the jump timer if the player is grounded
-        }
-        else if (playerController.isGrounded && currentJumps == 2 && jumpTimer <= jump3Time && Input.GetButtonDown("Jump"))
-        {
-            isSpeedChangeable = false; //you cant change speed when already in the air
-            isLaunching = false; //jumping cancels out the launch
-            verticleVelocity.y = jump3Force; //set the verticle velocity to the jump force (this makes the player go up)
-            currentJumps = 0; //return the current jumps back to 0
             jumpTimer = 0; //reset the jump timer if the player is grounded
         }*/
 
+        //this is the jump combo system
+        if (canJump && currentJumps == 1 && jumpTimer <= jump2Time && Input.GetButtonDown("Jump")) //if the player can jump, presses jump, is on their second jump, and the jump timer is less then jump 2 combo allowed time
+        {
+            ProcessJump(jump2Force); //process a jump with the jump 2 force
+        }
+        else if (canJump && currentJumps == 2 && jumpTimer <= jump3Time && Input.GetButtonDown("Jump")) //if the player can jump, presses jump, is on their third jump, and the jump timer is less then jump 3 combo allowed time
+        {
+            ProcessJump(jump3Force); //process a jump with the jump 3 force
+        }
+        else if (canJump && Input.GetButtonDown("Jump")) //this is the default jump for when the player doesnt reach any of the above conditions
+        {
+            currentJumps = 0; //this jump starts the combo, but is not guaranteed to be zero when the player jumps so reset it to zero
+            ProcessJump(jumpForce); //process a jump with regular jump force
+        }
+
         verticleVelocity.y += gravity * Time.deltaTime; //apply gravity to the verticle velocity and make sure its frame rate independant 
         playerController.Move(verticleVelocity * Time.deltaTime); //use the player controller to move the object based on vertical velocity
+    }
+
+    private void ProcessJump(float jumpforce)
+    {
+        canJump = false;
+        isSpeedChangeable = false; //you cant change speed when already in the air
+        isLaunching = false; //jumping cancels out the launch
+        verticleVelocity.y = jumpforce; //set the verticle velocity to the jump force (this makes the player go up)
+        currentJumps++; //increment the current jump count
+        jumpTimer = 0; //reset the jump timer if the player is grounded
     }
 
     IEnumerator Shoot()
@@ -268,6 +269,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     public void respawn()
     {
+        currentJumps = 0;
         isDead = false;
         HP = HPOriginal; //reset the players HP
         UpdatePlayerUI(); //update the players UI

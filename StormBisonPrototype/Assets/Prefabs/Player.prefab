@@ -266,8 +266,12 @@ MonoBehaviour:
   movementSpeed: 5
   sprintSpeed: 10
   maxJumps: 2
-  jumpForce: 7
-  gravity: -9.8
+  jumpForce: 10
+  jump2Force: 15
+  jump3Force: 20
+  jump2Time: 1.75
+  jump3Time: 2
+  gravity: -20
   shootDamage: 1
   shootRange: 20
   firingRate: 0.2
