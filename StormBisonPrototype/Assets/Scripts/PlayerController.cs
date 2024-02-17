@@ -47,6 +47,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     float jumpTimer; //jump timer is a float that increases with time and is reset when the player jumps (this functionality will be used for the jump mechanic
 
+    bool canJump;
     //LaunchControls
     bool isLaunching; //bool for if the player is launching
 
@@ -103,6 +104,7 @@ public class PlayerController : MonoBehaviour, IDamage
             verticleVelocity = Vector3.zero; //zero out their verticleVelocity so it doesnt build force while grounded
             isSpeedChangeable = true; //you can only change from normal speed to sprinting while on the ground
             isLaunching = false; //if you are grounded then you would be at the end of a launch
+            canJump = true;
         }
 
         if (!isLaunching) //if the player is launching out of a pipe then ignore new inputs until they land or jump
@@ -127,7 +129,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
         playerController.Move(movement * currentSpeed * Time.deltaTime); //use the player controller to move the object based on the movement direction above multiplied by the speed (velocity). Time.deltaTime makes it frame rate independan
 
-        if (Input.GetButtonDown("Jump") && currentJumps < maxJumps) //if the jump button is pressed and the current jumps coount isn't more than the max jumps
+        if (canJump && Input.GetButtonDown("Jump") && currentJumps < maxJumps) //if the jump button is pressed and the current jumps coount isn't more than the max jumps
         {
             isSpeedChangeable = false; //you cant change speed when already in the air
             isLaunching = false; //jumping cancels out the launch
