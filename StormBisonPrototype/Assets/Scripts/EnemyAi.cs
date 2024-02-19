@@ -25,6 +25,8 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] Canvas HPUI; //the enemy HP UI canvas
     [SerializeField] UnityEngine.UI.Image HPCircle; //the enemy HP circle
 
+    [SerializeField] float playerStompBounceForce = 0; //how high the player bounces when they stomp on the enemy
+
     float HPOriginal;
 
     bool isShooting;
@@ -123,6 +125,17 @@ public class enemyAI : MonoBehaviour, IDamage
             isDead = true;
             gameManager.instance.updateGameGoal(-1);
             Destroy(gameObject);
+        }
+    }
+
+    public void StompedOn() //this gets called by a seperate child trigger object.
+    {
+        if (!isDead) //to prevent issues make sure this can only trigger if the isDead bool is false
+        {
+            isDead = true; //set the bool to true to prevent player from killing the enemy twice by shooting at the same time
+            gameManager.instance.updateGameGoal(-1); //update the game goal
+            gameManager.instance.playerScript.EnemyBounce(playerStompBounceForce); //call the players bounce method and pass in the bounce force
+            Destroy(gameObject); //destroy the enemy
         }
     }
 

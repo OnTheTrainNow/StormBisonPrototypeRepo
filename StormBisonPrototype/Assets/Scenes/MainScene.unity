@@ -29111,11 +29111,15 @@ PrefabInstance:
       objectReference: {fileID: 1646076895}
     - target: {fileID: 1942001096921736025, guid: e7347285f012b664597c581ff39eb6b6, type: 3}
       propertyPath: LaunchForce.x
-      value: -0.8
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1942001096921736025, guid: e7347285f012b664597c581ff39eb6b6, type: 3}
+      propertyPath: LaunchForce.y
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 1942001096921736025, guid: e7347285f012b664597c581ff39eb6b6, type: 3}
       propertyPath: LaunchForce.z
-      value: 0.8
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1942001096921736025, guid: e7347285f012b664597c581ff39eb6b6, type: 3}
       propertyPath: exitPipeCover
