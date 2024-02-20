@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour, IDamage 
 {
     [SerializeField] CharacterController playerController; //the character controller for the player
+    [SerializeField] CapsuleCollider playerCollider; //the characters main collider
     //a camera field may be added later 
     [SerializeField] float HP = 10; //the player health points
     [SerializeField] float movementSpeed = 5f; //the movement speed tuning variable for the player
@@ -23,7 +24,10 @@ public class PlayerController : MonoBehaviour, IDamage
 
     [SerializeField] float gravity = -9.8f; //gravity is used for determining verticle velocity (falling)
 
-    
+    [SerializeField]float crouchControllerHeight; //the controller height for crouching
+    [SerializeField]float crouchColliderHeight; //the collider height for crouching
+
+
     [SerializeField] int shootDamage = 1; //how much damage is done by each shot
     [SerializeField] int shootRange = 20; //how far the player can shoot (this is the raycast range)
     [SerializeField] float firingRate = .2f; //the time between shots (determines how many times the player can fire in a specified time frame)
@@ -45,6 +49,11 @@ public class PlayerController : MonoBehaviour, IDamage
     float HPOriginal; //player starting HP
     bool isDead; //a bool that checks if the player is dead already when processing bullet hits
 
+    //crouch values
+    float defaultControllerHeight; //the regular controller height (these need to be set at start)
+    float defaultColliderHeight; //the regular collider height
+    bool isCrouched; //a bool to determine if the player is currently crouched or not
+
     //JumpControls
     float jumpTimer; //jump timer is a float that increases with time and is reset when the player jumps (this functionality will be used for the jump mechanic
     bool canJump; //a bool used to determine whether the player can currently jump
@@ -56,6 +65,9 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         HPOriginal = HP; //set the original HP to the initial HP value set
         playerController = GetComponent<CharacterController>(); //searches the current gameObject and returns the CharacterController
+        playerCollider = GetComponent<CapsuleCollider>(); //searches the curretn gameObject for its capsule collider
+        defaultControllerHeight = playerController.height; //get the original controller height
+        defaultColliderHeight = playerCollider.height; //get the orginal collider height
         currentSpeed = movementSpeed; //to avoid issues the default current speed is the same as movement when the program starts
         respawn();
         gameManager.instance.updateWeaponEquipped();
@@ -114,6 +126,22 @@ public class PlayerController : MonoBehaviour, IDamage
             //When added together they give the final Vector which will represent movement on the X and Z axis (X, 0, Z)
             movement = Input.GetAxis("Horizontal") * transform.right + Input.GetAxis("Vertical") * transform.forward;
             if (movement.magnitude > 1) { movement.Normalize(); } //diagonal movement returns a magnitude of 1.41 meaning the player moves faster than normal in that direction. If thats not intended then this line normalizes it to 1.
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftControl)) //if the player pressed the crouch button 
+        {
+            if (!isCrouched) //if they arent crouched
+            {
+                isCrouched = true; //set crouched bool to true
+                playerController.height = crouchControllerHeight; //reduce the controller and collider height
+                playerCollider.height = crouchColliderHeight;
+            }
+            else if (isCrouched) //if they are crouching already
+            {
+                isCrouched = false; //set crouched bool to false
+                playerController.height = defaultControllerHeight; //set the controller and collider heights back to default
+                playerCollider.height = defaultColliderHeight;
+            }
         }
 
         if (isSpeedChangeable) //if the speed is changeable
