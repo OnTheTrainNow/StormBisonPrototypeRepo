@@ -41,11 +41,9 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] float firingRate = .2f; //the time between shots (determines how many times the player can fire in a specified time frame)
 
     // shotgun test
-    [SerializeField] float pelletDmg = 0.4f; // controls the damage each individual pellet does
-    [SerializeField] int pellets = 8; // this controls the number of pellets in each shot (the lower the amount the lower the damage, the higher the amount the higher the damage)
-    [SerializeField] float pelletsSpreadAngle = 0.1f; // this sets the spread angle (smaller values = tighter spread, higher values = wider spread)
-    [SerializeField] float shotgunFiringRate = .7f; // Shotgun fire rate
-    public bool isShotgunEquipped = true; // bool to help check if shotgun is equipped
+    [SerializeField] float pelletDmg; // controls the damage each individual pellet does
+    [SerializeField] int pellets; // this controls the number of pellets in each shot (the lower the amount the lower the damage, the higher the amount the higher the damage)
+    [SerializeField] float pelletsSpreadAngle; // this sets the spread angle (smaller values = tighter spread, higher values = wider spread)
 
     int selectedGun = 0; //the indexer for the gunList (used by the player to select their active gun)
 
@@ -55,6 +53,11 @@ public class PlayerController : MonoBehaviour, IDamage
     float currentSpeed; //the players current speed (switches between sprint speed and mvoement speed)
     bool isShooting; //this bool determines whether the player is currently shooting or not (you cant shoot again while this is true)
     bool isSpeedChangeable; //this bool determines if the speed can currently be changed or not (you cant change speed when jumping)
+
+    // bools related to the weapon ui
+    public bool isShotgunEquipped; // bool to help check if shotgun is equipped
+    public bool isPistolEquipped;
+    public bool isRifleEquipped;
 
     float HPOriginal; //player starting HP
     bool isDead; //a bool that checks if the player is dead already when processing bullet hits
@@ -80,23 +83,12 @@ public class PlayerController : MonoBehaviour, IDamage
         defaultColliderHeight = playerCollider.height; //get the orginal collider height
         currentSpeed = movementSpeed; //to avoid issues the default current speed is the same as movement when the program starts
         respawn();
-        gameManager.instance.updateWeaponEquipped();
     }
 
     
     void Update()
     {
-        if (Input.GetKeyDown("1"))
-        {
-            isShotgunEquipped = true;
-            gameManager.instance.updateWeaponEquipped();
-        }
-        else if (Input.GetKeyDown("2"))
-        {
-            isShotgunEquipped = false;
-            gameManager.instance.updateWeaponEquipped();
-        }
-
+        gameManager.instance.updateWeaponEquipped();
         if (!gameManager.instance.isPaused) //if the gameManager is not set to paused 
         {
             Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootRange, Color.blue); //show the rayCast for debug purposes
@@ -279,7 +271,7 @@ public class PlayerController : MonoBehaviour, IDamage
             }
         }
 
-        yield return new WaitForSeconds(shotgunFiringRate);
+        yield return new WaitForSeconds(firingRate);
         isShooting = false;
     }
 
@@ -290,6 +282,12 @@ public class PlayerController : MonoBehaviour, IDamage
         shootDamage = gun.shootDamage; //set the current gun values to match the new gun
         shootRange = gun.shootRange;
         firingRate = gun.firingRate;
+        pelletDmg = gun.pelletDmg;
+        pelletsSpreadAngle = gun.pelletsSpreadAngle;
+        pellets = gun.pellets;
+        isShotgunEquipped = gun.isShotgunEquipped;
+        isPistolEquipped = gun.isPistolEquipped;
+        isRifleEquipped = gun.isRifleEquipped;
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = gun.gunModel.GetComponent<MeshFilter>().sharedMesh; //make the mesh and material on the players gunModel match the new gun
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = gun.gunModel.GetComponent<MeshRenderer>().sharedMaterial;
@@ -330,6 +328,12 @@ public class PlayerController : MonoBehaviour, IDamage
         shootDamage = gunList[selectedGun].shootDamage; //change the current gun stats to that of the selectedGun
         shootRange = gunList[selectedGun].shootRange;
         firingRate = gunList[selectedGun].firingRate;
+        pelletDmg = gunList[selectedGun].pelletDmg;
+        pelletsSpreadAngle = gunList[selectedGun].pelletsSpreadAngle;
+        pellets = gunList[selectedGun].pellets;
+        isShotgunEquipped = gunList[selectedGun].isShotgunEquipped;
+        isPistolEquipped = gunList[selectedGun].isPistolEquipped;
+        isRifleEquipped = gunList[selectedGun].isRifleEquipped;
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[selectedGun].gunModel.GetComponent<MeshFilter>().sharedMesh; //change the mesh and materials
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunList[selectedGun].gunModel.GetComponent<MeshRenderer>().sharedMaterial;

@@ -17,7 +17,13 @@ MonoBehaviour:
   firingRate: 0.2
   currAmmo: 0
   maxAmmo: 40
+  pelletDmg: 0
+  pellets: 0
+  pelletsSpreadAngle: 0
   gunModel: {fileID: 919132149155446097, guid: feeb8730d611c3b4e9cff76d5bb78bf0, type: 3}
   hitEffect: {fileID: 0}
   shootSFX: {fileID: 0}
   shootSoundVol: 0
+  isShotgunEquipped: 0
+  isPistolEquipped: 1
+  isRifleEquipped: 0

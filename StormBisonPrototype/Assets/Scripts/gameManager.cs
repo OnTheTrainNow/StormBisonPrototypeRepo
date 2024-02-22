@@ -94,9 +94,13 @@ public class gameManager : MonoBehaviour
         {
             weaponEquipped.text = "Shotgun";
         }
-        else if (playerScript.isShotgunEquipped == false)
+        else if (playerScript.isPistolEquipped == true)
         {
             weaponEquipped.text = "Pistol";
+        }
+        else if (playerScript.isRifleEquipped == true)
+        {
+            weaponEquipped.text = "Rifle";
         }
     }
 }
