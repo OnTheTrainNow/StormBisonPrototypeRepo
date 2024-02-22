@@ -3027,6 +3027,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   platformPath: {fileID: 1775584493}
+  waypointPath:
+  - {fileID: 1366729908}
+  - {fileID: 306671668}
+  - {fileID: 1148593851}
+  - {fileID: 777550772}
   platformSpeed: 2
 --- !u!4 &539937091 stripped
 Transform:

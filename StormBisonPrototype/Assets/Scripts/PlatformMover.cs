@@ -2,13 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//[RequireComponent(typeof(PlatformAttachment))] //the platform with script will need a platform attachment script to work properly
 public class PlatformMover : MonoBehaviour
 {
     [SerializeField] Transform startPosition; //the platforms starting position (these should be emtpy game objects placed at the desired positions for the platform)
     [SerializeField] Transform endPosition; //the platforms ending position
     [SerializeField] float platformSpeed; //how fast the platform moves
-    //[SerializeField] float stopTime = 0.1f; //how long the platform waits when reaching one of the positions
     [SerializeField] bool movementEnabled; //this can be used to turn the movement on or off
 
     float journeyPercentage; //this is a point along the path between the two positions (its the percentage of the distance between the two) 
