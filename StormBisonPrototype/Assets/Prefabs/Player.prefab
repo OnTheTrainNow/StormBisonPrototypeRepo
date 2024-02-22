@@ -34,7 +34,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1652829800153161814}
   m_Father: {fileID: 8214468546571601349}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &5967007431280927474
@@ -212,6 +213,112 @@ MonoBehaviour:
   crtCurve: 0
   grayScaleFactor: {x: 0.2126, y: 0.7152, z: 0.0722}
   grayScaleRatio: 0
+--- !u!1 &2142542849206352620
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1652829800153161814}
+  - component: {fileID: 2404883063097012211}
+  - component: {fileID: 485028863929277241}
+  - component: {fileID: 6226555909364080644}
+  m_Layer: 0
+  m_Name: GunModel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1652829800153161814
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2142542849206352620}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.66449356, z: -0, w: 0.747294}
+  m_LocalPosition: {x: 0.444, y: -0.47800004, z: 0.68}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8815216774099104646}
+  m_LocalEulerAnglesHint: {x: 0, y: 83.287, z: 0}
+--- !u!33 &2404883063097012211
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2142542849206352620}
+  m_Mesh: {fileID: 0}
+--- !u!23 &485028863929277241
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2142542849206352620}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &6226555909364080644
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2142542849206352620}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 2234992155589766746, guid: d76efbf62bb144c44a8ced04aa6e7bd5, type: 3}
 --- !u!1 &8325518595973490225
 GameObject:
   m_ObjectHideFlags: 0
@@ -262,24 +369,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: 4013128310524657863}
+  playerCollider: {fileID: 0}
   HP: 10
   movementSpeed: 5
   sprintSpeed: 10
-  maxJumps: 2
   jumpForce: 10
   jump2Force: 15
   jump3Force: 20
   jump2Time: 1.75
   jump3Time: 2
   gravity: -20
-  shootDamage: 1
-  shootRange: 20
-  firingRate: 0.2
+  crouchControllerHeight: 0
+  crouchColliderHeight: 0
+  gunList: []
+  gunModel: {fileID: 2142542849206352620}
+  shootDamage: 0
+  shootRange: 0
+  firingRate: 0
   pelletDmg: 0.4
   pellets: 8
   pelletsSpreadAngle: 0.1
   shotgunFiringRate: 0.7
-  isShotgunEquipped: 1
+  isShotgunEquipped: 0
 --- !u!33 &6581359598466913242
 MeshFilter:
   m_ObjectHideFlags: 0

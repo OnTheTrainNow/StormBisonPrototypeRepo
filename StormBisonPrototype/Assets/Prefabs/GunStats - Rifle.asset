@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57be55f4ce324494fae6936a4edd9eb7, type: 3}
+  m_Name: GunStats - Rifle
+  m_EditorClassIdentifier: 
+  shootDamage: 8
+  shootRange: 150
+  firingRate: 3
+  currAmmo: 0
+  maxAmmo: 2
+  gunModel: {fileID: 919132149155446097, guid: d76efbf62bb144c44a8ced04aa6e7bd5, type: 3}
+  hitEffect: {fileID: 0}
+  shootSFX: {fileID: 0}
+  shootSoundVol: 0
