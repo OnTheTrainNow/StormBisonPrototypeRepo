@@ -16,8 +16,6 @@ public class gameManager : MonoBehaviour
     [SerializeField] TMP_Text weaponEquipped; // weapon equipped text component
     [SerializeField] TMP_Text enemyCountText; //enemy count text component
 
-    public int horizontalSensitivity; //mouse sensitivity for the horizontal axis
-    public int verticalSensitivity; //mouse sensitivity for the vertical axis
     public TMP_Text sensitivityTextX; //the text for the horizontal sensitivity
     public Slider sensitivitySliderX; //the slider for the horzontal sensitivity
     public TMP_Text sensitivityTextY; //the text for the vertical sensitivity
@@ -45,12 +43,13 @@ public class gameManager : MonoBehaviour
 
     public void loadSettings()
     {
-        horizontalSensitivity = PlayerPrefs.GetInt("Mouse Sensitivity X");
-        verticalSensitivity = PlayerPrefs.GetInt("Mouse Sensitivity Y");
-        sensitivitySliderX.value = horizontalSensitivity;
-        sensitivitySliderY.value = verticalSensitivity;
-        sensitivityTextX.text = horizontalSensitivity.ToString("F0");
-        sensitivityTextY.text = verticalSensitivity.ToString("F0");
+        if (PlayerPrefs.HasKey("Mouse Sensitivity X") && PlayerPrefs.HasKey("Mouse Sensitivity Y"))
+        {
+            sensitivitySliderX.value = PlayerPrefs.GetInt("Mouse Sensitivity X");
+            sensitivitySliderY.value = PlayerPrefs.GetInt("Mouse Sensitivity Y");
+            sensitivityTextX.text = sensitivitySliderX.value.ToString("F0");
+            sensitivityTextY.text = sensitivitySliderY.value.ToString("F0");
+        }
     }
 
     void Update()

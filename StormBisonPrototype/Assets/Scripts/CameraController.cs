@@ -21,8 +21,8 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
-        float mouseX = Input.GetAxis("Mouse X") * Time.deltaTime * gameManager.instance.horizontalSensitivity; //get the direction and float value for mouse movement from get axis
-        float mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * gameManager.instance.verticalSensitivity; //multiply it by the corresponding sensitivity value 
+        float mouseX = Input.GetAxis("Mouse X") * Time.deltaTime * gameManager.instance.sensitivitySliderX.value; //get the direction and float value for mouse movement from get axis
+        float mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * gameManager.instance.sensitivitySliderY.value; //multiply it by the corresponding sensitivity value 
 
         if (invertY) //if the inverted controls bool is on
         {

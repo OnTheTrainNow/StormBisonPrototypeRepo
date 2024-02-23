@@ -3934,8 +3934,6 @@ MonoBehaviour:
   menuLose: {fileID: 7987452656049477148}
   weaponEquipped: {fileID: 4927669904689952401}
   enemyCountText: {fileID: 4995923645980054731}
-  horizontalSensitivity: 1000
-  verticalSensitivity: 1000
   sensitivityTextX: {fileID: 7579339576053248243}
   sensitivitySliderX: {fileID: 7893183629037606908}
   sensitivityTextY: {fileID: 1344263419353001555}
