@@ -134,7 +134,7 @@ public class enemyAI : MonoBehaviour, IDamage
         {
             isDead = true; //set the bool to true to prevent player from killing the enemy twice by shooting at the same time
             gameManager.instance.updateGameGoal(-1); //update the game goal
-            gameManager.instance.playerScript.EnemyBounce(playerStompBounceForce); //call the players bounce method and pass in the bounce force
+            gameManager.instance.playerScript.BounceOff(playerStompBounceForce); //call the players bounce method and pass in the bounce force
             Destroy(gameObject); //destroy the enemy
         }
     }

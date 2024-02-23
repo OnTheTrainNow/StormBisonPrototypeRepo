@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour, IDamage 
+public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
 {
     [Header("Components")]
     [SerializeField] CharacterController playerController; //the character controller for the player
@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] float jump3Time; //how long the jump timer can last in between jump 2 and jump 3
 
     [SerializeField] float gravity = -9.8f; //gravity is used for determining verticle velocity (falling)
+    [SerializeField] int pushBackResolve; //how fast/slow pushBack force is resolved on the player
 
     [Header("Crouching")]
     [SerializeField]float crouchControllerHeight; //the controller height for crouching
@@ -72,6 +73,7 @@ public class PlayerController : MonoBehaviour, IDamage
     bool canJump; //a bool used to determine whether the player can currently jump
 
     //LaunchControls
+    Vector3 pushBack;
     bool isLaunching; //bool for if the player is launching
 
     void Start()
@@ -120,6 +122,8 @@ public class PlayerController : MonoBehaviour, IDamage
 
     private void ProcessMovement()
     {
+        pushBack += Vector3.Lerp(pushBack, Vector3.zero, Time.deltaTime * pushBackResolve);
+
         if (playerController.isGrounded) //if the player touches the ground
         {
             //currentJumps = 0; //reset their current jumps
@@ -165,7 +169,7 @@ public class PlayerController : MonoBehaviour, IDamage
         }
 
         verticleVelocity.y += gravity * Time.deltaTime; //apply gravity to the verticle velocity and make sure its frame rate independant 
-        playerController.Move(verticleVelocity * Time.deltaTime); //use the player controller to move the object based on vertical velocity
+        playerController.Move((verticleVelocity + pushBack) * Time.deltaTime); //use the player controller to move the object based on vertical velocity
     }
 
     private void ProcessCrouch()
@@ -354,6 +358,17 @@ public class PlayerController : MonoBehaviour, IDamage
         }
     }
 
+    public void killBox() //this method is called when the player falls off the world into the kill box
+    {
+        StartCoroutine(flashDamage()); //flash the damage effect panel with a coroutine
+
+        if (!isDead) //if the isDead bool is not set
+        {
+            isDead = true; //set the player to dead
+            gameManager.instance.youLose(); //tell the game manager to display the Loss screen
+        }
+    }
+
     void UpdatePlayerUI()
     {
         gameManager.instance.playerHPCircle.fillAmount = HP / HPOriginal; //get the HP percentage and set the HP bar fill percentage to match it
@@ -390,7 +405,12 @@ public class PlayerController : MonoBehaviour, IDamage
     }
 
     //bouncing and launching
-    public void PipeLaunch(Vector3 LaunchMovement)
+    public void PushBack(Vector3 dirForce)
+    {
+        pushBack += dirForce;
+    }
+
+    public void Launch(Vector3 LaunchMovement)
     {
         currentJumps = 0; //launching from a pipe resets the jump count
         movement = new Vector3(LaunchMovement.x, 0, LaunchMovement.z); //get the non vertical movement of the player from the launch force
@@ -398,7 +418,7 @@ public class PlayerController : MonoBehaviour, IDamage
         isLaunching = true; //set is launching to true
     }
 
-    public void EnemyBounce(float BounceForce) //this is called if the player stomps on an enemies head
+    public void BounceOff(float BounceForce) //this is called if the player stomps on an enemies head
     {
         verticleVelocity.y = BounceForce; //set the players vertical velocity to the bounce force
     }

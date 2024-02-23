@@ -157,6 +157,18 @@ PrefabInstance:
       propertyPath: platformSpeed
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 1741427690035036413, guid: 21c05063adf3e7b41adf5e947b665a94, type: 3}
+      propertyPath: waypointPath.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1741427690035036413, guid: 21c05063adf3e7b41adf5e947b665a94, type: 3}
+      propertyPath: waypointPath.Array.data[0]
+      value: 
+      objectReference: {fileID: 8927544650694768862}
+    - target: {fileID: 1741427690035036413, guid: 21c05063adf3e7b41adf5e947b665a94, type: 3}
+      propertyPath: waypointPath.Array.data[1]
+      value: 
+      objectReference: {fileID: 1883530649960460791}
     - target: {fileID: 4013641776956304921, guid: 21c05063adf3e7b41adf5e947b665a94, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
