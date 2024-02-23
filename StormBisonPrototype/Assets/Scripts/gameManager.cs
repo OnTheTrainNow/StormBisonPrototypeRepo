@@ -15,6 +15,14 @@ public class gameManager : MonoBehaviour
 
     [SerializeField] TMP_Text weaponEquipped; // weapon equipped text component
     [SerializeField] TMP_Text enemyCountText; //enemy count text component
+
+    public int horizontalSensitivity; //mouse sensitivity for the horizontal axis
+    public int verticalSensitivity; //mouse sensitivity for the vertical axis
+    public TMP_Text sensitivityTextX; //the text for the horizontal sensitivity
+    public Slider sensitivitySliderX; //the slider for the horzontal sensitivity
+    public TMP_Text sensitivityTextY; //the text for the vertical sensitivity
+    public Slider sensitivitySliderY; //the slider for the vertical sensitivity
+
     public Image playerHPCircle; //player HP circle image
     public Image playerHPCircleBackground; //player HP circle image background
     public GameObject playerDamageFlash; //the damage effect panel
@@ -29,10 +37,20 @@ public class gameManager : MonoBehaviour
     void Awake()
     {
         instance = this;
+        loadSettings(); 
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<PlayerController>(); //get the player controller script
         playerSpawnPosition = GameObject.FindWithTag("PlayerSpawnPos"); //get the player spawn position
+    }
 
+    public void loadSettings()
+    {
+        horizontalSensitivity = PlayerPrefs.GetInt("Mouse Sensitivity X");
+        verticalSensitivity = PlayerPrefs.GetInt("Mouse Sensitivity Y");
+        sensitivitySliderX.value = horizontalSensitivity;
+        sensitivitySliderY.value = verticalSensitivity;
+        sensitivityTextX.text = horizontalSensitivity.ToString("F0");
+        sensitivityTextY.text = verticalSensitivity.ToString("F0");
     }
 
     void Update()

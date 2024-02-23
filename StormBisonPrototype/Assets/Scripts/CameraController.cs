@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField][Range(0, 3200)] int horizontalSensitivity; //mouse sensitivity for the horizontal axis
-    [SerializeField][Range(0,3200)] int verticalSensitivity; //mouse sensitivity for the vertical axis
     [SerializeField][Range(-90, 0)] int verticalLockMin = -90; //the minimum angle the camera can look down
     [SerializeField][Range(0, 90)] int verticalLockMax = 90; //the maximum angle the camera can look up
     [SerializeField] bool invertY; //this bool inverts the camera movement when moving the mouse up or down
+
+    int horizontalSensitivity; //mouse sensitivity for the horizontal axis
+    int verticalSensitivity; //mouse sensitivity for the vertical axis
 
     float xRotation; //the rotate for the camera along the X-Axis (looking up/down)
 
@@ -20,8 +21,8 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
-        float mouseX = Input.GetAxis("Mouse X") * Time.deltaTime * horizontalSensitivity; //get the direction and float value for mouse movement from get axis
-        float mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * verticalSensitivity; //multiply it by the corresponding sensitivity value 
+        float mouseX = Input.GetAxis("Mouse X") * Time.deltaTime * gameManager.instance.horizontalSensitivity; //get the direction and float value for mouse movement from get axis
+        float mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * gameManager.instance.verticalSensitivity; //multiply it by the corresponding sensitivity value 
 
         if (invertY) //if the inverted controls bool is on
         {
