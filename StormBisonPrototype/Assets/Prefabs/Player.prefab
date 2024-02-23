@@ -379,6 +379,7 @@ MonoBehaviour:
   jump2Time: 1.75
   jump3Time: 2
   gravity: -20
+  pushBackResolve: 5
   crouchControllerHeight: 0
   crouchColliderHeight: 0
   gunList: []
@@ -389,8 +390,9 @@ MonoBehaviour:
   pelletDmg: 0.4
   pellets: 8
   pelletsSpreadAngle: 0.1
-  shotgunFiringRate: 0.7
   isShotgunEquipped: 0
+  isPistolEquipped: 0
+  isRifleEquipped: 0
 --- !u!33 &6581359598466913242
 MeshFilter:
   m_ObjectHideFlags: 0

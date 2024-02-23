@@ -122,7 +122,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
 
     private void ProcessMovement()
     {
-        pushBack += Vector3.Lerp(pushBack, Vector3.zero, Time.deltaTime * pushBackResolve);
+        pushBack = Vector3.Lerp(pushBack, Vector3.zero, Time.deltaTime * pushBackResolve);
 
         if (playerController.isGrounded) //if the player touches the ground
         {
@@ -402,6 +402,8 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         transform.SetParent(null); //this fixes any issues where the player dies on a moving platform
         transform.position = gameManager.instance.playerSpawnPosition.transform.position; //change the players position to the spawn point position
         playerController.enabled = true; //re enable the controller
+
+        pushBack = Vector3.zero;
     }
 
     //bouncing and launching
