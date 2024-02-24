@@ -8,10 +8,16 @@ public class PipeTeleport : MonoBehaviour
     [SerializeField] Vector3 LaunchForce; //set the launch force of the exit pipe
     [SerializeField] ExitPipe exitPipeCover; //the exit pipe script for the corresponding exit pipes cover
 
+    [SerializeField] AudioSource enterSFX;
+
     private void OnTriggerEnter(Collider other) //when the player enters the trigger volume
     {
         if (other.CompareTag("Player")) //check if the other object is the player
         {
+            if (enterSFX != null)
+            {
+                enterSFX.Play();
+            }
             if (exitPipeCover != null) { exitPipeCover.disableCover(); } //if the exit pipe is set then call its disable method before teleporting
             gameManager.instance.player.transform.position = teleportPosition.position; //set their position to that of the exit position
             Physics.SyncTransforms(); //tell the physics systems to sync transforms in order for the teleport to work

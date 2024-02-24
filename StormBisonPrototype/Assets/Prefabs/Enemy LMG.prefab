@@ -547,6 +547,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13f09e3a36f556a49aeddd711d9b5e63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stompedFX: {fileID: 2564665703057083008, guid: c14877cbe0ebba349b158edf7f7233cc, type: 3}
 --- !u!1 &5964705094526383262
 GameObject:
   m_ObjectHideFlags: 0

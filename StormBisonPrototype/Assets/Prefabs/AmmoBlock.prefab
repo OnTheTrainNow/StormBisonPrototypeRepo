@@ -360,3 +360,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f4b26c2a378019488be7dc1c5e52436, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blockBreakFX: {fileID: 2564665703057083008, guid: 2063f6837c0b8e04793cf4de2e281376, type: 3}

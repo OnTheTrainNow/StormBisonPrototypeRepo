@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class StompOnEnemy : MonoBehaviour
 {
+    [SerializeField] TempFXObject stompedFX; //the FX object created when the player stomps on an enemy
+
     enemyAI parentScript; //get the reference to the enemy parent object
     private void Start()
     {
@@ -14,6 +16,10 @@ public class StompOnEnemy : MonoBehaviour
     {
         if(other.CompareTag("Player")) //check if the player entered the trigger area
         {
+            if (stompedFX != null)
+            {
+                Instantiate(stompedFX, transform.position, transform.rotation); //instantiate an FX object at the colliders position
+            }
             parentScript.StompedOn(); //call the enemys StompedOn script to kill it
         }
     }

@@ -9,10 +9,16 @@ public class ExitPipe : MonoBehaviour
     [SerializeField] MeshCollider pipeCover; //the reference to the corresponding mesh collider for the cover
     [SerializeField] float disableTime; //how long the pipe gets disables
 
+    [SerializeField] AudioSource exitSFX;
+
     public void disableCover() 
     {
         if (!isExitPipe) { return; } //ignore the script if exit pipe is turned off
 
+        if (exitSFX != null)
+        {
+            exitSFX.Play();
+        }
         StartCoroutine(disableTimer()); //start the disable timer coroutine
     }
 
