@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
@@ -45,6 +46,13 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     [SerializeField] float pelletDmg; // controls the damage each individual pellet does
     [SerializeField] int pellets; // this controls the number of pellets in each shot (the lower the amount the lower the damage, the higher the amount the higher the damage)
     [SerializeField] float pelletsSpreadAngle; // this sets the spread angle (smaller values = tighter spread, higher values = wider spread)
+
+    [Header("Sound Effects")]
+    [SerializeField] AudioSource characterSoundsSource;
+    [SerializeField] List<AudioClip> jumpSounds = new List<AudioClip>(); //this list is the sound of each jump in the combo in order
+    [SerializeField] List<AudioClip> hurtSounds = new List<AudioClip>(); //this list is the random collection of hurt sounds
+    [SerializeField] AudioSource gunSoundsSource;
+    
 
     int selectedGun = 0; //the indexer for the gunList (used by the player to select their active gun)
 
@@ -156,20 +164,33 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         //this is the jump combo system
         if (canJump && currentJumps == 1 && jumpTimer <= jump2Time && Input.GetButtonDown("Jump")) //if the player can jump, presses jump, is on their second jump, and the jump timer is less then jump 2 combo allowed time
         {
+            PlayJumpSound(1); //play the second sound in the list
             ProcessJump(jump2Force); //process a jump with the jump 2 force
         }
         else if (canJump && currentJumps == 2 && jumpTimer <= jump3Time && Input.GetButtonDown("Jump")) //if the player can jump, presses jump, is on their third jump, and the jump timer is less then jump 3 combo allowed time
         {
+            PlayJumpSound(2); //play the third sound in the list
             ProcessJump(jump3Force); //process a jump with the jump 3 force
         }
         else if (canJump && Input.GetButtonDown("Jump")) //this is the default jump for when the player doesnt reach any of the above conditions
         {
+            PlayJumpSound(0); //play the first sound in the list
             currentJumps = 0; //this jump starts the combo, but is not guaranteed to be zero when the player jumps so reset it to zero
             ProcessJump(jumpForce); //process a jump with regular jump force
         }
 
         verticleVelocity.y += gravity * Time.deltaTime; //apply gravity to the verticle velocity and make sure its frame rate independant 
         playerController.Move((verticleVelocity + pushBack) * Time.deltaTime); //use the player controller to move the object based on vertical velocity
+    }
+
+    private void PlayJumpSound(int index)
+    {
+        if (index >= 0 && index < jumpSounds.Count) //make sure the index is valid
+        {
+            characterSoundsSource.Stop(); //stop the current sound
+            characterSoundsSource.clip = jumpSounds[index]; //set the characters sound clip to the jump sound at the index (in the jump sound list)
+            characterSoundsSource.Play(); //play the sound
+        }
     }
 
     private void ProcessCrouch()
@@ -349,6 +370,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         HP -= damageTaken; //reduce the players current HP by the damage pass in
 
         UpdatePlayerUI(); //update the player UI
+        PlayHurtSound();
         StartCoroutine(flashDamage()); //flash the damage effect panel with a coroutine
 
         if (HP <= 0 && !isDead) //if the players HP is less than or equal to zero (and if they arent already dead to prevent double triggers)
@@ -360,12 +382,23 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
 
     public void killBox() //this method is called when the player falls off the world into the kill box
     {
+        PlayHurtSound();
         StartCoroutine(flashDamage()); //flash the damage effect panel with a coroutine
 
         if (!isDead) //if the isDead bool is not set
         {
             isDead = true; //set the player to dead
             gameManager.instance.youLose(); //tell the game manager to display the Loss screen
+        }
+    }
+
+    private void PlayHurtSound()
+    {
+        if (hurtSounds.Count > 0) //if the list is not empty
+        {
+            characterSoundsSource.Stop(); 
+            characterSoundsSource.clip = hurtSounds[UnityEngine.Random.Range(0,hurtSounds.Count)];
+            characterSoundsSource.Play();
         }
     }
 
