@@ -17,6 +17,7 @@ public class enemyAI : MonoBehaviour, IDamage
 
     [SerializeField] float HP;
     [SerializeField] int viewCone;
+    [SerializeField] int shootCone;
     [SerializeField] int targetFaceSpeed;
 
     [SerializeField] GameObject bullet;
@@ -62,7 +63,7 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         playerDir = gameManager.instance.player.transform.position - headPos.position;
 
-        angleToPlayer = Vector3.Angle(playerDir, transform.forward);
+        angleToPlayer = Vector3.Angle(new Vector3(playerDir.x, 0, playerDir.z), transform.forward);
         Debug.DrawRay(headPos.position, playerDir);
 
         RaycastHit hit;
@@ -74,7 +75,7 @@ public class enemyAI : MonoBehaviour, IDamage
             {
                 agent.SetDestination(gameManager.instance.player.transform.position);
 
-                if (!isShooting)
+                if (!isShooting && angleToPlayer <= shootCone)
                 {
                     StartCoroutine(shoot());
                 }

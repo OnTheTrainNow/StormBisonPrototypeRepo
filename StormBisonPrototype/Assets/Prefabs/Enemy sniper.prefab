@@ -351,6 +351,7 @@ MonoBehaviour:
   headPos: {fileID: 4442690997731229504}
   HP: 4
   viewCone: 90
+  shootCone: 3
   targetFaceSpeed: 8
   bullet: {fileID: 5321776339149397830, guid: 6e739e83c295b2447995a3632caf611a, type: 3}
   shootRate: 2.5

@@ -61,11 +61,13 @@ MonoBehaviour:
   headPos: {fileID: 2712131000690230396}
   HP: 25
   viewCone: 100
+  shootCone: 3
   targetFaceSpeed: 7
   bullet: {fileID: 6309969512564079822, guid: 1dea0cdbb01acb047beb8b99ba8a11c2, type: 3}
   shootRate: 0.1
   HPUI: {fileID: 68670254605622966}
   HPCircle: {fileID: 7005698031648217809}
+  playerStompBounceForce: 0
 --- !u!195 &5137874619175750858
 NavMeshAgent:
   m_ObjectHideFlags: 0
