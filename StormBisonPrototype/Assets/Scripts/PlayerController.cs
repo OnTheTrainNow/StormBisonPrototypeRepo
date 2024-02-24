@@ -49,11 +49,13 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     [SerializeField] int pellets; // this controls the number of pellets in each shot (the lower the amount the lower the damage, the higher the amount the higher the damage)
     [SerializeField] float pelletsSpreadAngle; // this sets the spread angle (smaller values = tighter spread, higher values = wider spread)
 
-    [Header("Sound Effects")]
+    [Header("Sound & Visual Effects")]
     [SerializeField] AudioSource characterSoundsSource; //this is the sound source for the player character (most player sounds shouldn't overlap)
     [SerializeField] List<AudioClip> jumpSounds = new List<AudioClip>(); //this list is the sound of each jump in the combo in order
     [SerializeField] List<AudioClip> hurtSounds = new List<AudioClip>(); //this list is the random collection of hurt sounds
     [SerializeField] AudioSource gunSoundsSource; //this is the sound source for the gun (gun sounds can overlap with player sounds)
+    [SerializeField] ParticleSystem jumpVFX; //this is the particle system attached to the player that creates dust clouds when they jump
+    [SerializeField] ParticleSystem bulletImpactFX; //this is the particle system for the players bullet impact (it works better if its not a child of the player object)
     
 
     int selectedGun = 0; //the indexer for the gunList (used by the player to select their active gun)
@@ -234,6 +236,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
 
     private void ProcessJump(float jumpforce)
     {
+        jumpVFX.Play(); //play the jump particle effect
         canJump = false;
         isSpeedChangeable = false; //you cant change speed when already in the air
         isLaunching = false; //jumping cancels out the launch
@@ -254,6 +257,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         //send a raycast out using the viewportPointToRay function of camera. (The Vector2 is the position, which is 0.5x0.5 for the center point)
         if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f,0.5f)), out hit, shootRange)) //The raycast is a bool which can output a Raycast hit. The shootRange is how far the ray shoots
         {
+            bulletImpact(hit); //tell the bullet impact effect to move to the hit location
 
             Debug.Log(hit.collider.name); //out put the hit object for testing purposes. this can be removed later
             IDamage dmg = hit.collider.GetComponent<IDamage>(); //get the IDamage component from the hit collider
@@ -288,6 +292,8 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
             RaycastHit hit;
             if (Physics.Raycast(pelletRay.origin, spread, out hit, shootRange))
             {
+                bulletImpact(hit); //tell the bullet impact effect to move to the hit location
+
                 Debug.Log(hit.collider.name);
 
                 IDamage dmg = hit.collider.GetComponent<IDamage>();
@@ -317,6 +323,16 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         gunFireSprite.transform.localRotation = Quaternion.Euler(0f, 0f, UnityEngine.Random.Range(0,360)); //randomly rotate the sprite on the z axis
         yield return new WaitForSeconds(0.1f); //wait for a split second
         gunFireSprite.enabled = false; //disable the sprite again
+    }
+
+    void bulletImpact(RaycastHit hit)
+    {
+        if (bulletImpactFX != null)
+        {
+            bulletImpactFX.transform.position = hit.point; //move to the hit location
+            bulletImpactFX.transform.rotation = hit.transform.rotation; //rotate to match the hit rotation
+            bulletImpactFX.Play(); //play the particle effect
+        }
     }
 
     public void getGunstats(GunStats gun) //gets a gun to add to the list

@@ -5,6 +5,29 @@ using UnityEngine;
 public class Wind : MonoBehaviour
 {
     [SerializeField] float windSpeed; //the strength of the wind
+    [SerializeField] AudioSource windSFX;
+
+    private void Start()
+    {
+        windSFX.enabled = false; 
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("Player"))
+        {
+            windSFX.enabled = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            windSFX.enabled = false;
+        }
+    }
+
 
     private void OnTriggerStay(Collider other)
     {
