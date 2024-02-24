@@ -20,8 +20,10 @@ MonoBehaviour:
   pelletDmg: 0.4
   pellets: 8
   pelletsSpreadAngle: 0.1
-  isShotgunEquipped: 1
   gunModel: {fileID: 919132149155446097, guid: 96bfef17abececb4db5045901fdd6d1d, type: 3}
   hitEffect: {fileID: 0}
-  shootSFX: {fileID: 0}
+  shootSFX: {fileID: 8300000, guid: 0c7cb4be866e0e64193a6a932a513654, type: 3}
   shootSoundVol: 0
+  isShotgunEquipped: 1
+  isPistolEquipped: 0
+  isRifleEquipped: 0

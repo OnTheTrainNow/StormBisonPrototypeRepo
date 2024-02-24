@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
@@ -37,6 +38,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     [Header("Weapon Stats")]
     [SerializeField] List<GunStats> gunList = new List<GunStats>(); //this list represents the players weapon loadout
     [SerializeField] GameObject gunModel; //the physical game object that represents the players current gun
+    [SerializeField] Image gunFireSprite; //the sprite for the firing animation
 
     [SerializeField] int shootDamage = 1; //how much damage is done by each shot
     [SerializeField] int shootRange = 20; //how far the player can shoot (this is the raycast range)
@@ -48,10 +50,10 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     [SerializeField] float pelletsSpreadAngle; // this sets the spread angle (smaller values = tighter spread, higher values = wider spread)
 
     [Header("Sound Effects")]
-    [SerializeField] AudioSource characterSoundsSource;
+    [SerializeField] AudioSource characterSoundsSource; //this is the sound source for the player character (most player sounds shouldn't overlap)
     [SerializeField] List<AudioClip> jumpSounds = new List<AudioClip>(); //this list is the sound of each jump in the combo in order
     [SerializeField] List<AudioClip> hurtSounds = new List<AudioClip>(); //this list is the random collection of hurt sounds
-    [SerializeField] AudioSource gunSoundsSource;
+    [SerializeField] AudioSource gunSoundsSource; //this is the sound source for the gun (gun sounds can overlap with player sounds)
     
 
     int selectedGun = 0; //the indexer for the gunList (used by the player to select their active gun)
@@ -87,6 +89,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     void Start()
     {
         HPOriginal = HP; //set the original HP to the initial HP value set
+        gunFireSprite.enabled = false; //turn the gun sprite off
         playerController = GetComponent<CharacterController>(); //searches the current gameObject and returns the CharacterController
         playerCollider = GetComponent<CapsuleCollider>(); //searches the curretn gameObject for its capsule collider
         defaultControllerHeight = playerController.height; //get the original controller height
@@ -113,6 +116,8 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
 
                 if (Input.GetButton("Shoot") && !isShooting) //check if the player is trying to shoot and if it is currently allowed (if they arent already shooting)
                 {
+                    StartCoroutine(gunFireEffect());
+
                     if (isShotgunEquipped) // Will Check if the bool for isShotgunEquipped is true. If true then the shotgun coroutine is started otherwise it will resort to our default shoot
                     {
                         StartCoroutine(shotgunShoot()); // starts the shotgunShoot coroutine
@@ -241,6 +246,9 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     IEnumerator Shoot()
     {
         isShooting = true; //set is shooting to true which prevents another shot from being fired
+
+        gunSoundsSource.Stop(); //stop the current sound
+        gunSoundsSource.Play(); //play the gun sound
         
         RaycastHit hit;
         //send a raycast out using the viewportPointToRay function of camera. (The Vector2 is the position, which is 0.5x0.5 for the center point)
@@ -264,6 +272,9 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     IEnumerator shotgunShoot()
     {
         isShooting = true;
+
+        gunSoundsSource.Stop(); //stop the current sound
+        gunSoundsSource.Play(); //play the gun sound
 
         // This is so that the pelletRays have the same ray origin as Shoot()'s rays
         Ray pelletRay = Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f));
@@ -300,6 +311,14 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         isShooting = false;
     }
 
+    IEnumerator gunFireEffect()
+    {
+        gunFireSprite.enabled = true; //enable the sprite
+        gunFireSprite.transform.localRotation = Quaternion.Euler(0f, 0f, UnityEngine.Random.Range(0,360)); //randomly rotate the sprite on the z axis
+        yield return new WaitForSeconds(0.1f); //wait for a split second
+        gunFireSprite.enabled = false; //disable the sprite again
+    }
+
     public void getGunstats(GunStats gun) //gets a gun to add to the list
     {
         gunList.Add(gun); //add the passed in gun to the list
@@ -313,6 +332,8 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         isShotgunEquipped = gun.isShotgunEquipped;
         isPistolEquipped = gun.isPistolEquipped;
         isRifleEquipped = gun.isRifleEquipped;
+
+        gunSoundsSource.clip = gun.shootSFX;
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = gun.gunModel.GetComponent<MeshFilter>().sharedMesh; //make the mesh and material on the players gunModel match the new gun
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = gun.gunModel.GetComponent<MeshRenderer>().sharedMaterial;
@@ -360,6 +381,8 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         isPistolEquipped = gunList[selectedGun].isPistolEquipped;
         isRifleEquipped = gunList[selectedGun].isRifleEquipped;
 
+        gunSoundsSource.clip = gunList[selectedGun].shootSFX;
+
         gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[selectedGun].gunModel.GetComponent<MeshFilter>().sharedMesh; //change the mesh and materials
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunList[selectedGun].gunModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
@@ -370,7 +393,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         HP -= damageTaken; //reduce the players current HP by the damage pass in
 
         UpdatePlayerUI(); //update the player UI
-        PlayHurtSound();
+        PlayHurtSound(); //play the hurt sound
         StartCoroutine(flashDamage()); //flash the damage effect panel with a coroutine
 
         if (HP <= 0 && !isDead) //if the players HP is less than or equal to zero (and if they arent already dead to prevent double triggers)
@@ -382,7 +405,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
 
     public void killBox() //this method is called when the player falls off the world into the kill box
     {
-        PlayHurtSound();
+        PlayHurtSound(); //play the hurt sound
         StartCoroutine(flashDamage()); //flash the damage effect panel with a coroutine
 
         if (!isDead) //if the isDead bool is not set
@@ -396,9 +419,9 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     {
         if (hurtSounds.Count > 0) //if the list is not empty
         {
-            characterSoundsSource.Stop(); 
-            characterSoundsSource.clip = hurtSounds[UnityEngine.Random.Range(0,hurtSounds.Count)];
-            characterSoundsSource.Play();
+            characterSoundsSource.Stop(); //stop the current sound
+            characterSoundsSource.clip = hurtSounds[UnityEngine.Random.Range(0,hurtSounds.Count)]; //get a random sound in the hurtSounds list
+            characterSoundsSource.Play(); //play the sound
         }
     }
 
