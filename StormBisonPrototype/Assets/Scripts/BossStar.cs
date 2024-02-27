@@ -4,18 +4,10 @@ using UnityEngine;
 
 public class BossStar : MonoBehaviour
 {
-    [SerializeField] enemyAI enemy;
-    [SerializeField] Star bossStar;
+    [SerializeField] GameObject bossStar;
 
-    // Update is called once per frame
-    void Update()
+    public void spawnStar()
     {
-        if (enemy != null)
-        {
-            if (enemy.IsDead())
-            {
-                Instantiate(bossStar);
-            }
-        }
+        Instantiate(bossStar, transform.position, transform.rotation);
     }
 }

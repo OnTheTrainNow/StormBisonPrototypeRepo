@@ -27,6 +27,7 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] UnityEngine.UI.Image HPCircle; //the enemy HP circle
 
     [SerializeField] float playerStompBounceForce = 0; //how high the player bounces when they stomp on the enemy
+    [SerializeField] bool dropsStar;
 
     float HPOriginal;
 
@@ -126,6 +127,7 @@ public class enemyAI : MonoBehaviour, IDamage
         if (HP <= 0 && !isDead)
         {
             isDead = true;
+            checkForStarDrop();
             gameManager.instance.updateGameGoal(-1);
             Destroy(gameObject);
         }
@@ -136,9 +138,22 @@ public class enemyAI : MonoBehaviour, IDamage
         if (!isDead) //to prevent issues make sure this can only trigger if the isDead bool is false
         {
             isDead = true; //set the bool to true to prevent player from killing the enemy twice by shooting at the same time
+            checkForStarDrop();
             gameManager.instance.updateGameGoal(-1); //update the game goal
             gameManager.instance.playerScript.BounceOff(playerStompBounceForce); //call the players bounce method and pass in the bounce force
             Destroy(gameObject); //destroy the enemy
+        }
+    }
+
+    void checkForStarDrop()
+    {
+        if (dropsStar)
+        {
+            BossStar bossStar = GetComponent<BossStar>();
+            if (bossStar != null)
+            {
+                bossStar.spawnStar();
+            }
         }
     }
 
