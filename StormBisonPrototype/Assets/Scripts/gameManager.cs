@@ -91,10 +91,15 @@ public class gameManager : MonoBehaviour
         // Player Win condition is met when all enemies are dead
         if (enemyCount <= 0)
         {
-            menuActive = menuWin;
-            menuActive.SetActive(true);
-            statePaused();
+            youWin();
         }
+    }
+
+    public void youWin()
+    {
+        menuActive = menuWin;
+        menuActive.SetActive(true);
+        statePaused();
     }
 
     // Player Lose function Will be called
