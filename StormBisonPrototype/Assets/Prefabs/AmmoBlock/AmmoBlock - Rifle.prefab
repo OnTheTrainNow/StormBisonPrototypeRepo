@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1146226433423152188}
   - component: {fileID: 7863285262600990285}
   m_Layer: 0
-  m_Name: AmmoBlock
+  m_Name: AmmoBlock - Rifle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -249,7 +249,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 19
+  m_VersionIndex: 27
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -274,8 +274,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1c8ea857edfd4a747acd7ba4a01d91a0, type: 2}
-  - {fileID: 2100000, guid: 12ffd6fde98dd3449a4b6feaa36adf0c, type: 2}
+  - {fileID: 2100000, guid: e455517a0aeff0a4684f6d3bcc37524e, type: 2}
+  - {fileID: 2100000, guid: 79771901a52eb8d4ca5c515c83be9fa7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -361,3 +361,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockBreakFX: {fileID: 2564665703057083008, guid: 2063f6837c0b8e04793cf4de2e281376, type: 3}
+  gunPickUp: {fileID: 809831267540243112, guid: 46fa0e7d64985c64fb5588c0575919a3, type: 3}
+  instantiationOffset: {x: 0, y: 2, z: 0}
+  velocityTunerY: 3
+  velocityTunerXZ: 3

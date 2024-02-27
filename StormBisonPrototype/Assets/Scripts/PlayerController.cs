@@ -53,6 +53,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     [SerializeField] AudioSource characterSoundsSource; //this is the sound source for the player character (most player sounds shouldn't overlap)
     [SerializeField] List<AudioClip> jumpSounds = new List<AudioClip>(); //this list is the sound of each jump in the combo in order
     [SerializeField] List<AudioClip> hurtSounds = new List<AudioClip>(); //this list is the random collection of hurt sounds
+    [SerializeField] AudioSource pickUpSoundSource; //this is the sound source for when the player picks up guns
     [SerializeField] AudioSource gunSoundsSource; //this is the sound source for the gun (gun sounds can overlap with player sounds)
     [SerializeField] ParticleSystem jumpVFX; //this is the particle system attached to the player that creates dust clouds when they jump
     [SerializeField] ParticleSystem bulletImpactFX; //this is the particle system for the players bullet impact (it works better if its not a child of the player object)
@@ -337,6 +338,8 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
 
     public void getGunstats(GunStats gun) //gets a gun to add to the list
     {
+        pickUpSoundSource.Play(); //play the pickup sound
+
         gunList.Add(gun); //add the passed in gun to the list
 
         shootDamage = gun.shootDamage; //set the current gun values to match the new gun
