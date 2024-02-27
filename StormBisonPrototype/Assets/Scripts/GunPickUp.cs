@@ -11,6 +11,7 @@ public class GunPickUp : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             gameManager.instance.playerScript.getGunstats(gun);
+            Destroy(gameObject.transform.parent.gameObject); //destroy the parent object for the gun (a parent is needed for the rigidbody
             Destroy(gameObject);
         }
     }

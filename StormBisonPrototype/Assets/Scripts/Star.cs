@@ -23,7 +23,7 @@ public class Star : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.RotateAround(transform.position, Vector3.up, rotateAngle); //rotate at the current position
+        transform.RotateAround(transform.position, Vector3.up, rotateAngle * Time.deltaTime); //rotate at the current position
         if (isStaticStar) return; //if the star is static than it doesn't need to move
         transform.position = Vector3.MoveTowards(transform.position, starManager.instance.starPositions[positionIndex].position, moveSpeed * Time.deltaTime);
         //move towards the stars position from the starManager list
