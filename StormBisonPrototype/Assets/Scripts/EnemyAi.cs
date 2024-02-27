@@ -59,6 +59,8 @@ public class enemyAI : MonoBehaviour, IDamage
         }
     }
 
+    public bool IsDead() { return isDead; } //getter method for if the enemy isDead
+
     bool canSeePlayer()
     {
         playerDir = gameManager.instance.player.transform.position - headPos.position;
