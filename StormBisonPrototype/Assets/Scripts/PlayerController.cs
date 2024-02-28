@@ -44,6 +44,9 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     [SerializeField] int shootRange = 20; //how far the player can shoot (this is the raycast range)
     [SerializeField] float firingRate = .2f; //the time between shots (determines how many times the player can fire in a specified time frame)
 
+    [SerializeField] int currAmmo = 0;
+    [SerializeField] int maxAmmo = 0;
+
     // shotgun test
     [SerializeField] float pelletDmg; // controls the damage each individual pellet does
     [SerializeField] int pellets; // this controls the number of pellets in each shot (the lower the amount the lower the damage, the higher the amount the higher the damage)
@@ -360,9 +363,14 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
 
     public void getGunstats(GunStats gun) //gets a gun to add to the list
     {
+        bool newGun = false;
         pickUpSoundSource.Play(); //play the pickup sound
 
-        gunList.Add(gun); //add the passed in gun to the list
+        if (!gunList.Contains(gun))
+        {
+            gunList.Add(gun); //add the passed in gun to the list
+            newGun = true;
+        }
 
         shootDamage = gun.shootDamage; //set the current gun values to match the new gun
         shootRange = gun.shootRange;
@@ -376,10 +384,20 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
 
         gunSoundsSource.clip = gun.shootSFX;
 
+        maxAmmo = gun.maxAmmo;
+        currAmmo = gun.currAmmo;
+
         gunModel.GetComponent<MeshFilter>().sharedMesh = gun.gunModel.GetComponent<MeshFilter>().sharedMesh; //make the mesh and material on the players gunModel match the new gun
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = gun.gunModel.GetComponent<MeshRenderer>().sharedMaterial;
 
-        selectedGun = gunList.Count - 1; //the new gun is appended to the end of the list so set the selected gun to match that
+        if(newGun) //if the was new 
+        {
+            selectedGun = gunList.Count - 1; //the new gun is appended to the end of the list so set the selected gun to match that
+        }
+        else //if the gun is already in the list
+        {
+            selectedGun = gunList.IndexOf(gun); //get the index of the gun and change the selected gun to match it
+        }
     }
 
     void selectGun()
@@ -423,6 +441,9 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         isRifleEquipped = gunList[selectedGun].isRifleEquipped;
 
         gunSoundsSource.clip = gunList[selectedGun].shootSFX;
+
+        maxAmmo = gunList[selectedGun].maxAmmo;
+        currAmmo = gunList[selectedGun].currAmmo;
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[selectedGun].gunModel.GetComponent<MeshFilter>().sharedMesh; //change the mesh and materials
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunList[selectedGun].gunModel.GetComponent<MeshRenderer>().sharedMaterial;
