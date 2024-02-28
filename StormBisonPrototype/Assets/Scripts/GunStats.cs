@@ -10,8 +10,8 @@ public class GunStats : ScriptableObject
     public int shootRange; //the range of the gun
     public float firingRate; //the firing rate of the gun
 
-    public int currAmmo; //the player current ammo for the gun
-    public int maxAmmo; //the players max ammo for the gun
+    public int currAmmo;
+    public int maxAmmo;
 
     // Values related to the shotgun
     public float pelletDmg; // controls the damage each individual pellet does

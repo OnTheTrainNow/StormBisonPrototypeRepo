@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.UI;
 using UnityEngine;
+using System.Reflection;
 
 public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
 {
@@ -19,7 +20,6 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
 
     [Header("Jumping & Gravity")]
     //jumping and gravity 
-    //[SerializeField] int maxJumps = 2; //the amount of times the player can jump (this is for the old system)
     [SerializeField] float jumpForce = 10f; //this controls how high a player can jump
     [SerializeField] float jump2Force = 15f; //this is how high the player jumps in combo jump 2
     [SerializeField] float jump3Force = 20f; //this is how high the player jumps in combo jump 3
@@ -51,8 +51,15 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
 
     [Header("Sound & Visual Effects")]
     [SerializeField] AudioSource characterSoundsSource; //this is the sound source for the player character (most player sounds shouldn't overlap)
+    [SerializeField] AudioSource characterMovementSource; //this is the sound source for moving
     [SerializeField] List<AudioClip> jumpSounds = new List<AudioClip>(); //this list is the sound of each jump in the combo in order
+    [Range(0, 1)][SerializeField] float jumpVolume;
     [SerializeField] List<AudioClip> hurtSounds = new List<AudioClip>(); //this list is the random collection of hurt sounds
+    [Range(0, 1)][SerializeField] float hurtVolume;
+    [SerializeField] List<AudioClip> stepSounds = new List<AudioClip>(); //this list is the random collection of hurt sounds
+    [Range(0, 1)][SerializeField] float stepVolume;
+    [SerializeField] float stepTimeNormal; //how long between step sounds
+    [SerializeField] float stepTimeSprint; //how long between step soudns while sprinting
     [SerializeField] AudioSource pickUpSoundSource; //this is the sound source for when the player picks up guns
     [SerializeField] AudioSource gunSoundsSource; //this is the sound source for the gun (gun sounds can overlap with player sounds)
     [SerializeField] ParticleSystem jumpVFX; //this is the particle system attached to the player that creates dust clouds when they jump
@@ -60,6 +67,8 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     
 
     int selectedGun = 0; //the indexer for the gunList (used by the player to select their active gun)
+    int currAmmo; //the ammo for the current gun
+    float gunVolume;
 
     Vector3 movement; //this vector handles movement along the X and Z axis (WASD, Up Down Left Right)
     Vector3 verticleVelocity; //this vector handles verticle velocity (jumping or falling)
@@ -76,10 +85,11 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     float HPOriginal; //player starting HP
     bool isDead; //a bool that checks if the player is dead already when processing bullet hits
 
-    //crouch values
+    //crouch/sprint values
     float defaultControllerHeight; //the regular controller height (these need to be set at start)
     float defaultColliderHeight; //the regular collider height
     bool isCrouched; //a bool to determine if the player is currently crouched or not
+    bool isSprinting;
 
     //JumpControls
     float jumpTimer; //jump timer is a float that increases with time and is reset when the player jumps (this functionality will be used for the jump mechanic
@@ -88,6 +98,9 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     //LaunchControls
     Vector3 pushBack;
     bool isLaunching; //bool for if the player is launching
+
+    //soundcontrols
+    bool isPlayingSteps;
 
     void Start()
     {
@@ -117,7 +130,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
             {
                 selectGun(); //check if they are changing guns
 
-                if (Input.GetButton("Shoot") && !isShooting) //check if the player is trying to shoot and if it is currently allowed (if they arent already shooting)
+                if (Input.GetButton("Shoot") && !isShooting && currAmmo > 0) //check if the player is trying to shoot and if it is currently allowed (if they arent already shooting)
                 {
                     StartCoroutine(gunFireEffect());
 
@@ -159,16 +172,6 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
 
         playerController.Move(movement * currentSpeed * Time.deltaTime); //use the player controller to move the object based on the movement direction above multiplied by the speed (velocity). Time.deltaTime makes it frame rate independan
 
-        //this is the old jump system
-        /*if (canJump && Input.GetButtonDown("Jump") && currentJumps < maxJumps) //if the jump button is pressed and the current jumps coount isn't more than the max jumps
-        {
-            isSpeedChangeable = false; //you cant change speed when already in the air
-            isLaunching = false; //jumping cancels out the launch
-            verticleVelocity.y = jumpForce; //set the verticle velocity to the jump force (this makes the player go up)
-            currentJumps++; //increment the current jump count
-            jumpTimer = 0; //reset the jump timer if the player is grounded
-        }*/
-
         //this is the jump combo system
         if (canJump && currentJumps == 1 && jumpTimer <= jump2Time && Input.GetButtonDown("Jump")) //if the player can jump, presses jump, is on their second jump, and the jump timer is less then jump 2 combo allowed time
         {
@@ -189,6 +192,11 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
 
         verticleVelocity.y += gravity * Time.deltaTime; //apply gravity to the verticle velocity and make sure its frame rate independant 
         playerController.Move((verticleVelocity + pushBack) * Time.deltaTime); //use the player controller to move the object based on vertical velocity
+
+        if (playerController.isGrounded && movement.normalized.magnitude > .3f && !isPlayingSteps)
+        {
+            StartCoroutine(PlayMoveSound());
+        }
     }
 
     private void PlayJumpSound(int index)
@@ -196,9 +204,23 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         if (index >= 0 && index < jumpSounds.Count) //make sure the index is valid
         {
             characterSoundsSource.Stop(); //stop the current sound
-            characterSoundsSource.clip = jumpSounds[index]; //set the characters sound clip to the jump sound at the index (in the jump sound list)
-            characterSoundsSource.Play(); //play the sound
+            characterSoundsSource.PlayOneShot(jumpSounds[index], jumpVolume); //play the jump sound
         }
+    }
+
+    IEnumerator PlayMoveSound()
+    {
+        isPlayingSteps = true; //set playing steps to true
+        characterMovementSource.PlayOneShot(stepSounds[UnityEngine.Random.Range(0, stepSounds.Count)], stepVolume); //play a random step sound
+        if (!isSprinting)
+        {
+            yield return new WaitForSeconds(stepTimeNormal);
+        }
+        else
+        {
+            yield return new WaitForSeconds(stepTimeSprint);
+        }
+        isPlayingSteps = false;
     }
 
     private void ProcessCrouch()
@@ -226,10 +248,12 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         {
             if (Input.GetKey(KeyCode.LeftShift)) //check if the player is sprinting
             {
+                isSprinting = true;
                 currentSpeed = sprintSpeed; //change the current speed to sprint speed
             }
             else
             {
+                isSprinting = false;
                 currentSpeed = movementSpeed; //otherwise keep at at movement speed
             }
         }
@@ -252,8 +276,12 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         isShooting = true; //set is shooting to true which prevents another shot from being fired
 
         gunSoundsSource.Stop(); //stop the current sound
-        gunSoundsSource.Play(); //play the gun sound
-        
+        gunSoundsSource.PlayOneShot(gunSoundsSource.clip, gunVolume); //play the current gun sound
+
+        gunList[selectedGun].currAmmo--; //reduce the selected guns ammo by 1
+        currAmmo = gunList[selectedGun].currAmmo; //set current ammo to match the selected ammo
+
+
         RaycastHit hit;
         //send a raycast out using the viewportPointToRay function of camera. (The Vector2 is the position, which is 0.5x0.5 for the center point)
         if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f,0.5f)), out hit, shootRange)) //The raycast is a bool which can output a Raycast hit. The shootRange is how far the ray shoots
@@ -279,7 +307,10 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         isShooting = true;
 
         gunSoundsSource.Stop(); //stop the current sound
-        gunSoundsSource.Play(); //play the gun sound
+        gunSoundsSource.PlayOneShot(gunSoundsSource.clip, gunVolume); //play the curren gun sound
+
+        gunList[selectedGun].currAmmo--; //reduce the selected guns ammo by 1
+        currAmmo = gunList[selectedGun].currAmmo; //set current ammo to match the selected ammo
 
         // This is so that the pelletRays have the same ray origin as Shoot()'s rays
         Ray pelletRay = Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f));
@@ -338,9 +369,14 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
 
     public void getGunstats(GunStats gun) //gets a gun to add to the list
     {
+        bool newGun = false; //by default treat the gun like its not new
         pickUpSoundSource.Play(); //play the pickup sound
 
-        gunList.Add(gun); //add the passed in gun to the list
+        if (!gunList.Contains(gun)) //if the gun isnt in the list
+        {
+            gunList.Add(gun); //add the passed in gun to the list
+            newGun = true; //set the newGun bool to true
+        }
 
         shootDamage = gun.shootDamage; //set the current gun values to match the new gun
         shootRange = gun.shootRange;
@@ -353,11 +389,23 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         isRifleEquipped = gun.isRifleEquipped;
 
         gunSoundsSource.clip = gun.shootSFX;
+        gunVolume = gun.shootSoundVol;
+        
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = gun.gunModel.GetComponent<MeshFilter>().sharedMesh; //make the mesh and material on the players gunModel match the new gun
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = gun.gunModel.GetComponent<MeshRenderer>().sharedMaterial;
 
-        selectedGun = gunList.Count - 1; //the new gun is appended to the end of the list so set the selected gun to match that
+        if(newGun) //if the was new 
+        {
+            selectedGun = gunList.Count - 1; //the new gun is appended to the end of the list so set the selected gun to match that
+        }
+        else //if the gun is already in the list
+        {
+            selectedGun = gunList.IndexOf(gun); //get the index of the gun and change the selected gun to match it   
+        }
+
+        gunList[selectedGun].currAmmo = gunList[selectedGun].maxAmmo; //set the guns current ammo to max
+        currAmmo = gunList[selectedGun].currAmmo; //set the current ammo to the guns ammo
     }
 
     void selectGun()
@@ -402,6 +450,9 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
 
         gunSoundsSource.clip = gunList[selectedGun].shootSFX;
 
+        currAmmo = gunList[selectedGun].currAmmo;
+        gunVolume = gunList[selectedGun].shootSoundVol;
+
         gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[selectedGun].gunModel.GetComponent<MeshFilter>().sharedMesh; //change the mesh and materials
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunList[selectedGun].gunModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
@@ -439,8 +490,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         if (hurtSounds.Count > 0) //if the list is not empty
         {
             characterSoundsSource.Stop(); //stop the current sound
-            characterSoundsSource.clip = hurtSounds[UnityEngine.Random.Range(0,hurtSounds.Count)]; //get a random sound in the hurtSounds list
-            characterSoundsSource.Play(); //play the sound
+            characterSoundsSource.PlayOneShot(hurtSounds[UnityEngine.Random.Range(0, hurtSounds.Count)], hurtVolume); //play a random hurt sound
         }
     }
 
