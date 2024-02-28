@@ -7,10 +7,15 @@ public class Explosion : MonoBehaviour
     [SerializeField] float duration; //the duration of the explosion
     [SerializeField] int damageAmount; //how much damage it deals
     [SerializeField] int knockBackStrength; //how strong the knockback from the grenade is
+    [SerializeField] GameObject FX; //the FX object created after the explosion
 
     // Start is called before the first frame update
     IEnumerator Start()
     {
+        if(FX != null) //if the FX exits than instantiate it (destroy is handled by the FX objects script)
+        {
+            Instantiate(FX, transform.position, transform.rotation);
+        }
         yield return new WaitForSeconds(duration); //the explosion last for this duration before destroying itself
         Destroy(gameObject);
     }
