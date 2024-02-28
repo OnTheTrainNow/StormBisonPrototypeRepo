@@ -10,7 +10,6 @@ public class GunStats : ScriptableObject
     public int shootRange; //the range of the gun
     public float firingRate; //the firing rate of the gun
 
-    public int currAmmo;
     public int maxAmmo;
 
     // Values related to the shotgun

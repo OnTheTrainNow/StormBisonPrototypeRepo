@@ -66,8 +66,8 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     [SerializeField] ParticleSystem bulletImpactFX; //this is the particle system for the players bullet impact (it works better if its not a child of the player object)
     
 
-    int selectedGun = 0; //the indexer for the gunList (used by the player to select their active gun)
-    int currAmmo; //the ammo for the current gun
+    public int selectedGun = 0; //the indexer for the gunList (used by the player to select their active gun)
+    public List<int> currAmmo = new List<int>(); //the ammo for the current gun
     float gunVolume;
 
     Vector3 movement; //this vector handles movement along the X and Z axis (WASD, Up Down Left Right)
@@ -130,7 +130,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
             {
                 selectGun(); //check if they are changing guns
 
-                if (Input.GetButton("Shoot") && !isShooting && currAmmo > 0) //check if the player is trying to shoot and if it is currently allowed (if they arent already shooting)
+                if (Input.GetButton("Shoot") && !isShooting && currAmmo[selectedGun] > 0) //check if the player is trying to shoot and if it is currently allowed (if they arent already shooting)
                 {
                     StartCoroutine(gunFireEffect());
 
@@ -278,8 +278,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         gunSoundsSource.Stop(); //stop the current sound
         gunSoundsSource.PlayOneShot(gunSoundsSource.clip, gunVolume); //play the current gun sound
 
-        gunList[selectedGun].currAmmo--; //reduce the selected guns ammo by 1
-        currAmmo = gunList[selectedGun].currAmmo; //set current ammo to match the selected ammo
+        currAmmo[selectedGun]--; //reduce the selected guns ammo by 1
 
 
         RaycastHit hit;
@@ -309,8 +308,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         gunSoundsSource.Stop(); //stop the current sound
         gunSoundsSource.PlayOneShot(gunSoundsSource.clip, gunVolume); //play the curren gun sound
 
-        gunList[selectedGun].currAmmo--; //reduce the selected guns ammo by 1
-        currAmmo = gunList[selectedGun].currAmmo; //set current ammo to match the selected ammo
+        currAmmo[selectedGun]--; //reduce the selected guns ammo by 1
 
         // This is so that the pelletRays have the same ray origin as Shoot()'s rays
         Ray pelletRay = Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f));
@@ -375,6 +373,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         if (!gunList.Contains(gun)) //if the gun isnt in the list
         {
             gunList.Add(gun); //add the passed in gun to the list
+            currAmmo.Add(gun.maxAmmo);
             newGun = true; //set the newGun bool to true
         }
 
@@ -404,8 +403,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
             selectedGun = gunList.IndexOf(gun); //get the index of the gun and change the selected gun to match it   
         }
 
-        gunList[selectedGun].currAmmo = gunList[selectedGun].maxAmmo; //set the guns current ammo to max
-        currAmmo = gunList[selectedGun].currAmmo; //set the current ammo to the guns ammo
+        currAmmo[selectedGun] = gunList[selectedGun].maxAmmo; //set the guns current ammo to max
     }
 
     void selectGun()
@@ -450,7 +448,6 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
 
         gunSoundsSource.clip = gunList[selectedGun].shootSFX;
 
-        currAmmo = gunList[selectedGun].currAmmo;
         gunVolume = gunList[selectedGun].shootSoundVol;
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[selectedGun].gunModel.GetComponent<MeshFilter>().sharedMesh; //change the mesh and materials

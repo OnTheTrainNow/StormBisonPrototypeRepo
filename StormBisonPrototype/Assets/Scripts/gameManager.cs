@@ -15,6 +15,7 @@ public class gameManager : MonoBehaviour
 
     [SerializeField] TMP_Text weaponEquipped; // weapon equipped text component
     [SerializeField] TMP_Text enemyCountText; //enemy count text component
+    [SerializeField] TMP_Text ammoCountText; //enemy count text component
 
     public TMP_Text sensitivityTextX; //the text for the horizontal sensitivity
     public Slider sensitivitySliderX; //the slider for the horzontal sensitivity
@@ -54,6 +55,9 @@ public class gameManager : MonoBehaviour
 
     void Update()
     {
+        ammoCountText.text = playerScript.currAmmo[playerScript.selectedGun].ToString(); //update the ammo count on the UI
+        
+
         // esc key will bring up Pause Menu, requires button functionality script
         if (Input.GetButtonDown("Cancel") && menuActive == null)
         {
