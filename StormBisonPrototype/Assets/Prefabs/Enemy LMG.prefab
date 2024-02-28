@@ -260,13 +260,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1880941244171974110}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.079513475, y: 0.663656, z: 0.74313986, w: -0.031328555}
-  m_LocalPosition: {x: -0.22053517, y: 0.024589777, z: 0.14772435}
+  m_LocalRotation: {x: -0.5817037, y: 0.44712296, z: 0.46925467, w: -0.49142855}
+  m_LocalPosition: {x: -1.452, y: -0.129, z: 0.145}
   m_LocalScale: {x: 1, y: 0.99999994, z: 0.99999994}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3024670732575376554}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 8.749, y: -94.445, z: -96.808}
 --- !u!1 &2272973921811001436
 GameObject:
   m_ObjectHideFlags: 0
@@ -303,7 +303,8 @@ Transform:
   m_Children:
   - {fileID: 6690812141392791803}
   - {fileID: 454238487237120604}
-  - {fileID: 6354428442534586694}
+  - {fileID: 1000739478473047684}
+  - {fileID: 6748322059245797784}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3407552239644925072
@@ -329,9 +330,9 @@ MonoBehaviour:
   viewCone: 60
   shootCone: 3
   targetFaceSpeed: 6
-  animSpeedTrans: 0
-  roamPauseTime: 0
-  roamDist: 0
+  animSpeedTrans: 5
+  roamPauseTime: 3
+  roamDist: 16
   bullet: {fileID: 6309969512564079822, guid: 1dea0cdbb01acb047beb8b99ba8a11c2, type: 3}
   shootRate: 0.25
   HPUI: {fileID: 6111295214184303583}
@@ -348,8 +349,8 @@ Animator:
   m_GameObject: {fileID: 2272973921811001436}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: c6acf3f29c109e4439950c8f6a85cb2b, type: 3}
-  m_Controller: {fileID: 9100000, guid: 432271d493baf5643a2721542599a1ef, type: 2}
-  m_CullingMode: 0
+  m_Controller: {fileID: 9100000, guid: 0596301afba8c1d489aa22301cfd9b87, type: 2}
+  m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
@@ -378,7 +379,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 1
+  m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!136 &7478826707367804211
@@ -401,9 +402,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
-  m_Height: 2.98
+  m_Height: 2.5
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 1.25, z: 0}
 --- !u!135 &1639479392893346329
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -463,7 +464,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 2.23}
+  m_AnchoredPosition: {x: 0, y: 3.2}
   m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &6111295214184303583
@@ -598,13 +599,13 @@ Transform:
   m_GameObject: {fileID: 3471100852529725199}
   serializedVersion: 2
   m_LocalRotation: {x: -0.50000036, y: 0.49999964, z: 0.49999964, w: 0.50000036}
-  m_LocalPosition: {x: -0.0000000015575574, y: 1.2235097, z: -0.035632763}
-  m_LocalScale: {x: 0.99999994, y: 0.99999994, z: 1}
+  m_LocalPosition: {x: 0, y: 1.25, z: -0.035633087}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 574851585414457949}
   - {fileID: 5785440894943390593}
-  m_Father: {fileID: 6354428442534586694}
+  m_Father: {fileID: 2109523545549341920}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3782497997282918023
 GameObject:
@@ -729,12 +730,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5308889284807197891}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6354428442534586694}
+  m_Father: {fileID: 2109523545549341920}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &1004534452755473954
 SkinnedMeshRenderer:
@@ -836,7 +837,7 @@ Transform:
   m_GameObject: {fileID: 5314488668418731000}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.63, z: 0}
+  m_LocalPosition: {x: 0, y: 2.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1066,61 +1067,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8868201882126937685}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &6667824213196395309
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6354428442534586694}
-  - component: {fileID: 5299992901325890001}
-  m_Layer: 0
-  m_Name: ToonSoldier_demo (3)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6354428442534586694
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6667824213196395309}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1000739478473047684}
-  - {fileID: 6748322059245797784}
-  m_Father: {fileID: 2109523545549341920}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &5299992901325890001
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6667824213196395309}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: c6acf3f29c109e4439950c8f6a85cb2b, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 1
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 1
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6754867670920575408
 GameObject:
   m_ObjectHideFlags: 0
