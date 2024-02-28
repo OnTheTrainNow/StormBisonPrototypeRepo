@@ -9665,7 +9665,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e74cbdb83a6c96645a92d1e42e7ebffc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossStar: {fileID: 5020643782354415535, guid: 3a9df74596539f74798fc2e51a4a6ae4, type: 3}
+  bossStar: {fileID: 2307301218259941284, guid: 0872a0021681a114f957aed8712bc8d4, type: 3}
+  positionIndex: 2
 --- !u!1001 &1418564414
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11176,6 +11177,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3501274844694528973, guid: b275552ed1840b9459a1bdf118cab824, type: 3}
   m_PrefabInstance: {fileID: 1588220884}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1632337779 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4360138262819534267, guid: d19c8bde0f5559e409b828bbb8846898, type: 3}
+  m_PrefabInstance: {fileID: 1600024667707158242}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e95836663edb0a44a94e4dd9a66808b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1662603848
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13131,6 +13143,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1932102386}
     m_Modifications:
+    - target: {fileID: 4360138262819534267, guid: d19c8bde0f5559e409b828bbb8846898, type: 3}
+      propertyPath: disableTime
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 5436512497290081989, guid: d19c8bde0f5559e409b828bbb8846898, type: 3}
       propertyPath: m_Name
       value: PipeCoverMesh
@@ -13801,6 +13817,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PipeTrigger
       objectReference: {fileID: 0}
+    - target: {fileID: 7879254902456176808, guid: 53a641221c57d7244aa49e3af1d57a1c, type: 3}
+      propertyPath: exitPipeCover
+      value: 
+      objectReference: {fileID: 1632337779}
     - target: {fileID: 7879254902456176808, guid: 53a641221c57d7244aa49e3af1d57a1c, type: 3}
       propertyPath: teleportPosition
       value: 

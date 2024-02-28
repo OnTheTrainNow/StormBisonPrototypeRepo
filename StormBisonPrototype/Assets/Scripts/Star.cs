@@ -7,9 +7,8 @@ public class Star : MonoBehaviour
     [SerializeField] MeshRenderer thisRenderer;
     [SerializeField] AudioSource starSFX;
     [SerializeField] bool isStaticStar; //if the star moves or not
-    [SerializeField] float rotateAngle = 0; 
 
-    [SerializeField] int positionIndex = 0; //this is the index for the star's position in the star managers position list
+    public int positionIndex = 0; //this is the index for the star's position in the star managers position list
     [SerializeField] float moveSpeed = 0; //how fast the star moves towards its positon
 
     BoxCollider thisCollider;
@@ -23,7 +22,6 @@ public class Star : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.RotateAround(transform.position, Vector3.up, rotateAngle * Time.deltaTime); //rotate at the current position
         if (isStaticStar) return; //if the star is static than it doesn't need to move
         transform.position = Vector3.MoveTowards(transform.position, starManager.instance.starPositions[positionIndex].position, moveSpeed * Time.deltaTime);
         //move towards the stars position from the starManager list
