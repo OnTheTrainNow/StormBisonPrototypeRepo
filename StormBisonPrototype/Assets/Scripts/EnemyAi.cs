@@ -6,8 +6,9 @@ using UnityEngine.AI;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 
-public class enemyAI : MonoBehaviour, IDamage
+public class enemyAI : MonoBehaviour, IDamage, IPushBack
 {
+    [SerializeField] Animator animator;
     [SerializeField] Renderer model;
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Transform shootPos;
@@ -19,6 +20,9 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] int viewCone;
     [SerializeField] int shootCone;
     [SerializeField] int targetFaceSpeed;
+    [SerializeField] int animSpeedTrans;
+    [SerializeField] int roamPauseTime;
+    [SerializeField] int roamDist;
 
     [SerializeField] GameObject bullet;
     [SerializeField] float shootRate;
@@ -36,6 +40,9 @@ public class enemyAI : MonoBehaviour, IDamage
     float angleToPlayer;
     Vector3 playerDir;
     Vector3 playerDir2;
+    float stoppingDistOrig;
+    Vector3 startingPos;
+    bool destChosen;
 
     Color originalColor;
     Renderer rend;
@@ -54,9 +61,37 @@ public class enemyAI : MonoBehaviour, IDamage
 
     void Update()
     {
-        if (playerInRange && canSeePlayer())
-        {
+        float animSpeed = agent.velocity.normalized.magnitude;
+        animator.SetFloat("Speed", Mathf.Lerp(animator.GetFloat("Speed"), animSpeed, Time.deltaTime * animSpeedTrans));
 
+        if (playerInRange && !canSeePlayer())
+        {
+            // roam if I'm in your range but i can't see you
+            StartCoroutine(roam());
+        }
+        else if (!playerInRange)
+        {
+            // roam because you are not in range
+            StartCoroutine(roam());
+        }
+    }
+
+    IEnumerator roam()
+    {
+        if (agent.remainingDistance < 0.05f && !destChosen)
+        {
+            destChosen = true;
+            agent.stoppingDistance = 0;
+            yield return new WaitForSeconds(roamPauseTime);
+
+            Vector3 randomPos = Random.insideUnitSphere * roamDist;
+            randomPos += startingPos;
+
+            NavMeshHit hit;
+            NavMesh.SamplePosition(randomPos, out hit, roamDist, 1);
+            agent.SetDestination(hit.position);
+
+            destChosen = false;
         }
     }
 
@@ -87,6 +122,7 @@ public class enemyAI : MonoBehaviour, IDamage
                 {
                     faceTarget();
                 }
+                agent.stoppingDistance = stoppingDistOrig;
 
                 return true;
             }
@@ -198,5 +234,25 @@ public class enemyAI : MonoBehaviour, IDamage
         {
             HPUI.enabled = false;  //set the UI components to disabled
         }
+    }
+
+    public void pushBackDir(Vector3 dir)
+    {
+        agent.velocity += (dir / 2);
+    }
+
+    public void PushBack(Vector3 dirForce)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void Launch(Vector3 LaunchMovement)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void BounceOff(float BounceForce)
+    {
+        throw new System.NotImplementedException();
     }
 }
