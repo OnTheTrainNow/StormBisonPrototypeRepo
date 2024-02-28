@@ -15,15 +15,15 @@ MonoBehaviour:
   shootDamage: 8
   shootRange: 150
   firingRate: 3
-  currAmmo: 0
-  maxAmmo: 2
+  currAmmo: 3
+  maxAmmo: 4
   pelletDmg: 0
   pellets: 0
   pelletsSpreadAngle: 0
   gunModel: {fileID: 919132149155446097, guid: d76efbf62bb144c44a8ced04aa6e7bd5, type: 3}
   hitEffect: {fileID: 0}
   shootSFX: {fileID: 8300000, guid: b56cf03a9f296d14387dac3403b2f727, type: 3}
-  shootSoundVol: 0
+  shootSoundVol: 0.7
   isShotgunEquipped: 0
   isPistolEquipped: 0
   isRifleEquipped: 1

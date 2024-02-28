@@ -44,9 +44,6 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     [SerializeField] int shootRange = 20; //how far the player can shoot (this is the raycast range)
     [SerializeField] float firingRate = .2f; //the time between shots (determines how many times the player can fire in a specified time frame)
 
-    [SerializeField] int currAmmo = 0;
-    [SerializeField] int maxAmmo = 0;
-
     // shotgun test
     [SerializeField] float pelletDmg; // controls the damage each individual pellet does
     [SerializeField] int pellets; // this controls the number of pellets in each shot (the lower the amount the lower the damage, the higher the amount the higher the damage)
@@ -70,6 +67,8 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     
 
     int selectedGun = 0; //the indexer for the gunList (used by the player to select their active gun)
+    int currAmmo; //the ammo for the current gun
+    float gunVolume;
 
     Vector3 movement; //this vector handles movement along the X and Z axis (WASD, Up Down Left Right)
     Vector3 verticleVelocity; //this vector handles verticle velocity (jumping or falling)
@@ -131,7 +130,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
             {
                 selectGun(); //check if they are changing guns
 
-                if (Input.GetButton("Shoot") && !isShooting) //check if the player is trying to shoot and if it is currently allowed (if they arent already shooting)
+                if (Input.GetButton("Shoot") && !isShooting && currAmmo > 0) //check if the player is trying to shoot and if it is currently allowed (if they arent already shooting)
                 {
                     StartCoroutine(gunFireEffect());
 
@@ -277,8 +276,12 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         isShooting = true; //set is shooting to true which prevents another shot from being fired
 
         gunSoundsSource.Stop(); //stop the current sound
-        gunSoundsSource.Play(); //play the gun sound
-        
+        gunSoundsSource.PlayOneShot(gunSoundsSource.clip, gunVolume); //play the current gun sound
+
+        gunList[selectedGun].currAmmo--; //reduce the selected guns ammo by 1
+        currAmmo = gunList[selectedGun].currAmmo; //set current ammo to match the selected ammo
+
+
         RaycastHit hit;
         //send a raycast out using the viewportPointToRay function of camera. (The Vector2 is the position, which is 0.5x0.5 for the center point)
         if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f,0.5f)), out hit, shootRange)) //The raycast is a bool which can output a Raycast hit. The shootRange is how far the ray shoots
@@ -304,7 +307,10 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         isShooting = true;
 
         gunSoundsSource.Stop(); //stop the current sound
-        gunSoundsSource.Play(); //play the gun sound
+        gunSoundsSource.PlayOneShot(gunSoundsSource.clip, gunVolume); //play the curren gun sound
+
+        gunList[selectedGun].currAmmo--; //reduce the selected guns ammo by 1
+        currAmmo = gunList[selectedGun].currAmmo; //set current ammo to match the selected ammo
 
         // This is so that the pelletRays have the same ray origin as Shoot()'s rays
         Ray pelletRay = Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f));
@@ -363,13 +369,13 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
 
     public void getGunstats(GunStats gun) //gets a gun to add to the list
     {
-        bool newGun = false;
+        bool newGun = false; //by default treat the gun like its not new
         pickUpSoundSource.Play(); //play the pickup sound
 
-        if (!gunList.Contains(gun))
+        if (!gunList.Contains(gun)) //if the gun isnt in the list
         {
             gunList.Add(gun); //add the passed in gun to the list
-            newGun = true;
+            newGun = true; //set the newGun bool to true
         }
 
         shootDamage = gun.shootDamage; //set the current gun values to match the new gun
@@ -383,9 +389,8 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         isRifleEquipped = gun.isRifleEquipped;
 
         gunSoundsSource.clip = gun.shootSFX;
-
-        maxAmmo = gun.maxAmmo;
-        currAmmo = gun.currAmmo;
+        gunVolume = gun.shootSoundVol;
+        
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = gun.gunModel.GetComponent<MeshFilter>().sharedMesh; //make the mesh and material on the players gunModel match the new gun
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = gun.gunModel.GetComponent<MeshRenderer>().sharedMaterial;
@@ -396,8 +401,11 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         }
         else //if the gun is already in the list
         {
-            selectedGun = gunList.IndexOf(gun); //get the index of the gun and change the selected gun to match it
+            selectedGun = gunList.IndexOf(gun); //get the index of the gun and change the selected gun to match it   
         }
+
+        gunList[selectedGun].currAmmo = gunList[selectedGun].maxAmmo; //set the guns current ammo to max
+        currAmmo = gunList[selectedGun].currAmmo; //set the current ammo to the guns ammo
     }
 
     void selectGun()
@@ -442,8 +450,8 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
 
         gunSoundsSource.clip = gunList[selectedGun].shootSFX;
 
-        maxAmmo = gunList[selectedGun].maxAmmo;
         currAmmo = gunList[selectedGun].currAmmo;
+        gunVolume = gunList[selectedGun].shootSoundVol;
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[selectedGun].gunModel.GetComponent<MeshFilter>().sharedMesh; //change the mesh and materials
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunList[selectedGun].gunModel.GetComponent<MeshRenderer>().sharedMaterial;
