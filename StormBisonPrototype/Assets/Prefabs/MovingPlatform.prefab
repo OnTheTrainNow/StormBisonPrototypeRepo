@@ -185,5 +185,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 078e4f0113bf21549896e95ac9f2e6ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  platformPath: {fileID: 0}
+  waypointPath: []
   platformSpeed: 0
