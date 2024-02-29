@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine;
 using System.Reflection;
 using Unity.VisualScripting;
+using UnityEditor.Timeline;
 
 public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
 {
@@ -362,8 +363,8 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         if (bulletImpactFX != null)
         {
             bulletImpactFX.transform.position = hit.point; //move to the hit location
-            bulletImpactFX.transform.rotation = hit.transform.rotation; //rotate to match the hit rotation
-            bulletParticleSystem.Play(); //play the particle effect
+            bulletImpactFX.transform.LookAt(transform.position); //rotate the bullet impact to face the player
+            bulletParticleSystem.Play(); //play the particle effect (there are 3 different ones)
         }
     }
 
@@ -392,7 +393,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         gunSoundsSource.clip = gun.shootSFX;
         gunVolume = gun.shootSoundVol;
 
-        bulletParticleSystem = gun.hitEffect;
+        bulletParticleSystem = bulletImpactFX.transform.GetChild(gun.hitEffectIndex).GetComponent<ParticleSystem>(); //get the child particle system at the index
         
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = gun.gunModel.GetComponent<MeshFilter>().sharedMesh; //make the mesh and material on the players gunModel match the new gun
@@ -453,7 +454,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         gunSoundsSource.clip = gunList[selectedGun].shootSFX;
         gunVolume = gunList[selectedGun].shootSoundVol;
 
-        bulletParticleSystem = gunList[selectedGun].hitEffect;
+        bulletParticleSystem = bulletImpactFX.transform.GetChild(gunList[selectedGun].hitEffectIndex).GetComponent<ParticleSystem>(); //get the child particle system at the index
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[selectedGun].gunModel.GetComponent<MeshFilter>().sharedMesh; //change the mesh and materials
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunList[selectedGun].gunModel.GetComponent<MeshRenderer>().sharedMaterial;

@@ -20,7 +20,7 @@ MonoBehaviour:
   pellets: 0
   pelletsSpreadAngle: 0
   gunModel: {fileID: 919132149155446097, guid: d76efbf62bb144c44a8ced04aa6e7bd5, type: 3}
-  hitEffect: {fileID: 6415166316778051512, guid: e459bb61036259d40a7d84d93691db17, type: 3}
+  hitEffectIndex: 1
   shootSFX: {fileID: 8300000, guid: b56cf03a9f296d14387dac3403b2f727, type: 3}
   shootSoundVol: 0.7
   isShotgunEquipped: 0

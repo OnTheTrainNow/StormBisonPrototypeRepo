@@ -18,7 +18,7 @@ public class GunStats : ScriptableObject
     public float pelletsSpreadAngle; // this sets the spread angle (smaller values = tighter spread, higher values = wider spread)
 
     public GameObject gunModel; //the gameObject holding the gun model for the gun
-    public ParticleSystem hitEffect; //the impact effect for the gun
+    public int hitEffectIndex; //the impact effect for the gun
     public AudioClip shootSFX; //the sound effect that will play when the player shoots
     [Range(0, 1)] public float shootSoundVol; //the volume of the shoot sfx
 
