@@ -8,7 +8,6 @@ using UnityEngine.UIElements;
 
 public class enemyAI : MonoBehaviour, IDamage, IPushBack
 {
-    [Header("Components")]
     [SerializeField] Animator animator;
     [SerializeField] Renderer model;
     [SerializeField] NavMeshAgent agent;
@@ -16,9 +15,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
     [SerializeField] Transform shootPos2;
     [SerializeField] Transform shootPos3;
     [SerializeField] Transform headPos;
-    [SerializeField] AudioSource enemyAudio;
 
-    [Header("Enemy Stats")]
     [SerializeField] float HP;
     [SerializeField] int viewCone;
     [SerializeField] int shootCone;
@@ -27,25 +24,14 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
     [SerializeField] int roamPauseTime;
     [SerializeField] int roamDist;
 
-    [Header("Weapon Stats")]
     [SerializeField] GameObject bullet;
     [SerializeField] float shootRate;
 
-    [Header("Enemy UI")]
     [SerializeField] Canvas HPUI; //the enemy HP UI canvas
     [SerializeField] UnityEngine.UI.Image HPCircle; //the enemy HP circle
 
-    [Header("Player Stomp Stats")]
     [SerializeField] float playerStompBounceForce = 0; //how high the player bounces when they stomp on the enemy
     [SerializeField] bool dropsStar;
-
-    [Header("Audio")]
-    [SerializeField] AudioClip[] enemySteps;
-    [Range(0, 1)][SerializeField] float enemyStepsVol = 0.5f;
-    [SerializeField] AudioClip[] enemyHurtSound;
-    [Range(0, 1)] [SerializeField] float enemyHurtVol = 0.5f;
-    [SerializeField] AudioClip enemyShots;
-    [Range(0, 1)] [SerializeField] float enemyShotsVol = 0.5f;
 
     float HPOriginal;
 
@@ -57,7 +43,6 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
     float stoppingDistOrig;
     Vector3 startingPos;
     bool destChosen;
-    bool isPlayingSteps;
 
     bool isDead; // bool to prevent player shotgun pellets from causing issue with enemycount
 
@@ -102,10 +87,6 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
 
             destChosen = false;
         }
-        if (agent.velocity.normalized.magnitude > .3 && !isPlayingSteps)
-        {
-            StartCoroutine(playEnemyFootSteps());
-        }
     }
 
     public bool IsDead() { return isDead; } //getter method for if the enemy isDead
@@ -129,7 +110,6 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
                 if (!isShooting && angleToPlayer <= shootCone)
                 {
                     StartCoroutine(shoot());
-                    enemyAudio.PlayOneShot(enemyShots, enemyShotsVol);
                 }
 
                 if (agent.remainingDistance < agent.stoppingDistance)
@@ -170,8 +150,6 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
     {
         agent.SetDestination(gameManager.instance.player.transform.position); //have the enemy move to the position they were shot from
         HP -= amount;
-
-        enemyAudio.PlayOneShot(enemyHurtSound[Random.Range(0, enemyHurtSound.Length)], enemyHurtVol);
 
         updateUI();
         StartCoroutine(flashMat());
@@ -270,12 +248,5 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
     public void BounceOff(float BounceForce)
     {
         //throw new System.NotImplementedException();
-    }
-    IEnumerator playEnemyFootSteps()
-    {
-        isPlayingSteps = true;
-        enemyAudio.PlayOneShot(enemySteps[Random.Range(0, enemySteps.Length)], enemyStepsVol);
-        yield return new WaitForSeconds(0.3f);
-        isPlayingSteps = false;
     }
 }
