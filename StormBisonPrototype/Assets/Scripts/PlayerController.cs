@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine.UI;
 using UnityEngine;
 using System.Reflection;
+using Unity.VisualScripting;
 
 public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
 {
@@ -63,9 +64,9 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     [SerializeField] AudioSource pickUpSoundSource; //this is the sound source for when the player picks up guns
     [SerializeField] AudioSource gunSoundsSource; //this is the sound source for the gun (gun sounds can overlap with player sounds)
     [SerializeField] ParticleSystem jumpVFX; //this is the particle system attached to the player that creates dust clouds when they jump
-    [SerializeField] ParticleSystem bulletImpactFX; //this is the particle system for the players bullet impact (it works better if its not a child of the player object)
-    
+    [SerializeField] GameObject bulletImpactFX; //this is the particle system for the players bullet impact (it works better if its not a child of the player object)
 
+    ParticleSystem bulletParticleSystem;
     public int selectedGun = 0; //the indexer for the gunList (used by the player to select their active gun)
     public List<int> currAmmo = new List<int>(); //the ammo for the current gun
     float gunVolume;
@@ -106,6 +107,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     {
         HPOriginal = HP; //set the original HP to the initial HP value set
         gunFireSprite.enabled = false; //turn the gun sprite off
+        bulletParticleSystem = bulletImpactFX.GetComponent<ParticleSystem>();
         playerController = GetComponent<CharacterController>(); //searches the current gameObject and returns the CharacterController
         playerCollider = GetComponent<CapsuleCollider>(); //searches the curretn gameObject for its capsule collider
         defaultControllerHeight = playerController.height; //get the original controller height
@@ -361,7 +363,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         {
             bulletImpactFX.transform.position = hit.point; //move to the hit location
             bulletImpactFX.transform.rotation = hit.transform.rotation; //rotate to match the hit rotation
-            bulletImpactFX.Play(); //play the particle effect
+            bulletParticleSystem.Play(); //play the particle effect
         }
     }
 
@@ -389,6 +391,8 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
 
         gunSoundsSource.clip = gun.shootSFX;
         gunVolume = gun.shootSoundVol;
+
+        bulletParticleSystem = gun.hitEffect;
         
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = gun.gunModel.GetComponent<MeshFilter>().sharedMesh; //make the mesh and material on the players gunModel match the new gun
@@ -447,8 +451,9 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         isRifleEquipped = gunList[selectedGun].isRifleEquipped;
 
         gunSoundsSource.clip = gunList[selectedGun].shootSFX;
-
         gunVolume = gunList[selectedGun].shootSoundVol;
+
+        bulletParticleSystem = gunList[selectedGun].hitEffect;
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[selectedGun].gunModel.GetComponent<MeshFilter>().sharedMesh; //change the mesh and materials
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunList[selectedGun].gunModel.GetComponent<MeshRenderer>().sharedMaterial;

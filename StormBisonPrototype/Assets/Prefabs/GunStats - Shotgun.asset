@@ -15,13 +15,12 @@ MonoBehaviour:
   shootDamage: 0
   shootRange: 10
   firingRate: 0.7
-  currAmmo: 5
   maxAmmo: 12
   pelletDmg: 0.4
   pellets: 8
   pelletsSpreadAngle: 0.1
   gunModel: {fileID: 919132149155446097, guid: 96bfef17abececb4db5045901fdd6d1d, type: 3}
-  hitEffect: {fileID: 0}
+  hitEffect: {fileID: 6415166316778051512, guid: 167911b444e79ca4c8b8832e6b8b597b, type: 3}
   shootSFX: {fileID: 8300000, guid: 0c7cb4be866e0e64193a6a932a513654, type: 3}
   shootSoundVol: 0.7
   isShotgunEquipped: 1

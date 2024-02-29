@@ -11362,6 +11362,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8996321218289514549, guid: a35b27f7b89b23246b9545bd38a1894b, type: 3}
   m_PrefabInstance: {fileID: 1673543981}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1674092032 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2162287870825052246, guid: a14d40c50b8f4e44c9cf41f060a210c0, type: 3}
+  m_PrefabInstance: {fileID: 1555125709}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &1683655893
 Mesh:
   m_ObjectHideFlags: 0
@@ -12618,11 +12623,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9e6ea77aaf795e143a0a8de3194cafec, type: 3}
---- !u!198 &1902643043 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 6415166316778051512, guid: a14d40c50b8f4e44c9cf41f060a210c0, type: 3}
-  m_PrefabInstance: {fileID: 1555125709}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1913428880
 GameObject:
   m_ObjectHideFlags: 0
@@ -13639,7 +13639,7 @@ PrefabInstance:
     - target: {fileID: 3901616942316194201, guid: fbf486c5c2e000c409108f5bcdd19c49, type: 3}
       propertyPath: bulletImpactFX
       value: 
-      objectReference: {fileID: 1902643043}
+      objectReference: {fileID: 1674092032}
     - target: {fileID: 8214468546571601349, guid: fbf486c5c2e000c409108f5bcdd19c49, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

@@ -55,7 +55,10 @@ public class gameManager : MonoBehaviour
 
     void Update()
     {
-        ammoCountText.text = playerScript.currAmmo[playerScript.selectedGun].ToString(); //update the ammo count on the UI
+        if (playerScript.currAmmo.Count > 0)
+        {
+            ammoCountText.text = playerScript.currAmmo[playerScript.selectedGun].ToString(); //update the ammo count on the UI
+        }
         
 
         // esc key will bring up Pause Menu, requires button functionality script
