@@ -44,9 +44,6 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
     Vector3 startingPos;
     bool destChosen;
 
-    Color originalColor;
-    Renderer rend;
-
     bool isDead; // bool to prevent player shotgun pellets from causing issue with enemycount
 
     void Start()
@@ -54,9 +51,6 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
         HPOriginal = HP;
         updateUI();
         gameManager.instance.updateGameGoal(1);
-
-        rend = GetComponent<Renderer>();
-        originalColor = rend.material.color;
     }
 
     void Update()
@@ -197,7 +191,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
     {
         model.material.color = Color.red;
         yield return new WaitForSeconds(0.1f);
-        rend.material.color = originalColor;
+        model.material.color = Color.white;
     }
 
     IEnumerator shoot()
@@ -243,16 +237,16 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
 
     public void PushBack(Vector3 dirForce)
     {
-        throw new System.NotImplementedException();
+        //throw new System.NotImplementedException();
     }
 
     public void Launch(Vector3 LaunchMovement)
     {
-        throw new System.NotImplementedException();
+        //throw new System.NotImplementedException();
     }
 
     public void BounceOff(float BounceForce)
     {
-        throw new System.NotImplementedException();
+        //throw new System.NotImplementedException();
     }
 }

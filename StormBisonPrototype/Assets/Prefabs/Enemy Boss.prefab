@@ -53,7 +53,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 792399801755707544}
-  model: {fileID: 13700000, guid: c6acf3f29c109e4439950c8f6a85cb2b, type: 3}
+  model: {fileID: 8407103549057840305}
   agent: {fileID: 5137874619175750858}
   shootPos: {fileID: 580110361661857669}
   shootPos2: {fileID: 0}
