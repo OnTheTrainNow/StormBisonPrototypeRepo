@@ -6,7 +6,6 @@ using UnityEngine.UI;
 using UnityEngine;
 using System.Reflection;
 using Unity.VisualScripting;
-using UnityEditor.Timeline;
 
 public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
 {
