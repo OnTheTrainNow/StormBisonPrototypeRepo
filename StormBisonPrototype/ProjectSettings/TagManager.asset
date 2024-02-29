@@ -6,6 +6,7 @@ TagManager:
   tags:
   - MovingPlatform
   - PlayerSpawnPos
+  - GunModel
   layers:
   - Default
   - TransparentFX

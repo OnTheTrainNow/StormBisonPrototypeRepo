@@ -323,7 +323,7 @@ GameObject:
   - component: {fileID: 3097428807527442880}
   m_Layer: 0
   m_Name: GunModel
-  m_TagString: Untagged
+  m_TagString: GunModel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -920,6 +920,8 @@ MonoBehaviour:
   gunSoundsSource: {fileID: 3097428807527442880}
   jumpVFX: {fileID: 8646079237418123920}
   bulletImpactFX: {fileID: 0}
+  selectedGun: 0
+  currAmmo: 
   isShotgunEquipped: 0
   isPistolEquipped: 0
   isRifleEquipped: 0
