@@ -319,7 +319,6 @@ GameObject:
   - component: {fileID: 1652829800153161814}
   - component: {fileID: 2404883063097012211}
   - component: {fileID: 485028863929277241}
-  - component: {fileID: 6226555909364080644}
   - component: {fileID: 3097428807527442880}
   m_Layer: 0
   m_Name: GunModel
@@ -394,28 +393,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &6226555909364080644
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2142542849206352620}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 2234992155589766746, guid: d76efbf62bb144c44a8ced04aa6e7bd5, type: 3}
 --- !u!82 &3097428807527442880
 AudioSource:
   m_ObjectHideFlags: 0
