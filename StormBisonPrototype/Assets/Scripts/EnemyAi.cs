@@ -60,12 +60,14 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
     bool isPlayingSteps;
 
     bool isDead; // bool to prevent player shotgun pellets from causing issue with enemycount
+    Color defaultColor;
 
     void Start()
     {
         HPOriginal = HP;
         updateUI();
         gameManager.instance.updateGameGoal(1);
+        defaultColor = model.material.GetColor("_Color"); //get the default color of the enemy;
     }
 
     void Update()
@@ -211,9 +213,9 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
 
     IEnumerator flashMat()
     {
-        model.material.color = Color.red;
+        model.material.color = Color.red; //set the material color to red
         yield return new WaitForSeconds(0.1f);
-        model.material.color = Color.white;
+        model.material.color = defaultColor; //set the material color to default
     }
 
     IEnumerator shoot()

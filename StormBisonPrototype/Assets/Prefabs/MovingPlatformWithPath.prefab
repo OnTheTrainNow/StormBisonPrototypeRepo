@@ -40,7 +40,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7422529763104534579}
-  - component: {fileID: 7860591025574160218}
   m_Layer: 0
   m_Name: WaypointPath
   m_TagString: Untagged
@@ -65,18 +64,6 @@ Transform:
   - {fileID: 1883530649960460791}
   m_Father: {fileID: 6004940385999153727}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7860591025574160218
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3527087857577594676}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 616aae24596acaa449e933e04b3d59b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6528199386768778233
 GameObject:
   m_ObjectHideFlags: 0
@@ -149,10 +136,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6004940385999153727}
     m_Modifications:
-    - target: {fileID: 1741427690035036413, guid: 21c05063adf3e7b41adf5e947b665a94, type: 3}
-      propertyPath: platformPath
-      value: 
-      objectReference: {fileID: 7860591025574160218}
     - target: {fileID: 1741427690035036413, guid: 21c05063adf3e7b41adf5e947b665a94, type: 3}
       propertyPath: platformSpeed
       value: 5

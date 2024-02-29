@@ -330,8 +330,8 @@ MonoBehaviour:
   enemyAudio: {fileID: -4825209319157097512}
   HP: 9
   viewCone: 60
-  shootCone: 3
-  targetFaceSpeed: 6
+  shootCone: 40
+  targetFaceSpeed: 8
   animSpeedTrans: 5
   roamPauseTime: 3
   roamDist: 16
@@ -353,9 +353,9 @@ MonoBehaviour:
   enemyHurtSound:
   - {fileID: 8300000, guid: bc44f20371929fc4cabd9a0a40ca2a82, type: 3}
   - {fileID: 8300000, guid: 851bee342871bb548837094229361c84, type: 3}
-  enemyHurtVol: 0.5
+  enemyHurtVol: 1
   enemyShots: {fileID: 8300000, guid: 94c5c23c515ee524db2d8b4816842a68, type: 3}
-  enemyShotsVol: 0.5
+  enemyShotsVol: 1
 --- !u!95 &8121291022707772453
 Animator:
   serializedVersion: 5
