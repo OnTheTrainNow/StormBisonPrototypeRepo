@@ -149,4 +149,4 @@ MonoBehaviour:
   duration: 0.05
   damageAmount: 5
   knockBackStrength: 100
-  FX: {fileID: 1843210199114657685, guid: 6913fa5c3524b5b43af3e9cb374808c7, type: 3}
+  FX: {fileID: 1843210199114657685, guid: 96d80b21ceaf8874b899da8a3c87385b, type: 3}
