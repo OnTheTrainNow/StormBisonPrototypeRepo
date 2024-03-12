@@ -64,6 +64,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
 
     void Start()
     {
+        stoppingDistOrig = agent.stoppingDistance;
         HPOriginal = HP;
         updateUI();
         gameManager.instance.updateGameGoal(1);
@@ -114,6 +115,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
 
     bool canSeePlayer()
     {
+        agent.stoppingDistance = stoppingDistOrig;
         playerDir = gameManager.instance.player.transform.position - headPos.position;
 
         angleToPlayer = Vector3.Angle(new Vector3(playerDir.x, 0, playerDir.z), transform.forward);
