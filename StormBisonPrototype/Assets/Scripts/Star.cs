@@ -8,6 +8,7 @@ public class Star : MonoBehaviour
     [SerializeField] AudioSource starSFX;
     [SerializeField] bool isStaticStar; //if the star moves or not
 
+    public int starArrayID = 0; //this is the Stars index on the tracker Array for all the stars
     public int positionIndex = 0; //this is the index for the star's position in the star managers position list
     [SerializeField] float moveSpeed = 0; //how fast the star moves towards its positon
 
@@ -39,6 +40,9 @@ public class Star : MonoBehaviour
             {
                 thisRenderer.enabled = false;
             }
+
+            starManager.instance.starTracker[starArrayID] = true; //set the relevant starID in the tracker to true to represent the star being collected
+
             starSFX.Play();
             gameManager.instance.youWin();
             Destroy(gameObject, 3);

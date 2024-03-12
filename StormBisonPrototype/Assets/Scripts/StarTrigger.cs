@@ -6,6 +6,7 @@ public class StarTrigger : MonoBehaviour
 {
     [SerializeField] GameObject starToSpawn; //the star prefab to be spawned
     [SerializeField] int starPosIndex; //the position index for the star
+    [SerializeField] int starID; 
 
     bool isTriggered; //this bool is used to make sure duplicate stars dont spawn;
     private void OnTriggerEnter(Collider other)
@@ -14,5 +15,6 @@ public class StarTrigger : MonoBehaviour
         isTriggered = true; //set is triggered to true
         GameObject spawned = Instantiate(starToSpawn, transform.position, transform.rotation); //spawn the star
         spawned.GetComponent<Star>().positionIndex = starPosIndex; //set its position index 
+        spawned.GetComponent<Star>().starArrayID = starID; //set its ID 
     }
 }
