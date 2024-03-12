@@ -21,7 +21,7 @@ public class DataManager : MonoBehaviour
 
     public void Start()
     {
-        saveFileHandler = new SaveFileHandler(); //create a fileHandler
+        saveFileHandler = new SaveFileHandler(fileName); //create a fileHandler
         getSaveDataList(); //get the list of IPersistence objects
         loadPlayerData(); //load the players save data
     }
