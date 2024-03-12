@@ -149,6 +149,12 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         }
 
         jumpTimer += Time.deltaTime; 
+
+        // Self Damage Tool
+        if (Input.GetButtonDown("Self Damage Tool"))
+        {
+            TakeDamage(1.0f);
+        }
     }
 
     private void ProcessMovement()
@@ -473,6 +479,15 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
             isDead = true; //set the player to dead
             gameManager.instance.youLose(); //tell the game manager to display the Loss screen
         }
+    }
+
+    public void HealAmount(float healAmount) // this Method handles the healing for the player.
+    {
+        // make sure that when you mess with the blue coin(MAX HP HEAL) healAmount it is always greater than the players max Hp, so if the max hp is 10 than do 11 or higher on heal amount.
+        // i have the blue coin(MAX HP HEAL) at 100 since i dont remember if we wanted to have health Upgrades
+        HP += healAmount;
+        HP = Mathf.Min(HP, HPOriginal); // this is so that the HP healed never goes over our maximum health, so if you are at 6/10 hp a coin that heals 5 will only heal 4 HP
+        UpdatePlayerUI();
     }
 
     public void killBox() //this method is called when the player falls off the world into the kill box
