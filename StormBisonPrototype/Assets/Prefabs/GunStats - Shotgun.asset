@@ -15,7 +15,7 @@ MonoBehaviour:
   shootDamage: 0
   shootRange: 10
   firingRate: 0.7
-  maxAmmo: 12
+  gunUsage: 5
   pelletDmg: 0.4
   pellets: 8
   pelletsSpreadAngle: 0.1

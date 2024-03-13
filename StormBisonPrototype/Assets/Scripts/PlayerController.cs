@@ -71,7 +71,8 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
 
     ParticleSystem bulletParticleSystem;
     public int selectedGun = 0; //the indexer for the gunList (used by the player to select their active gun)
-    public List<int> currAmmo = new List<int>(); //the ammo for the current gun
+    //public List<int> currAmmo = new List<int>(); //the ammo for the current gun
+    public List<int> gunCosts = new List<int>();
     float gunVolume;
 
     Vector3 movement; //this vector handles movement along the X and Z axis (WASD, Up Down Left Right)
@@ -80,6 +81,13 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     float currentSpeed; //the players current speed (switches between sprint speed and mvoement speed)
     bool isShooting; //this bool determines whether the player is currently shooting or not (you cant shoot again while this is true)
     bool isSpeedChangeable; //this bool determines if the speed can currently be changed or not (you cant change speed when jumping)
+
+    //water tank
+    [SerializeField] float maxWater;
+    [Range(0,1)][SerializeField] float startingWaterPercentage;
+    public float currentWater;
+
+    [SerializeField] int jetPackUsage;
 
     // bools related to the weapon ui
     public bool isShotgunEquipped; // bool to help check if shotgun is equipped
@@ -108,6 +116,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
 
     void Start()
     {
+        currentWater = (int)(maxWater * startingWaterPercentage); //current water is based on starting water percentage
         HPOriginal = HP; //set the original HP to the initial HP value set
         gunFireSprite.enabled = false; //turn the gun sprite off
         bulletParticleSystem = bulletImpactFX.GetComponent<ParticleSystem>();
@@ -135,7 +144,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
             {
                 selectGun(); //check if they are changing guns
 
-                if (Input.GetButton("Shoot") && !isShooting && currAmmo[selectedGun] > 0) //check if the player is trying to shoot and if it is currently allowed (if they arent already shooting)
+                if (Input.GetButton("Shoot") && !isShooting && currentWater >= gunCosts[selectedGun]) //check if the player is trying to shoot and if it is currently allowed (if they arent already shooting)
                 {
                     StartCoroutine(gunFireEffect());
 
@@ -157,6 +166,18 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         if (Input.GetButtonDown("Self Damage Tool"))
         {
             TakeDamage(1.0f);
+        }
+
+        //refill test tool
+        if (Input.GetButtonDown("Refill Test Tool"))
+        {
+            fillTank(7);
+        }
+
+        if (Input.GetButton("FakeJetPack") && currentWater > 0)
+        {
+            currentWater -= (int)(jetPackUsage) * Time.deltaTime;
+            if (currentWater < 0) { currentWater = 0; }
         }
     }
 
@@ -281,6 +302,25 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         jumpTimer = 0; //reset the jump timer if the player is grounded
     }
 
+    //Water Tank
+    public void fillTank(int fillAmount) //this is for testing purposes (it probably needs to be changed when actual water sources are added) constant source probably needs seperate logic
+    {
+        if (currentWater < maxWater) //if the current water is less than max water than follow fill logic
+        {
+            if ((currentWater + fillAmount) >= maxWater) //if curr water and fill amount combined are greater than or equal to tank capacity 
+            {
+                currentWater = maxWater; //fill to max
+            }
+            else
+            {
+                currentWater += (int)fillAmount; //otherwise the fill amount is low enough to just add it 
+            }
+        }
+        if (currentWater > maxWater) //if current water somehow manages to go over tank capacity
+        {
+            currentWater = maxWater; //set it equal to max water
+        }
+    }
     //shooting
     IEnumerator Shoot()
     {
@@ -289,7 +329,9 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         gunSoundsSource.Stop(); //stop the current sound
         gunSoundsSource.PlayOneShot(gunSoundsSource.clip, gunVolume); //play the current gun sound
 
-        currAmmo[selectedGun]--; //reduce the selected guns ammo by 1
+        //currAmmo[selectedGun]--; //reduce the selected guns ammo by 1
+        currentWater -= gunCosts[selectedGun];
+        if (currentWater < 0) { currentWater = 0; }
 
 
         RaycastHit hit;
@@ -319,7 +361,9 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         gunSoundsSource.Stop(); //stop the current sound
         gunSoundsSource.PlayOneShot(gunSoundsSource.clip, gunVolume); //play the curren gun sound
 
-        currAmmo[selectedGun]--; //reduce the selected guns ammo by 1
+        //currAmmo[selectedGun]--; //reduce the selected guns ammo by 1
+        currentWater -= gunCosts[selectedGun];
+        if (currentWater < 0) { currentWater = 0; }
 
         // This is so that the pelletRays have the same ray origin as Shoot()'s rays
         Ray pelletRay = Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f));
@@ -384,7 +428,8 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         if (!gunList.Contains(gun)) //if the gun isnt in the list
         {
             gunList.Add(gun); //add the passed in gun to the list
-            currAmmo.Add(gun.maxAmmo);
+            //currAmmo.Add(gun.maxAmmo);
+            gunCosts.Add(gun.gunUsage);
             newGun = true; //set the newGun bool to true
         }
 
@@ -416,7 +461,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
             selectedGun = gunList.IndexOf(gun); //get the index of the gun and change the selected gun to match it   
         }
 
-        currAmmo[selectedGun] = gunList[selectedGun].maxAmmo; //set the guns current ammo to max
+        //currAmmo[selectedGun] = gunList[selectedGun].maxAmmo; //set the guns current ammo to max
     }
 
     void selectGun()
