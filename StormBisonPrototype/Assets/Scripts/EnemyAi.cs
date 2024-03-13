@@ -47,6 +47,10 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
     [SerializeField] AudioClip enemyShots;
     [Range(0, 1)] [SerializeField] float enemyShotsVol = 0.5f;
 
+    [Header("Patrolling")]
+    [SerializeField] bool patrolling;
+    [SerializeField] Transform[] patrolPos;
+
     float HPOriginal;
 
     bool isShooting;
@@ -58,6 +62,8 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
     Vector3 startingPos;
     bool destChosen;
     bool isPlayingSteps;
+    int patrolItr;
+    bool patrolDir;
 
     bool isDead; // bool to prevent player shotgun pellets from causing issue with enemycount
     Color defaultColor;
@@ -69,6 +75,8 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
         updateUI();
         gameManager.instance.updateGameGoal(1);
         defaultColor = model.material.GetColor("_Color"); //get the default color of the enemy;
+        patrolItr = 0; //set patrol iterator to 0
+        patrolDir = true;//set patrol direction to forward
     }
 
     void Update()
@@ -78,13 +86,28 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
 
         if (playerInRange && !canSeePlayer())
         {
-            // roam if I'm in your range but i can't see you
-            StartCoroutine(roam());
+            // roam/patroling if I'm in your range but i can't see you
+            if (patrolling)
+            {
+                StartCoroutine(patrol());
+            }
+            else
+            {
+                StartCoroutine(roam());
+            }
+            
         }
         else if (!playerInRange)
         {
-            // roam because you are not in range
-            StartCoroutine(roam());
+            // roam/patroling because you are not in range
+            if (patrolling)
+            {
+                StartCoroutine(patrol());
+            }
+            else
+            {
+                StartCoroutine(roam());
+            }
         }
     }
 
@@ -103,6 +126,41 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
             NavMesh.SamplePosition(randomPos, out hit, roamDist, 1);
             agent.SetDestination(hit.position);
 
+            destChosen = false;
+        }
+        if (agent.velocity.normalized.magnitude > .3 && !isPlayingSteps)
+        {
+            StartCoroutine(playEnemyFootSteps());
+        }
+    }
+
+    IEnumerator patrol()
+    {   
+        
+        if (agent.remainingDistance < 0.05f && !destChosen)
+        {
+            destChosen = true;
+            agent.stoppingDistance = 0;
+            yield return new WaitForSeconds(roamPauseTime);
+            agent.SetDestination(patrolPos[patrolItr].position);
+            //if patrolDir is true iterate forward through array and if its false reverse
+            if (patrolDir)
+            {
+                patrolItr++;
+            }
+            else
+            {
+                patrolItr--;
+            }
+            //if patrolItr is at the end of patrolPos reverse direction and if its at teh start set direction to forward
+            if (patrolItr == patrolPos.Length - 1)
+            {
+                patrolDir = false;
+            }
+            if (patrolItr == 0)
+            {
+                patrolDir = true;
+            }
             destChosen = false;
         }
         if (agent.velocity.normalized.magnitude > .3 && !isPlayingSteps)
