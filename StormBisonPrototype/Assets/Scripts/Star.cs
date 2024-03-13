@@ -14,7 +14,6 @@ public class Star : MonoBehaviour
     [SerializeField] float moveSpeed = 0; //how fast the star moves towards its positon
 
     BoxCollider thisCollider;
-    bool isDupe;
 
     // Start is called before the first frame update
     void Start()
@@ -22,7 +21,6 @@ public class Star : MonoBehaviour
         thisCollider = GetComponent<BoxCollider>();
         if (starManager.instance.starTracker[starArrayID]) //check the star manager to see if this star is collected already (based on ID)
         {
-            isDupe = true;
             thisRenderer.material = dupeMat; //if its collected than set its material to the dupeMat
         }
     }

@@ -853,6 +853,7 @@ MonoBehaviour:
   HP: 10
   movementSpeed: 5
   sprintSpeed: 10
+  playerLives: 0
   jumpForce: 10
   jump2Force: 15
   jump3Force: 20
@@ -899,6 +900,10 @@ MonoBehaviour:
   bulletImpactFX: {fileID: 0}
   selectedGun: 0
   currAmmo: 
+  maxWater: 200
+  startingWaterPercentage: 0.5
+  currentWater: 0
+  jetPackUsage: 10
   isShotgunEquipped: 0
   isPistolEquipped: 0
   isRifleEquipped: 0
@@ -2397,7 +2402,7 @@ ParticleSystem:
         atime6: 0
         atime7: 0
         m_Mode: 0
-        m_ColorSpace: 0
+        m_ColorSpace: -1
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
       minGradient:

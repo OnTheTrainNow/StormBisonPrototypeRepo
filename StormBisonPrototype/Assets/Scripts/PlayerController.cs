@@ -81,6 +81,13 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     bool isShooting; //this bool determines whether the player is currently shooting or not (you cant shoot again while this is true)
     bool isSpeedChangeable; //this bool determines if the speed can currently be changed or not (you cant change speed when jumping)
 
+    //water tank
+    [SerializeField] float maxWater;
+    [Range(0,1)][SerializeField] float startingWaterPercentage;
+    public float currentWater;
+
+    [SerializeField] int jetPackUsage;
+
     // bools related to the weapon ui
     public bool isShotgunEquipped; // bool to help check if shotgun is equipped
     public bool isPistolEquipped;
@@ -108,6 +115,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
 
     void Start()
     {
+        currentWater = (int)(maxWater * startingWaterPercentage); //current water is based on starting water percentage
         HPOriginal = HP; //set the original HP to the initial HP value set
         gunFireSprite.enabled = false; //turn the gun sprite off
         bulletParticleSystem = bulletImpactFX.GetComponent<ParticleSystem>();
@@ -157,6 +165,18 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         if (Input.GetButtonDown("Self Damage Tool"))
         {
             TakeDamage(1.0f);
+        }
+
+        //refill test tool
+        if (Input.GetButtonDown("Refill Test Tool"))
+        {
+            fillTank(7);
+        }
+
+        if (Input.GetButton("FakeJetPack") && currentWater > 0)
+        {
+            currentWater -= (int)(jetPackUsage) * Time.deltaTime;
+            if (currentWater < 0) { currentWater = 0; }
         }
     }
 
@@ -281,6 +301,25 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         jumpTimer = 0; //reset the jump timer if the player is grounded
     }
 
+    //Water Tank
+    public void fillTank(int fillAmount) //this is for testing purposes (it probably needs to be changed when actual water sources are added) constant source probably needs seperate logic
+    {
+        if (currentWater < maxWater) //if the current water is less than max water than follow fill logic
+        {
+            if ((currentWater + fillAmount) >= maxWater) //if curr water and fill amount combined are greater than or equal to tank capacity 
+            {
+                currentWater = maxWater; //fill to max
+            }
+            else
+            {
+                currentWater += (int)fillAmount; //otherwise the fill amount is low enough to just add it 
+            }
+        }
+        if (currentWater > maxWater) //if current water somehow manages to go over tank capacity
+        {
+            currentWater = maxWater; //set it equal to max water
+        }
+    }
     //shooting
     IEnumerator Shoot()
     {
