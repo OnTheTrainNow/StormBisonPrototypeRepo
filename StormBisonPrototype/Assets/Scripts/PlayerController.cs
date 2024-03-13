@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
 
     [SerializeField] float jetPackForce = 2f;
     [SerializeField] int jetPackUsage;
+    [SerializeField] float jetPackSprintUsageScaler = 2f; //this is a scaler variable for how fast the jetpack drains while sprinting
     [SerializeField] float jetPackDisableLaunchTime = .5f; //how long the jetpack is disabled for after launching
 
     //jump timers
@@ -321,13 +322,22 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     private void ProcessJetpack()
     {
         if (launchTimer <= jetPackDisableLaunchTime) { return; } //if the launch timer is too low than don't give access to the jetpack
-        if(!playerController.isGrounded && Input.GetButton("FakeJetPack") && currentWater > 0)
+        
+        if(!playerController.isGrounded && Input.GetButton("FakeJetPack") && currentWater > 0) //if the player holds the jetpack button and has water (being grounded is in debate as a requirment)
         {
-            isJumping = false;
-            isLaunching = false;
-            verticleVelocity.y = jetPackForce;
-            currentWater -= (int)(jetPackUsage) * Time.deltaTime;
-            if (currentWater < 0) { currentWater = 0; }
+            isSpeedChangeable = true; //allow them to control sprint speed
+            isJumping = false; //they are no longer considered jumping after using the jetpack
+            isLaunching = false; //they are no longer considered launchign after using the jetpack
+            verticleVelocity.y = jetPackForce; //set the y velocity to jetpack force each frame they hold
+            if (isSprinting) //if the player is sprinting while using the jetpack
+            {
+                currentWater -= (int)(jetPackUsage) * jetPackSprintUsageScaler * Time.deltaTime; //the water drains faster based on the usage scaler
+            }
+            else //otherwise
+            {
+                currentWater -= (int)(jetPackUsage) * Time.deltaTime; //drain the water based on regular usage amount
+            }
+            if (currentWater < 0) { currentWater = 0; } //if the water drops below 0 during this process set it back to 0
         }
     }
 
