@@ -857,6 +857,8 @@ MonoBehaviour:
   jumpForce: 10
   jump2Force: 15
   jump3Force: 20
+  variableJumpPercentage: 0.8
+  jetPackForce: 1.5
   jump2Time: 1.75
   jump3Time: 2
   gravity: -20
@@ -899,7 +901,7 @@ MonoBehaviour:
   jumpVFX: {fileID: 8646079237418123920}
   bulletImpactFX: {fileID: 0}
   selectedGun: 0
-  currAmmo: 
+  gunCosts: 
   maxWater: 200
   startingWaterPercentage: 0.5
   currentWater: 0
