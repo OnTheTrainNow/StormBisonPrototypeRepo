@@ -51,6 +51,13 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
     [SerializeField] bool patrolling;
     [SerializeField] Transform[] patrolPos;
 
+    [Header("Drops")]
+    [SerializeField] bool isRNG;
+    [SerializeField] GameObject drop;
+    [SerializeField] GameObject[] rngDrops;
+    [SerializeField] float[] rngDropsRate;
+
+
     float HPOriginal;
 
     bool isShooting;
@@ -258,6 +265,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
             checkForStarDrop();
             gameManager.instance.updateGameGoal(-1);
             Destroy(gameObject);
+            Drop();
         }
     }
 
@@ -270,6 +278,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
             gameManager.instance.updateGameGoal(-1); //update the game goal
             gameManager.instance.playerScript.BounceOff(playerStompBounceForce); //call the players bounce method and pass in the bounce force
             Destroy(gameObject); //destroy the enemy
+            Drop();
         }
     }
 
@@ -313,6 +322,28 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
 
         yield return new WaitForSeconds(shootRate);
         isShooting = false;
+    }
+
+    void Drop()
+    {
+        Vector3 dropPos = transform.position;
+        dropPos.y += 1;
+        if (isRNG)
+        {
+            float dropFloat = Random.Range((float)0.0, (float)1.0);
+            for (int i = 0; i < rngDrops.Length; i++)
+            {
+                if (dropFloat <= rngDropsRate[i])
+                {
+                    Instantiate(rngDrops[i], dropPos, transform.rotation);
+                    i = rngDrops.Length;
+                }
+            }
+        }
+        else if(drop != null)
+        {
+            Instantiate(drop, dropPos, transform.rotation);
+        }
     }
 
     void updateUI()
