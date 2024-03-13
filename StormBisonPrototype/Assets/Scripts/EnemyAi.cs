@@ -64,6 +64,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
     bool isPlayingSteps;
     int patrolItr;
     bool patrolDir;
+    bool sawPlayer;
 
     bool isDead; // bool to prevent player shotgun pellets from causing issue with enemycount
     Color defaultColor;
@@ -86,8 +87,22 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
 
         if (playerInRange && !canSeePlayer())
         {
+            if (sawPlayer) //if enemy lost sight of player
+            {
+                playerDir = gameManager.instance.player.transform.position - headPos.position;
+                RaycastHit hit;
+                Physics.Raycast(headPos.position, playerDir, out hit);
+                if (hit.collider.CompareTag("Player")) //if player is not obstructed face player else set sawplayer to false
+                {
+                    faceTarget();
+                }
+                else
+                {
+                    sawPlayer = false;
+                }
+            }
             // roam/patroling if I'm in your range but i can't see you
-            if (patrolling)
+            else if (patrolling)
             {
                 StartCoroutine(patrol());
             }
@@ -198,7 +213,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
                     faceTarget();
                 }
                 agent.stoppingDistance = stoppingDistOrig;
-
+                sawPlayer = true;
                 return true;
             }
         }
