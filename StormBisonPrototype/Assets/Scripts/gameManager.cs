@@ -15,10 +15,10 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject menuLose;
     [SerializeField] GameObject menuDied;
 
-    [SerializeField] TMP_Text weaponEquipped; // weapon equipped text component
+    [SerializeField] TMP_Text weaponEquipped; //weapon equipped text component
     [SerializeField] TMP_Text enemyCountText; //enemy count text component
-    [SerializeField] TMP_Text ammoCountText; //enemy count text component
-    [SerializeField] TMP_Text starCountText;
+    [SerializeField] TMP_Text waterCountText; //enemy count text component
+    [SerializeField] TMP_Text starCountText; //star count text component
 
     public TMP_Text sensitivityTextX; //the text for the horizontal sensitivity
     public Slider sensitivitySliderX; //the slider for the horzontal sensitivity
@@ -58,9 +58,10 @@ public class gameManager : MonoBehaviour
 
     void Update()
     {
-        if (playerScript.currAmmo.Count > 0)
+        if (playerScript.currentWater > 0)
         {
-            ammoCountText.text = playerScript.currAmmo[playerScript.selectedGun].ToString(); //update the ammo count on the UI
+            int waterInt = (int)playerScript.currentWater;
+            waterCountText.text = waterInt.ToString(); //update the ammo count on the UI
         }
         
 

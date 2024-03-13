@@ -2327,7 +2327,7 @@ GameObject:
   - component: {fileID: 2266141718214887966}
   - component: {fileID: 372600541294081598}
   m_Layer: 5
-  m_Name: AmmoLabel
+  m_Name: WaterLabel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2381,7 +2381,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Ammo:'
+  m_text: 'Water:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d1dd245b14606044a9e05e110a2d8169, type: 2}
   m_sharedMaterial: {fileID: -8478471507340715083, guid: d1dd245b14606044a9e05e110a2d8169, type: 2}
@@ -3665,7 +3665,7 @@ GameObject:
   - component: {fileID: 6102734216231428465}
   - component: {fileID: 1887179123204682085}
   m_Layer: 5
-  m_Name: AmmoCount
+  m_Name: WaterCount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4282,7 +4282,7 @@ MonoBehaviour:
   menuDied: {fileID: 0}
   weaponEquipped: {fileID: 4927669904689952401}
   enemyCountText: {fileID: 4995923645980054731}
-  ammoCountText: {fileID: 1887179123204682085}
+  waterCountText: {fileID: 1887179123204682085}
   starCountText: {fileID: 4825216083388017896}
   sensitivityTextX: {fileID: 7579339576053248243}
   sensitivitySliderX: {fileID: 7893183629037606908}
