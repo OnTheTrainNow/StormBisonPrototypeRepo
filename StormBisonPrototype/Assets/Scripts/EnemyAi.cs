@@ -75,7 +75,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
         updateUI();
         gameManager.instance.updateGameGoal(1);
         defaultColor = model.material.GetColor("_Color"); //get the default color of the enemy;
-        patrolItr = 0; //set patrol iterator to 0
+        patrolItr = -1; //set patrol iterator to 0
         patrolDir = true;//set patrol direction to forward
     }
 
@@ -136,13 +136,10 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
 
     IEnumerator patrol()
     {   
-        
+        agent.stoppingDistance = 0;
         if (agent.remainingDistance < 0.05f && !destChosen)
         {
             destChosen = true;
-            agent.stoppingDistance = 0;
-            yield return new WaitForSeconds(roamPauseTime);
-            agent.SetDestination(patrolPos[patrolItr].position);
             //if patrolDir is true iterate forward through array and if its false reverse
             if (patrolDir)
             {
@@ -152,6 +149,8 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
             {
                 patrolItr--;
             }
+            yield return new WaitForSeconds(roamPauseTime);
+            agent.SetDestination(patrolPos[patrolItr].position);
             //if patrolItr is at the end of patrolPos reverse direction and if its at teh start set direction to forward
             if (patrolItr == patrolPos.Length - 1)
             {
