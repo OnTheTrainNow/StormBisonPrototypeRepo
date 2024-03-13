@@ -52,7 +52,6 @@ public class Star : MonoBehaviour
             starManager.instance.CountStars();
 
             starSFX.Play();
-            DataManager.instance.savePlayerData(); //this may need to be moved to gamemanager later
             gameManager.instance.youWin();
             Destroy(gameObject, 3);
         }

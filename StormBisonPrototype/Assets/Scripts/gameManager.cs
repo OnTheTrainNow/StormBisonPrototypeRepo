@@ -18,6 +18,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] TMP_Text weaponEquipped; // weapon equipped text component
     [SerializeField] TMP_Text enemyCountText; //enemy count text component
     [SerializeField] TMP_Text ammoCountText; //enemy count text component
+    [SerializeField] TMP_Text starCountText;
 
     public TMP_Text sensitivityTextX; //the text for the horizontal sensitivity
     public Slider sensitivitySliderX; //the slider for the horzontal sensitivity
@@ -109,6 +110,7 @@ public class gameManager : MonoBehaviour
         menuActive = menuWin;
         menuActive.SetActive(true);
         statePaused();
+        DataManager.instance.savePlayerData();
     }
 
     // Player Lose function Will be called
@@ -124,6 +126,7 @@ public class gameManager : MonoBehaviour
         statePaused();
         menuActive = menuDied;
         menuActive.SetActive(true);
+        DataManager.instance.savePlayerData();
     }
 
     public void updateWeaponEquipped()
@@ -140,6 +143,11 @@ public class gameManager : MonoBehaviour
         {
             weaponEquipped.text = "Rifle";
         }
+    }
+
+    public void updateStarUI()
+    {
+        starCountText.text = starManager.instance.starCount.ToString();
     }
     public void loadLobby()
     {

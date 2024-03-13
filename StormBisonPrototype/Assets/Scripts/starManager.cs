@@ -37,6 +37,7 @@ public class starManager : MonoBehaviour , IPersistence //most of this functiona
     {
         saveData.playerStars.CopyTo(starTracker, 0);
         this.starCount = saveData.starCount;
+        gameManager.instance.updateStarUI();
     }
 
     public void CountStars() //count stars tells the manager to recount all the current collected stars in the array
@@ -49,5 +50,6 @@ public class starManager : MonoBehaviour , IPersistence //most of this functiona
                 starCount++;
             }
         }
+        gameManager.instance.updateStarUI();
     }
 }
