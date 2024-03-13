@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class starManager : MonoBehaviour //most of this functionality couldve been included in gameManager, but I thought it would be better for it to be de-coupled
+public class starManager : MonoBehaviour , IPersistence //most of this functionality couldve been included in gameManager, but I thought it would be better for it to be de-coupled
 {
     public static starManager instance; //this will be a singleton like the game Manager
 
@@ -24,5 +24,15 @@ public class starManager : MonoBehaviour //most of this functionality couldve be
         {
             render.enabled = false;
         }
+    }
+
+    public void SavePersistentData(ref PlayerSaveData saveData)
+    {
+        starTracker.CopyTo(saveData.playerStars, 0);
+    }
+
+    public void LoadPersistentData(PlayerSaveData saveData)
+    {
+        saveData.playerStars.CopyTo(starTracker, 0);
     }
 }
