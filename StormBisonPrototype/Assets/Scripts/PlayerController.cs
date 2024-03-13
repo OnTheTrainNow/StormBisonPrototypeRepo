@@ -422,46 +422,75 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
 
     public void getGunstats(GunStats gun) //gets a gun to add to the list
     {
-        bool newGun = false; //by default treat the gun like its not new
-        pickUpSoundSource.Play(); //play the pickup sound
-
-        if (!gunList.Contains(gun)) //if the gun isnt in the list
+        if (gunList.Count < 2)
         {
-            gunList.Add(gun); //add the passed in gun to the list
-            //currAmmo.Add(gun.maxAmmo);
-            gunCosts.Add(gun.gunUsage);
-            newGun = true; //set the newGun bool to true
+            bool newGun = false; //by default treat the gun like its not new
+            pickUpSoundSource.Play(); //play the pickup sound
+
+            if (!gunList.Contains(gun)) //if the gun isnt in the list
+            {
+                gunList.Add(gun); //add the passed in gun to the list
+                                  //currAmmo.Add(gun.maxAmmo);
+                gunCosts.Add(gun.gunUsage);
+                newGun = true; //set the newGun bool to true
+            }
+
+            shootDamage = gun.shootDamage; //set the current gun values to match the new gun
+            shootRange = gun.shootRange;
+            firingRate = gun.firingRate;
+            pelletDmg = gun.pelletDmg;
+            pelletsSpreadAngle = gun.pelletsSpreadAngle;
+            pellets = gun.pellets;
+            isShotgunEquipped = gun.isShotgunEquipped;
+            isPistolEquipped = gun.isPistolEquipped;
+            isRifleEquipped = gun.isRifleEquipped;
+
+            gunSoundsSource.clip = gun.shootSFX;
+            gunVolume = gun.shootSoundVol;
+
+            bulletParticleSystem = bulletImpactFX.transform.GetChild(gun.hitEffectIndex).GetComponent<ParticleSystem>(); //get the child particle system at the index
+
+
+            gunModel.GetComponent<MeshFilter>().sharedMesh = gun.gunModel.GetComponent<MeshFilter>().sharedMesh; //make the mesh and material on the players gunModel match the new gun
+            gunModel.GetComponent<MeshRenderer>().sharedMaterial = gun.gunModel.GetComponent<MeshRenderer>().sharedMaterial;
+
+            if (newGun) //if the was new 
+            {
+                selectedGun = gunList.Count - 1; //the new gun is appended to the end of the list so set the selected gun to match that
+            }
+            else //if the gun is already in the list
+            {
+                selectedGun = gunList.IndexOf(gun); //get the index of the gun and change the selected gun to match it   
+            }
+
+            //currAmmo[selectedGun] = gunList[selectedGun].maxAmmo; //set the guns current ammo to max
         }
-
-        shootDamage = gun.shootDamage; //set the current gun values to match the new gun
-        shootRange = gun.shootRange;
-        firingRate = gun.firingRate;
-        pelletDmg = gun.pelletDmg;
-        pelletsSpreadAngle = gun.pelletsSpreadAngle;
-        pellets = gun.pellets;
-        isShotgunEquipped = gun.isShotgunEquipped;
-        isPistolEquipped = gun.isPistolEquipped;
-        isRifleEquipped = gun.isRifleEquipped;
-
-        gunSoundsSource.clip = gun.shootSFX;
-        gunVolume = gun.shootSoundVol;
-
-        bulletParticleSystem = bulletImpactFX.transform.GetChild(gun.hitEffectIndex).GetComponent<ParticleSystem>(); //get the child particle system at the index
-        
-
-        gunModel.GetComponent<MeshFilter>().sharedMesh = gun.gunModel.GetComponent<MeshFilter>().sharedMesh; //make the mesh and material on the players gunModel match the new gun
-        gunModel.GetComponent<MeshRenderer>().sharedMaterial = gun.gunModel.GetComponent<MeshRenderer>().sharedMaterial;
-
-        if(newGun) //if the was new 
+        if (gunList.Count == 2)
         {
-            selectedGun = gunList.Count - 1; //the new gun is appended to the end of the list so set the selected gun to match that
-        }
-        else //if the gun is already in the list
-        {
-            selectedGun = gunList.IndexOf(gun); //get the index of the gun and change the selected gun to match it   
-        }
+            bool newGun = false;
 
-        //currAmmo[selectedGun] = gunList[selectedGun].maxAmmo; //set the guns current ammo to max
+            if (!gunList.Contains(gun))
+            {
+                gunList.Add(gun);
+
+                gunCosts.Add(gun.gunUsage);
+                newGun = true;
+            }
+
+            if (newGun) //if the gun is new then it will replace the current weapon being held
+            {
+                int currentIndex = selectedGun;
+                gunList[currentIndex] = gun;
+                changeGun();
+            }
+            else
+            {
+                //if the gun is already in the list it will not add the same gun instead it will just equip your weapon
+                //(if your holding a rifle and have a shotgun as secondary and pick up another shotgun you will automatically switch to the shotgun)
+                selectedGun = gunList.IndexOf(gun);
+                changeGun();
+            }
+        }
     }
 
     void selectGun()
