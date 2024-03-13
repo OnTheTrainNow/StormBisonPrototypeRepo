@@ -9,6 +9,7 @@ public class starManager : MonoBehaviour , IPersistence //most of this functiona
     public List<Transform> starPositions = new List<Transform>(); //the main functionality of this manager is to track positions for stars to move towards
 
     public bool[] starTracker = new bool[30]; //this bool tracks which stars are collected by the player
+    public int starCount = 0;
 
     MeshRenderer render;
 
@@ -29,10 +30,24 @@ public class starManager : MonoBehaviour , IPersistence //most of this functiona
     public void SavePersistentData(ref PlayerSaveData saveData)
     {
         starTracker.CopyTo(saveData.playerStars, 0);
+        saveData.starCount = this.starCount;
     }
 
     public void LoadPersistentData(PlayerSaveData saveData)
     {
         saveData.playerStars.CopyTo(starTracker, 0);
+        this.starCount = saveData.starCount;
+    }
+
+    public void CountStars() //count stars tells the manager to recount all the current collected stars in the array
+    {
+        starCount = 0; //reset the count
+        for(int i = 0; i < starTracker.Length; i++)
+        {
+            if (starTracker[i])
+            {
+                starCount++;
+            }
+        }
     }
 }
