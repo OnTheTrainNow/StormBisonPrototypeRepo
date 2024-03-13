@@ -7,6 +7,7 @@ public class Star : MonoBehaviour
     [SerializeField] MeshRenderer thisRenderer;
     [SerializeField] AudioSource starSFX;
     [SerializeField] bool isStaticStar; //if the star moves or not
+    [SerializeField] Material dupeMat; //the material for when the star is a duplicate
 
     public int starArrayID = 0; //this is the Stars index on the tracker Array for all the stars
     public int positionIndex = 0; //this is the index for the star's position in the star managers position list
@@ -18,6 +19,10 @@ public class Star : MonoBehaviour
     void Start()
     {
         thisCollider = GetComponent<BoxCollider>();
+        if (starManager.instance.starTracker[starArrayID]) //check the star manager to see if this star is collected already (based on ID)
+        {
+            thisRenderer.material = dupeMat; //if its collected than set its material to the dupeMat
+        }
     }
 
     // Update is called once per frame
@@ -44,6 +49,7 @@ public class Star : MonoBehaviour
             starManager.instance.starTracker[starArrayID] = true; //set the relevant starID in the tracker to true to represent the star being collected
 
             starSFX.Play();
+            DataManager.instance.savePlayerData(); //this may need to be moved to gamemanager later
             gameManager.instance.youWin();
             Destroy(gameObject, 3);
         }

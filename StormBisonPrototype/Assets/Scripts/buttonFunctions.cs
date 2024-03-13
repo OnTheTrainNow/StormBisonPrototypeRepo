@@ -26,8 +26,11 @@ public class buttonFunctions : MonoBehaviour
 
     public void respawn()
     {
-        gameManager.instance.stateUnpaused(); //unpause the game
-        gameManager.instance.playerScript.respawn(); //call the players respawn function
+        if (gameManager.instance.playerScript.playerLives > 0)
+        {
+            gameManager.instance.stateUnpaused(); //unpause the game
+            gameManager.instance.playerScript.respawn(); //call the players respawn function
+        }
     }
 
     public void mouseSensitivity()

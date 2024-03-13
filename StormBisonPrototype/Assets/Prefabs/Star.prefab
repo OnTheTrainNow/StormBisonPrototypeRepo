@@ -51,6 +51,8 @@ MonoBehaviour:
   thisRenderer: {fileID: 8876096924871829738}
   starSFX: {fileID: 6668441624125401887}
   isStaticStar: 0
+  dupeMat: {fileID: 2100000, guid: 13aa06e32e2d6b74aba876a40d1da7f5, type: 2}
+  starArrayID: 0
   positionIndex: 0
   moveSpeed: 10
 --- !u!54 &2909666015555936405
