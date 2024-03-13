@@ -19,6 +19,9 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     [SerializeField] float movementSpeed = 5f; //the movement speed tuning variable for the player
     [SerializeField] float sprintSpeed = 10f; //the movement speed while sprinting
 
+    //Player Lives
+    public int playerLives;
+
     [Header("Jumping & Gravity")]
     //jumping and gravity 
     [SerializeField] float jumpForce = 10f; //this controls how high a player can jump
@@ -476,8 +479,17 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
 
         if (HP <= 0 && !isDead) //if the players HP is less than or equal to zero (and if they arent already dead to prevent double triggers)
         {
+            playerLives -= 1;
             isDead = true; //set the player to dead
-            gameManager.instance.youLose(); //tell the game manager to display the Loss screen
+            if (playerLives <= 0 && isDead == true)
+            {
+                gameManager.instance.loadLobby();
+                Debug.Log("Oops No More Lives For You");
+            }
+            else
+            {
+                gameManager.instance.youDied(); //tell the game manager to display the death screen
+            }
         }
     }
 
@@ -535,17 +547,17 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
 
     public void respawn()
     {
-        currentJumps = 0;
-        isDead = false;
-        HP = HPOriginal; //reset the players HP
-        UpdatePlayerUI(); //update the players UI
+            currentJumps = 0;
+            isDead = false;
+            HP = HPOriginal; //reset the players HP
+            UpdatePlayerUI(); //update the players UI
 
-        playerController.enabled = false; //disable the controller
-        transform.SetParent(null); //this fixes any issues where the player dies on a moving platform
-        transform.position = gameManager.instance.playerSpawnPosition.transform.position; //change the players position to the spawn point position
-        playerController.enabled = true; //re enable the controller
+            playerController.enabled = false; //disable the controller
+            transform.SetParent(null); //this fixes any issues where the player dies on a moving platform
+            transform.position = gameManager.instance.playerSpawnPosition.transform.position; //change the players position to the spawn point position
+            playerController.enabled = true; //re enable the controller
 
-        pushBack = Vector3.zero;
+            pushBack = Vector3.zero;
     }
 
     //bouncing and launching

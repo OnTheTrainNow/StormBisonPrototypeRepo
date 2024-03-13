@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class gameManager : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
+    [SerializeField] GameObject menuDied;
 
     [SerializeField] TMP_Text weaponEquipped; // weapon equipped text component
     [SerializeField] TMP_Text enemyCountText; //enemy count text component
@@ -117,6 +119,13 @@ public class gameManager : MonoBehaviour
         menuActive.SetActive(true);
     }
 
+    public void youDied()
+    {
+        statePaused();
+        menuActive = menuDied;
+        menuActive.SetActive(true);
+    }
+
     public void updateWeaponEquipped()
     {
         if (playerScript.isShotgunEquipped == true)
@@ -131,5 +140,9 @@ public class gameManager : MonoBehaviour
         {
             weaponEquipped.text = "Rifle";
         }
+    }
+    public void loadLobby()
+    {
+        SceneManager.LoadScene("Test Lobby");
     }
 }
