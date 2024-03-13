@@ -27,6 +27,11 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     [SerializeField] float jumpForce = 10f; //this controls how high a player can jump
     [SerializeField] float jump2Force = 15f; //this is how high the player jumps in combo jump 2
     [SerializeField] float jump3Force = 20f; //this is how high the player jumps in combo jump 3
+    [Range(0, 1)][SerializeField] float variableJumpPercentage = .75f;
+
+    [SerializeField] float jetPackForce = 2f;
+    [SerializeField] int jetPackUsage;
+    [SerializeField] float jetPackDisableLaunchTime = .5f; //how long the jetpack is disabled for after launching
 
     //jump timers
     [SerializeField] float jump2Time; //how long the jump timer can last in between jump 1 and jump 2 (this is the time the player has to combo into the next jump)
@@ -87,8 +92,6 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     [Range(0,1)][SerializeField] float startingWaterPercentage;
     public float currentWater;
 
-    [SerializeField] int jetPackUsage;
-
     // bools related to the weapon ui
     public bool isShotgunEquipped; // bool to help check if shotgun is equipped
     public bool isPistolEquipped;
@@ -106,10 +109,12 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     //JumpControls
     float jumpTimer; //jump timer is a float that increases with time and is reset when the player jumps (this functionality will be used for the jump mechanic
     bool canJump; //a bool used to determine whether the player can currently jump
+    bool isJumping;
 
     //LaunchControls
     Vector3 pushBack;
     bool isLaunching; //bool for if the player is launching
+    float launchTimer;
 
     //soundcontrols
     bool isPlayingSteps;
@@ -161,6 +166,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         }
 
         jumpTimer += Time.deltaTime; 
+        launchTimer += Time.deltaTime;
 
         // Self Damage Tool
         if (Input.GetButtonDown("Self Damage Tool"))
@@ -174,11 +180,11 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
             fillTank(7);
         }
 
-        if (Input.GetButton("FakeJetPack") && currentWater > 0)
+        /*if (Input.GetButton("FakeJetPack") && currentWater > 0)
         {
             currentWater -= (int)(jetPackUsage) * Time.deltaTime;
             if (currentWater < 0) { currentWater = 0; }
-        }
+        }*/
     }
 
     private void ProcessMovement()
@@ -192,6 +198,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
             isSpeedChangeable = true; //you can only change from normal speed to sprinting while on the ground
             isLaunching = false; //if you are grounded then you would be at the end of a launch
             canJump = true; //isGrounded is kinda buggy to use on its own for jumping, so a can jump bool is set to true when the player touches the ground
+            isJumping = false;
         }
 
         if (!isLaunching) //if the player is launching out of a pipe then ignore new inputs until they land or jump
@@ -221,6 +228,14 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
             currentJumps = 0; //this jump starts the combo, but is not guaranteed to be zero when the player jumps so reset it to zero
             ProcessJump(jumpForce); //process a jump with regular jump force
         }
+
+        //this if statement is the logic for variable jump
+        if (isJumping && Input.GetButtonUp("Jump") && verticleVelocity.y > 0f) //if the player has upward velocity and is jumping and lets off the jump button
+        {
+            verticleVelocity.y *= variableJumpPercentage;
+        }
+
+        ProcessJetpack();
 
         verticleVelocity.y += gravity * Time.deltaTime; //apply gravity to the verticle velocity and make sure its frame rate independant 
         playerController.Move((verticleVelocity + pushBack) * Time.deltaTime); //use the player controller to move the object based on vertical velocity
@@ -294,12 +309,26 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     private void ProcessJump(float jumpforce)
     {
         jumpVFX.Play(); //play the jump particle effect
+        isJumping = true;
         canJump = false;
         isSpeedChangeable = false; //you cant change speed when already in the air
         isLaunching = false; //jumping cancels out the launch
         verticleVelocity.y = jumpforce; //set the verticle velocity to the jump force (this makes the player go up)
         currentJumps++; //increment the current jump count
         jumpTimer = 0; //reset the jump timer if the player is grounded
+    }
+
+    private void ProcessJetpack()
+    {
+        if (launchTimer <= jetPackDisableLaunchTime) { return; } //if the launch timer is too low than don't give access to the jetpack
+        if(!playerController.isGrounded && Input.GetButton("FakeJetPack") && currentWater > 0)
+        {
+            isJumping = false;
+            isLaunching = false;
+            verticleVelocity.y = jetPackForce;
+            currentWater -= (int)(jetPackUsage) * Time.deltaTime;
+            if (currentWater < 0) { currentWater = 0; }
+        }
     }
 
     //Water Tank
@@ -643,9 +672,12 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     public void Launch(Vector3 LaunchMovement)
     {
         currentJumps = 0; //launching from a pipe resets the jump count
+        launchTimer = 0; //reset the launch timer
         movement = new Vector3(LaunchMovement.x, 0, LaunchMovement.z); //get the non vertical movement of the player from the launch force
         verticleVelocity = new Vector3(0, LaunchMovement.y, 0); //get the vertical movement from the launch force 
         isLaunching = true; //set is launching to true
+        canJump = false; //if the player launches they shouldn't be able to jump until after landing
+        isJumping = false; //if the player launches while jumping they should no longer be considered jumping
     }
 
     public void BounceOff(float BounceForce) //this is called if the player stomps on an enemies head
