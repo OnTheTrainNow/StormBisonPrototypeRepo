@@ -59,6 +59,11 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     [SerializeField] int pellets; // this controls the number of pellets in each shot (the lower the amount the lower the damage, the higher the amount the higher the damage)
     [SerializeField] float pelletsSpreadAngle; // this sets the spread angle (smaller values = tighter spread, higher values = wider spread)
 
+    //jetpack damage variables
+    [SerializeField] int JetPackShootRange = 10;
+    [SerializeField] float JetPackShootDamage = 1f;
+    [SerializeField] float JetPackFiringRate = .2f;
+
     [Header("Sound & Visual Effects")]
     [SerializeField] AudioSource characterSoundsSource; //this is the sound source for the player character (most player sounds shouldn't overlap)
     [SerializeField] AudioSource characterMovementSource; //this is the sound source for moving
@@ -92,6 +97,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     [SerializeField] float maxWater;
     [Range(0,1)][SerializeField] float startingWaterPercentage;
     public float currentWater;
+    bool isJetPackShooting;
 
     // bools related to the weapon ui
     public bool isShotgunEquipped; // bool to help check if shotgun is equipped
@@ -323,7 +329,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     {
         if (launchTimer <= jetPackDisableLaunchTime) { return; } //if the launch timer is too low than don't give access to the jetpack
         
-        if(!playerController.isGrounded && Input.GetButton("FakeJetPack") && currentWater > 0) //if the player holds the jetpack button and has water (being grounded is in debate as a requirment)
+        if(!playerController.isGrounded && Input.GetButton("Jetpack M2") && currentWater > 0) //if the player holds the jetpack button and has water (being grounded is in debate as a requirment)
         {
             isSpeedChangeable = true; //allow them to control sprint speed
             isJumping = false; //they are no longer considered jumping after using the jetpack
@@ -337,6 +343,8 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
             {
                 currentWater -= (int)(jetPackUsage) * Time.deltaTime; //drain the water based on regular usage amount
             }
+
+            if (!isJetPackShooting) { StartCoroutine(JetPackShoot()); }
             if (currentWater < 0) { currentWater = 0; } //if the water drops below 0 during this process set it back to 0
         }
     }
@@ -441,10 +449,40 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         isShooting = false;
     }
 
+    IEnumerator JetPackShoot()
+    {
+        isJetPackShooting = true; //set is shooting to true which prevents another shot from being fired
+
+        /* //this will be changed for the jetpack later
+        gunSoundsSource.Stop(); //stop the current sound
+        gunSoundsSource.PlayOneShot(gunSoundsSource.clip, gunVolume); //play the current gun sound
+        */
+
+        RaycastHit hit;
+        //send a raycast out below the player
+        Debug.DrawRay(playerController.transform.position, Vector3.down * 10, Color.yellow, 1f);
+        if (Physics.Raycast(playerController.transform.position, Vector3.down , out hit, JetPackShootRange)) //The raycast is a bool which can output a Raycast hit. The shootRange is how far the ray shoots
+        {
+            //bulletImpact(hit); //tell the bullet impact effect to move to the hit location
+
+            Debug.Log(hit.collider.name); //out put the hit object for testing purposes. this can be removed later
+            IDamage dmg = hit.collider.GetComponent<IDamage>(); //get the IDamage component from the hit collider
+
+            if (hit.transform != transform && dmg != null) //if the IDamage componenet was found
+            {
+                dmg.TakeDamage(JetPackShootDamage); //then call the takeDamage method for the hit object
+            }
+        }
+
+        yield return new WaitForSeconds(JetPackFiringRate); //halt the function for the firingRate duration
+
+        isJetPackShooting = false; //set is shooting to false which means the player can shoot again
+    }
+
     IEnumerator gunFireEffect()
     {
         gunFireSprite.enabled = true; //enable the sprite
-        gunFireSprite.transform.localRotation = Quaternion.Euler(0f, 0f, UnityEngine.Random.Range(0,360)); //randomly rotate the sprite on the z axis
+        gunFireSprite.transform.localRotation = Quaternion.Euler(0f, 0f, UnityEngine.Random.Range(0,360)); //randomly rotate the sprite on the z axis 
         yield return new WaitForSeconds(0.1f); //wait for a split second
         gunFireSprite.enabled = false; //disable the sprite again
     }

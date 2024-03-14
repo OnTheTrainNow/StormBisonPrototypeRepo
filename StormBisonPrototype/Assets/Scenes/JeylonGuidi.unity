@@ -13706,6 +13706,10 @@ PrefabInstance:
       propertyPath: bulletImpactFX
       value: 
       objectReference: {fileID: 8922220}
+    - target: {fileID: 3901616942316194201, guid: fbf486c5c2e000c409108f5bcdd19c49, type: 3}
+      propertyPath: JetPackShootRange
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 8214468546571601349, guid: fbf486c5c2e000c409108f5bcdd19c49, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
