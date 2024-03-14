@@ -100,6 +100,8 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     [Range(0,1)][SerializeField] float startingWaterPercentage;
     public float currentWater;
     bool isJetPackShooting;
+    bool isJetPacking;
+
 
     // bools related to the weapon ui
     public bool isShotgunEquipped; // bool to help check if shotgun is equipped
@@ -115,6 +117,8 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     bool isCrouched; //a bool to determine if the player is currently crouched or not
     bool isSprinting;
     bool isSliding;
+
+    Quaternion slideDirection;
 
     //JumpControls
     float jumpTimer; //jump timer is a float that increases with time and is reset when the player jumps (this functionality will be used for the jump mechanic
@@ -205,6 +209,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
             canJump = true; //isGrounded is kinda buggy to use on its own for jumping, so a can jump bool is set to true when the player touches the ground
             isJumping = false;
             isWallJumping = false;
+            isJetPacking = false;
         }
 
         if (!isLaunching && !isSliding) //if the player is launching out of a pipe then ignore new inputs until they land or jump
@@ -214,6 +219,8 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
             movement = Input.GetAxis("Horizontal") * transform.right + Input.GetAxis("Vertical") * transform.forward;
             if (movement.magnitude > 1) { movement.Normalize(); } //diagonal movement returns a magnitude of 1.41 meaning the player moves faster than normal in that direction. If thats not intended then this line normalizes it to 1.
         }
+
+
 
         playerController.Move(movement * currentSpeed * Time.deltaTime); //use the player controller to move the object based on the movement direction above multiplied by the speed (velocity). Time.deltaTime makes it frame rate independan
 
@@ -300,6 +307,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
 
     private void ProcessSprint()
     {
+        if (isCrouched) { return; }
         if (isSpeedChangeable) //if the speed is changeable
         {
             if (Input.GetKey(KeyCode.LeftShift)) //check if the player is sprinting
@@ -317,20 +325,36 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
 
     private void ProcessSlide()
     {
-        if (isSprinting && Input.GetKeyDown(KeyCode.LeftControl))
+        if (isJumping || isWallJumping || isJetPacking || isLaunching) { return; } //the player can't slide in the follow conditons
+        if (isSprinting && Input.GetKeyDown(KeyCode.LeftControl)) //this activates the slide
         {
-            isSliding = true;
-            currentSpeed = sprintSpeed * 2;
+            isSliding = true; //set the sliding state to true
+
+            slideDirection = Quaternion.LookRotation(playerController.transform.forward, Vector3.up);  //store the players current forward direction
+
+            isSprinting = false; //the player is no longer considered sprinting       
+            currentSpeed = sprintSpeed * 2.5f; //set the current speed to faster than sprint (it will drop quickly)
             isCrouched = true; //set crouched bool to true
             playerController.height = crouchControllerHeight; //reduce the controller and collider height
-            playerCollider.height = crouchColliderHeight;
+            playerCollider.height = crouchColliderHeight; //reduce the collider height
         }
-        else if (isSliding && Input.GetKeyDown(KeyCode.LeftControl))
+        else if (isSliding && Input.GetKeyDown(KeyCode.LeftControl)) //this cancels the slide early
         {
             isCrouched = false; //set crouched bool to false
             isSliding = false; //uncrouching stops sliding
             playerController.height = defaultControllerHeight; //set the controller and collider heights back to default
-            playerCollider.height = defaultColliderHeight;
+            playerCollider.height = defaultColliderHeight; //reset the collider height
+            currentSpeed = movementSpeed; //set the current speed back to default
+        }
+        if (isSliding) //this handles lerp the slide speed back to near zero
+        {
+            playerController.transform.rotation = slideDirection; //set the players rotation to the slide rotation while sliding
+            currentSpeed = Mathf.Lerp(currentSpeed, 0f, Time.deltaTime * 2f); //lerp the speed down to zero
+            if (currentSpeed <= 0.5f) //if the current speed drops low enough (its hard to check zero itself) 
+            { 
+                isSliding = false; //the player is no longer sliding (this leaves them in crouch state without sliding restrictions on speed and rotation)
+                currentSpeed = movementSpeed; //reset their speed to default
+            }
         }
     }
 
@@ -353,6 +377,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         
         if(!playerController.isGrounded && Input.GetButton("Jetpack M2") && currentWater > 0) //if the player holds the jetpack button and has water (being grounded is in debate as a requirment)
         {
+            isJetPacking = true;
             isSpeedChangeable = true; //allow them to control sprint speed
             isJumping = false; //they are no longer considered jumping after using the jetpack
             isLaunching = false; //they are no longer considered launchign after using the jetpack
@@ -368,6 +393,10 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
 
             if (!isJetPackShooting) { StartCoroutine(JetPackShoot()); }
             if (currentWater < 0) { currentWater = 0; } //if the water drops below 0 during this process set it back to 0
+        }
+        else
+        {
+            isJetPacking = false;
         }
     }
 
