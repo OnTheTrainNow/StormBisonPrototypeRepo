@@ -114,6 +114,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     float defaultColliderHeight; //the regular collider height
     bool isCrouched; //a bool to determine if the player is currently crouched or not
     bool isSprinting;
+    bool isSliding;
 
     //JumpControls
     float jumpTimer; //jump timer is a float that increases with time and is reset when the player jumps (this functionality will be used for the jump mechanic
@@ -189,12 +190,6 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         {
             fillTank(7);
         }
-
-        /*if (Input.GetButton("FakeJetPack") && currentWater > 0)
-        {
-            currentWater -= (int)(jetPackUsage) * Time.deltaTime;
-            if (currentWater < 0) { currentWater = 0; }
-        }*/
     }
 
     private void ProcessMovement()
@@ -212,7 +207,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
             isWallJumping = false;
         }
 
-        if (!isLaunching) //if the player is launching out of a pipe then ignore new inputs until they land or jump
+        if (!isLaunching && !isSliding) //if the player is launching out of a pipe then ignore new inputs until they land or jump
         {
             //GetAxis returns the direction value along the given axis. transform.right and transform.forward return a Vector3 value for the given axis (X,0,0) and (0,0,Z)
             //When added together they give the final Vector which will represent movement on the X and Z axis (X, 0, Z)
@@ -221,6 +216,8 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         }
 
         playerController.Move(movement * currentSpeed * Time.deltaTime); //use the player controller to move the object based on the movement direction above multiplied by the speed (velocity). Time.deltaTime makes it frame rate independan
+
+        ProcessSlide();
 
         //this is the jump combo system
         if (canJump && currentJumps == 1 && jumpTimer <= jump2Time && Input.GetButtonDown("Jump")) //if the player can jump, presses jump, is on their second jump, and the jump timer is less then jump 2 combo allowed time
@@ -283,6 +280,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
 
     private void ProcessCrouch()
     {
+        if (isSliding || isSprinting || isJumping) { return; }
         if (Input.GetKeyDown(KeyCode.LeftControl)) //if the player pressed the crouch button 
         {
             if (!isCrouched) //if they arent crouched
@@ -314,6 +312,25 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
                 isSprinting = false;
                 currentSpeed = movementSpeed; //otherwise keep at at movement speed
             }
+        }
+    }
+
+    private void ProcessSlide()
+    {
+        if (isSprinting && Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            isSliding = true;
+            currentSpeed = sprintSpeed * 2;
+            isCrouched = true; //set crouched bool to true
+            playerController.height = crouchControllerHeight; //reduce the controller and collider height
+            playerCollider.height = crouchColliderHeight;
+        }
+        else if (isSliding && Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            isCrouched = false; //set crouched bool to false
+            isSliding = false; //uncrouching stops sliding
+            playerController.height = defaultControllerHeight; //set the controller and collider heights back to default
+            playerCollider.height = defaultColliderHeight;
         }
     }
 
