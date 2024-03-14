@@ -358,6 +358,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
             {
                 Vector3 direction = Vector3.Reflect(playerController.transform.forward, other.normal);
                 Debug.DrawRay(other.point, direction, Color.red, 2f);
+                playerController.transform.rotation = Quaternion.LookRotation(direction);
                 movement = direction;
                 //mainCamera.CameraWallJump(direction);
                 ProcessWallJump();
