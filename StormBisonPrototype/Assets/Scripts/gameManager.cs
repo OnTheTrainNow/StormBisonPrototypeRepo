@@ -14,12 +14,13 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
     [SerializeField] GameObject menuDied;
-    //[SerializeField] GameObject menuShop;
+    [SerializeField] GameObject menuShop;
 
     [SerializeField] TMP_Text weaponEquipped; //weapon equipped text component
     [SerializeField] TMP_Text enemyCountText; //enemy count text component
     [SerializeField] TMP_Text waterCountText; //enemy count text component
     [SerializeField] TMP_Text starCountText; //star count text component
+    [SerializeField] TMP_Text coinCountText; //coin count text component
 
     public TMP_Text sensitivityTextX; //the text for the horizontal sensitivity
     public Slider sensitivitySliderX; //the slider for the horzontal sensitivity
@@ -128,6 +129,7 @@ public class gameManager : MonoBehaviour
         statePaused();
         menuActive = menuDied;
         menuActive.SetActive(true);
+        DataManager.instance.savePlayerData();
     }
 
     public void updateWeaponEquipped()
@@ -150,17 +152,22 @@ public class gameManager : MonoBehaviour
     {
         starCountText.text = starManager.instance.starCount.ToString();
     }
+
+    public void updateCoinUI()
+    {
+        //coinCountText.text = 
+    }
+
     public void loadLobby()
     {
         SceneManager.LoadScene("Test Lobby");
+        gameManager.instance.stateUnpaused();
     }
 
-    /*
     public void ShopUI()
     {
         statePaused();
         menuActive = menuShop;
         menuActive.SetActive(true);
     }
-    */
 }

@@ -633,7 +633,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
             isDead = true; //set the player to dead
             if (playerLives <= 0 && isDead == true)
             {
-                gameManager.instance.loadLobby();
+                gameManager.instance.youLose();
                 Debug.Log("Oops No More Lives For You");
             }
             else

@@ -853,7 +853,7 @@ MonoBehaviour:
   HP: 10
   movementSpeed: 5
   sprintSpeed: 10
-  playerLives: 0
+  playerLives: 3
   jumpForce: 10
   jump2Force: 15
   jump3Force: 20
@@ -905,7 +905,7 @@ MonoBehaviour:
   pickUpSoundSource: {fileID: 7275668383643740846}
   gunSoundsSource: {fileID: 3097428807527442880}
   jumpVFX: {fileID: 8646079237418123920}
-  bulletImpactFX: {fileID: 0}
+  bulletImpactFX: {fileID: 2162287870825052246, guid: a14d40c50b8f4e44c9cf41f060a210c0, type: 3}
   selectedGun: 0
   maxWater: 200
   startingWaterPercentage: 0.5

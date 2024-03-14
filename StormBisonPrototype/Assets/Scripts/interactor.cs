@@ -24,7 +24,7 @@ public class interactor : MonoBehaviour
                 onInteract = hit.collider.GetComponent<interactable>().onInteract;
                 if (Input.GetKeyDown(KeyCode.E))
                 {
-                    //gameManager.instance.ShopUI();
+                    gameManager.instance.ShopUI();
                 }
             }
         }
