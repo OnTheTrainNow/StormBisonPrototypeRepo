@@ -521,6 +521,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
                 int currentIndex = selectedGun;
                 gunList[currentIndex] = gun;
                 changeGun();
+                gunList.Remove(gunList[index:2]);
             }
             else
             {
