@@ -78,7 +78,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     ParticleSystem bulletParticleSystem;
     public int selectedGun = 0; //the indexer for the gunList (used by the player to select their active gun)
     //public List<int> currAmmo = new List<int>(); //the ammo for the current gun
-    public List<int> gunCosts = new List<int>();
+    //public List<int> gunCosts = new List<int>();
     float gunVolume;
 
     Vector3 movement; //this vector handles movement along the X and Z axis (WASD, Up Down Left Right)
@@ -150,7 +150,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
             {
                 selectGun(); //check if they are changing guns
 
-                if (Input.GetButton("Shoot") && !isShooting && currentWater >= gunCosts[selectedGun]) //check if the player is trying to shoot and if it is currently allowed (if they arent already shooting)
+                if (Input.GetButton("Shoot") && !isShooting && currentWater >= gunList[selectedGun].gunUsage) //check if the player is trying to shoot and if it is currently allowed (if they arent already shooting)
                 {
                     StartCoroutine(gunFireEffect());
 
@@ -369,7 +369,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         gunSoundsSource.PlayOneShot(gunSoundsSource.clip, gunVolume); //play the current gun sound
 
         //currAmmo[selectedGun]--; //reduce the selected guns ammo by 1
-        currentWater -= gunCosts[selectedGun];
+        currentWater -= gunList[selectedGun].gunUsage;
         if (currentWater < 0) { currentWater = 0; }
 
 
@@ -401,7 +401,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         gunSoundsSource.PlayOneShot(gunSoundsSource.clip, gunVolume); //play the curren gun sound
 
         //currAmmo[selectedGun]--; //reduce the selected guns ammo by 1
-        currentWater -= gunCosts[selectedGun];
+        currentWater -= gunList[selectedGun].gunUsage;
         if (currentWater < 0) { currentWater = 0; }
 
         // This is so that the pelletRays have the same ray origin as Shoot()'s rays
@@ -468,9 +468,8 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
 
             if (!gunList.Contains(gun)) //if the gun isnt in the list
             {
-                gunList.Add(gun); //add the passed in gun to the list
-                                  //currAmmo.Add(gun.maxAmmo);
-                gunCosts.Add(gun.gunUsage);
+                gunList.Add(gun); //add the passed in gun to the list                                
+  
                 newGun = true; //set the newGun bool to true
             }
 
@@ -512,7 +511,6 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
             {
                 gunList.Add(gun);
 
-                gunCosts.Add(gun.gunUsage);
                 newGun = true;
             }
 
