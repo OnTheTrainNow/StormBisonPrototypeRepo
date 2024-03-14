@@ -869,7 +869,7 @@ GameObject:
   - component: {fileID: -3681630622553407822}
   m_Layer: 0
   m_Name: Enemy sniper
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -941,6 +941,12 @@ MonoBehaviour:
   enemyHurtVol: 1
   enemyShots: {fileID: 8300000, guid: b56cf03a9f296d14387dac3403b2f727, type: 3}
   enemyShotsVol: 1
+  patrolling: 0
+  patrolPos: []
+  isRNG: 0
+  drop: {fileID: 0}
+  rngDrops: []
+  rngDropsRate: []
 --- !u!95 &920004103683814774
 Animator:
   serializedVersion: 5

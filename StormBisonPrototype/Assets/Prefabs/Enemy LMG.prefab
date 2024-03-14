@@ -284,7 +284,7 @@ GameObject:
   - component: {fileID: -4825209319157097512}
   m_Layer: 0
   m_Name: Enemy LMG
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -356,6 +356,12 @@ MonoBehaviour:
   enemyHurtVol: 1
   enemyShots: {fileID: 8300000, guid: 94c5c23c515ee524db2d8b4816842a68, type: 3}
   enemyShotsVol: 1
+  patrolling: 0
+  patrolPos: []
+  isRNG: 0
+  drop: {fileID: 0}
+  rngDrops: []
+  rngDropsRate: []
 --- !u!95 &8121291022707772453
 Animator:
   serializedVersion: 5

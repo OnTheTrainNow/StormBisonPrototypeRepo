@@ -6841,6 +6841,10 @@ PrefabInstance:
       propertyPath: crouchControllerHeight
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4630737454425940122, guid: fbf486c5c2e000c409108f5bcdd19c49, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5429629153115185322, guid: fbf486c5c2e000c409108f5bcdd19c49, type: 3}
       propertyPath: m_Enabled
       value: 1
