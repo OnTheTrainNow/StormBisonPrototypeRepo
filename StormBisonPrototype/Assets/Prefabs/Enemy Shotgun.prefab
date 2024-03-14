@@ -1056,7 +1056,7 @@ GameObject:
   - component: {fileID: -6298050844954029422}
   m_Layer: 0
   m_Name: Enemy Shotgun
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1128,6 +1128,12 @@ MonoBehaviour:
   enemyHurtVol: 1
   enemyShots: {fileID: 8300000, guid: 0c7cb4be866e0e64193a6a932a513654, type: 3}
   enemyShotsVol: 1
+  patrolling: 0
+  patrolPos: []
+  isRNG: 0
+  drop: {fileID: 0}
+  rngDrops: []
+  rngDropsRate: []
 --- !u!95 &8247513071359957879
 Animator:
   serializedVersion: 5

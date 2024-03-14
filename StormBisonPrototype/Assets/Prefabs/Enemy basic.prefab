@@ -393,7 +393,7 @@ GameObject:
   - component: {fileID: -3788929693599086162}
   m_Layer: 0
   m_Name: Enemy basic
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -465,6 +465,12 @@ MonoBehaviour:
   enemyHurtVol: 1
   enemyShots: {fileID: 8300000, guid: 3e2bf76f2e1588649b341ccdba3e5ccc, type: 3}
   enemyShotsVol: 1
+  patrolling: 0
+  patrolPos: []
+  isRNG: 0
+  drop: {fileID: 0}
+  rngDrops: []
+  rngDropsRate: []
 --- !u!95 &8514929546904190882
 Animator:
   serializedVersion: 5

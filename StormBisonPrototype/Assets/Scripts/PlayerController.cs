@@ -33,7 +33,8 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     [SerializeField] float jetPackForce = 2f;
     [SerializeField] int jetPackUsage;
     [SerializeField] float jetPackSprintUsageScaler = 2f; //this is a scaler variable for how fast the jetpack drains while sprinting
-    [SerializeField] float jetPackDisableLaunchTime = .5f; //how long the jetpack is disabled for after launching
+    [SerializeField] float jetPackDisableLaunchTime = .5f; //how long the jetpack is disabled for after launching 
+    [SerializeField] float jetPackDisableWallTime = .5f; //how long the jetpack is disabled for after  wall jumping
 
     //jump timers
     [SerializeField] float jump2Time; //how long the jump timer can last in between jump 1 and jump 2 (this is the time the player has to combo into the next jump)
@@ -118,6 +119,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     float jumpTimer; //jump timer is a float that increases with time and is reset when the player jumps (this functionality will be used for the jump mechanic
     bool canJump; //a bool used to determine whether the player can currently jump
     bool isJumping;
+    bool isWallJumping;
 
     //LaunchControls
     Vector3 pushBack;
@@ -207,6 +209,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
             isLaunching = false; //if you are grounded then you would be at the end of a launch
             canJump = true; //isGrounded is kinda buggy to use on its own for jumping, so a can jump bool is set to true when the player touches the ground
             isJumping = false;
+            isWallJumping = false;
         }
 
         if (!isLaunching) //if the player is launching out of a pipe then ignore new inputs until they land or jump
@@ -329,6 +332,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     private void ProcessJetpack()
     {
         if (launchTimer <= jetPackDisableLaunchTime) { return; } //if the launch timer is too low than don't give access to the jetpack
+        if (isWallJumping && jumpTimer <= jetPackDisableWallTime) { return; } //if the player is wall jumping and the jump timer is low
         
         if(!playerController.isGrounded && Input.GetButton("Jetpack M2") && currentWater > 0) //if the player holds the jetpack button and has water (being grounded is in debate as a requirment)
         {
@@ -352,34 +356,29 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
 
     void OnControllerColliderHit(ControllerColliderHit other)
     {
+        if (other.gameObject.CompareTag("Enemy")) { return; } //if the hit object is an enemy than ignore it
         if (!playerController.isGrounded && (other.normal.y < .1f && other.normal.y >= 0)) //when the player collides, isn't grounded, and the other objects normal is near vertical
         {
-            if (Input.GetButtonDown("Jump"))
+            if (Input.GetButtonDown("Jump") || Input.GetButtonUp("Jump")) //the timing is kinda hard so wall jumping checks for either button up or down
             {
-                Vector3 direction = Vector3.Reflect(playerController.transform.forward, other.normal);
-                Debug.DrawRay(other.point, direction, Color.red, 2f);
-                playerController.transform.rotation = Quaternion.LookRotation(direction);
-                movement = direction;
-                //mainCamera.CameraWallJump(direction);
+                Vector3 direction = Vector3.Reflect(playerController.transform.forward, other.normal); //get their reflected direction off the normal
+                Debug.DrawRay(other.point, direction, Color.red, 2f); //this draws the direction for debugging
+                playerController.transform.rotation = Quaternion.LookRotation(direction, Vector3.up); //set the players rotation to that of the direction
+                movement = direction; //change the players movement direction to match the direction
                 ProcessWallJump();
-                /*Debug.DrawRay(other.point, other.normal, Color.red, 2f);
-                Debug.Log(other.normal.y);*/
             }
         }
     }
-
     private void ProcessWallJump()
     {
         jumpVFX.Play(); //play the jump particle effect
         PlayJumpSound(1);
-        isLaunching = true;
+        isWallJumping = true;
         isJumping = true;
         canJump = false;
         isSpeedChangeable = false; //you cant change speed when already in the air
-        //isLaunching = false; //jumping cancels out the launch
         verticleVelocity.y = wallJumpForce; //set the verticle velocity to the jump force (this makes the player go up)
-        //currentJumps++; //increment the current jump count
-        jumpTimer = 0; //reset the jump timer if the player is grounded
+        jumpTimer = 0; //reset the jump timer (you can continue jump combos from wall jumps)
     }
 
     //Water Tank
@@ -758,6 +757,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         isLaunching = true; //set is launching to true
         canJump = false; //if the player launches they shouldn't be able to jump until after landing
         isJumping = false; //if the player launches while jumping they should no longer be considered jumping
+        isWallJumping = false; //if the player launches while wall jumping they are no longer considered wall jumping
     }
 
     public void BounceOff(float BounceForce) //this is called if the player stomps on an enemies head

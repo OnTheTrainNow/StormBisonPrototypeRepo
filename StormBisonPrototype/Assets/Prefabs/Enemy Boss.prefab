@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 126825218107069685}
   m_Layer: 0
   m_Name: Enemy Boss
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -89,6 +89,12 @@ MonoBehaviour:
   enemyHurtVol: 1
   enemyShots: {fileID: 8300000, guid: 94c5c23c515ee524db2d8b4816842a68, type: 3}
   enemyShotsVol: 1
+  patrolling: 0
+  patrolPos: []
+  isRNG: 0
+  drop: {fileID: 0}
+  rngDrops: []
+  rngDropsRate: []
 --- !u!114 &4566547176631055044
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -103,6 +109,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bossStar: {fileID: 2307301218259941284, guid: 0872a0021681a114f957aed8712bc8d4, type: 3}
   positionIndex: 0
+  starID: 0
 --- !u!95 &792399801755707544
 Animator:
   serializedVersion: 5

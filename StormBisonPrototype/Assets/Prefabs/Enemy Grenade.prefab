@@ -424,7 +424,7 @@ GameObject:
   - component: {fileID: 6593789628113574021}
   m_Layer: 0
   m_Name: Enemy Grenade
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -496,6 +496,12 @@ MonoBehaviour:
   enemyHurtVol: 1
   enemyShots: {fileID: 8300000, guid: 94c5c23c515ee524db2d8b4816842a68, type: 3}
   enemyShotsVol: 0.5
+  patrolling: 0
+  patrolPos: []
+  isRNG: 0
+  drop: {fileID: 0}
+  rngDrops: []
+  rngDropsRate: []
 --- !u!95 &8013512473165784994
 Animator:
   serializedVersion: 5
