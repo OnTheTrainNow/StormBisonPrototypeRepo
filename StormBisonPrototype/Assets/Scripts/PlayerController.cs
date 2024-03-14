@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     [SerializeField] float jumpForce = 10f; //this controls how high a player can jump
     [SerializeField] float jump2Force = 15f; //this is how high the player jumps in combo jump 2
     [SerializeField] float jump3Force = 20f; //this is how high the player jumps in combo jump 3
+    [SerializeField] float wallJumpForce = 10f; //this controls how high a player can jump from walls
     [Range(0, 1)][SerializeField] float variableJumpPercentage = .75f;
 
     [SerializeField] float jetPackForce = 2f;
@@ -347,6 +348,37 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
             if (!isJetPackShooting) { StartCoroutine(JetPackShoot()); }
             if (currentWater < 0) { currentWater = 0; } //if the water drops below 0 during this process set it back to 0
         }
+    }
+
+    void OnControllerColliderHit(ControllerColliderHit other)
+    {
+        if (!playerController.isGrounded && (other.normal.y < .1f && other.normal.y >= 0)) //when the player collides, isn't grounded, and the other objects normal is near vertical
+        {
+            if (Input.GetButtonDown("Jump"))
+            {
+                Vector3 direction = Vector3.Reflect(playerController.transform.forward, other.normal);
+                Debug.DrawRay(other.point, direction, Color.red, 2f);
+                movement = direction;
+                //mainCamera.CameraWallJump(direction);
+                ProcessWallJump();
+                /*Debug.DrawRay(other.point, other.normal, Color.red, 2f);
+                Debug.Log(other.normal.y);*/
+            }
+        }
+    }
+
+    private void ProcessWallJump()
+    {
+        jumpVFX.Play(); //play the jump particle effect
+        PlayJumpSound(1);
+        isLaunching = true;
+        isJumping = true;
+        canJump = false;
+        isSpeedChangeable = false; //you cant change speed when already in the air
+        //isLaunching = false; //jumping cancels out the launch
+        verticleVelocity.y = wallJumpForce; //set the verticle velocity to the jump force (this makes the player go up)
+        //currentJumps++; //increment the current jump count
+        jumpTimer = 0; //reset the jump timer if the player is grounded
     }
 
     //Water Tank
