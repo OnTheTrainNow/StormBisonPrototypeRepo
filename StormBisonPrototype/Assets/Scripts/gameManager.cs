@@ -14,7 +14,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
     [SerializeField] GameObject menuDied;
-    [SerializeField] GameObject menuShop;
+    //[SerializeField] GameObject menuShop;
 
     [SerializeField] TMP_Text weaponEquipped; //weapon equipped text component
     [SerializeField] TMP_Text enemyCountText; //enemy count text component
@@ -128,7 +128,6 @@ public class gameManager : MonoBehaviour
         statePaused();
         menuActive = menuDied;
         menuActive.SetActive(true);
-        DataManager.instance.savePlayerData();
     }
 
     public void updateWeaponEquipped()
@@ -156,10 +155,12 @@ public class gameManager : MonoBehaviour
         SceneManager.LoadScene("Test Lobby");
     }
 
+    /*
     public void ShopUI()
     {
         statePaused();
         menuActive = menuShop;
         menuActive.SetActive(true);
     }
+    */
 }
