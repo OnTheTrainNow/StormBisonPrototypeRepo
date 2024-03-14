@@ -357,10 +357,14 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     void OnControllerColliderHit(ControllerColliderHit other)
     {
         if (other.gameObject.CompareTag("Enemy")) { return; } //if the hit object is an enemy than ignore it
+
         if (!playerController.isGrounded && (other.normal.y < .1f && other.normal.y >= 0)) //when the player collides, isn't grounded, and the other objects normal is near vertical
         {
             if (Input.GetButtonDown("Jump") || Input.GetButtonUp("Jump")) //the timing is kinda hard so wall jumping checks for either button up or down
             {
+                Debug.DrawRay(playerController.transform.position, playerController.transform.forward * 1f, Color.yellow, 1f); //debug ray 
+                if (!Physics.Raycast(playerController.transform.position, playerController.transform.forward, 1f)) { return; } //use a forward facing raycast to determine if the player is facing the wall enough
+                
                 Vector3 direction = Vector3.Reflect(playerController.transform.forward, other.normal); //get their reflected direction off the normal
                 Debug.DrawRay(other.point, direction, Color.red, 2f); //this draws the direction for debugging
                 playerController.transform.rotation = Quaternion.LookRotation(direction, Vector3.up); //set the players rotation to that of the direction
