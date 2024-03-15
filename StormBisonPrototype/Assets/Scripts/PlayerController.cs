@@ -153,6 +153,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         defaultColliderHeight = playerCollider.height; //get the orginal collider height
         currentSpeed = movementSpeed; //to avoid issues the default current speed is the same as movement when the program starts
         respawn();
+        UpdateWaterUI(); //update the water UI
     }
 
     
@@ -454,6 +455,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
 
             if (!isJetPackShooting) { StartCoroutine(JetPackShoot()); }
             if (currentWater < 0) { currentWater = 0; } //if the water drops below 0 during this process set it back to 0
+            UpdateWaterUI(); //update the water UI
         }
         else
         {
@@ -511,6 +513,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         {
             currentWater = maxWater; //set it equal to max water
         }
+        UpdateWaterUI(); //update the water UI
     }
 
     public void constFillTank(float fillAmount) //this version of filltank is used for the constant source
@@ -531,6 +534,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         {
             currentWater = maxWater; //set it equal to max water
         }
+        UpdateWaterUI(); //update the water UI
     }
 
     //shooting
@@ -544,6 +548,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         //currAmmo[selectedGun]--; //reduce the selected guns ammo by 1
         currentWater -= gunList[selectedGun].gunUsage;
         if (currentWater < 0) { currentWater = 0; }
+        UpdateWaterUI(); //update the water UI
 
 
         RaycastHit hit;
@@ -576,6 +581,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         //currAmmo[selectedGun]--; //reduce the selected guns ammo by 1
         currentWater -= gunList[selectedGun].gunUsage;
         if (currentWater < 0) { currentWater = 0; }
+        UpdateWaterUI(); //update the water UI
 
         // This is so that the pelletRays have the same ray origin as Shoot()'s rays
         Ray pelletRay = Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f));
@@ -851,6 +857,13 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
             gameManager.instance.playerHPCircleBackground.enabled = false; //otherwise disable it
             gameManager.instance.playerHPCircle.enabled = false; //otherwise disable it
         }
+    }
+
+    void UpdateWaterUI()
+    {
+        gameManager.instance.playerWaterBar.fillAmount = currentWater / maxWater;
+        int waterInt = (int)currentWater;
+        gameManager.instance.waterCountText.text = waterInt.ToString(); //update the ammo count on the UI
     }
 
     IEnumerator flashDamage()

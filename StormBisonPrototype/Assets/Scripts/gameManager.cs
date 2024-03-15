@@ -18,9 +18,10 @@ public class gameManager : MonoBehaviour
 
     [SerializeField] TMP_Text weaponEquipped; //weapon equipped text component
     [SerializeField] TMP_Text enemyCountText; //enemy count text component
-    [SerializeField] TMP_Text waterCountText; //enemy count text component
     [SerializeField] TMP_Text starCountText; //star count text component
     [SerializeField] TMP_Text coinCountText; //coin count text component
+
+    public TMP_Text waterCountText; //enemy count text component
 
     public TMP_Text sensitivityTextX; //the text for the horizontal sensitivity
     public Slider sensitivitySliderX; //the slider for the horzontal sensitivity
@@ -29,6 +30,9 @@ public class gameManager : MonoBehaviour
 
     public Image playerHPCircle; //player HP circle image
     public Image playerHPCircleBackground; //player HP circle image background
+
+    public Image playerWaterBar; //player HP circle image
+
     public GameObject playerDamageFlash; //the damage effect panel
     public GameObject playerSpawnPosition; //the player spawn position
 
@@ -59,13 +63,7 @@ public class gameManager : MonoBehaviour
     }
 
     void Update()
-    {
-        if (playerScript.currentWater > 0)
-        {
-            int waterInt = (int)playerScript.currentWater;
-            waterCountText.text = waterInt.ToString(); //update the ammo count on the UI
-        }
-        
+    {       
 
         // esc key will bring up Pause Menu, requires button functionality script
         if (Input.GetButtonDown("Cancel") && menuActive == null)
