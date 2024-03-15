@@ -857,17 +857,23 @@ MonoBehaviour:
   jumpForce: 10
   jump2Force: 15
   jump3Force: 20
+  wallJumpForce: 10
+  longJumpForce: 12
   variableJumpPercentage: 0.8
+  longJumpSpeedTuner: 2.5
   jetPackForce: 1.5
   jetPackUsage: 10
   jetPackSprintUsageScaler: 2
   jetPackDisableLaunchTime: 0.5
+  jetPackDisableWallTime: 0.5
   jump2Time: 1.75
   jump3Time: 2
   gravity: -20
   pushBackResolve: 5
   crouchControllerHeight: 0
   crouchColliderHeight: 0
+  slideSpeedTuner: 2.5
+  slideSpeedFallOff: 2
   gunList: []
   gunModel: {fileID: 2142542849206352620}
   gunFireSprite: {fileID: 3185400160208435130}
@@ -909,7 +915,9 @@ MonoBehaviour:
   selectedGun: 0
   maxWater: 200
   startingWaterPercentage: 0.5
+  constantFillRate: 1
   currentWater: 0
+  isConstantFill: 0
   isShotgunEquipped: 0
   isPistolEquipped: 0
   isRifleEquipped: 0

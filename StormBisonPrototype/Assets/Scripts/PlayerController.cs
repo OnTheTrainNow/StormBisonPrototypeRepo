@@ -103,10 +103,11 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     //water tank
     [SerializeField] float maxWater;
     [Range(0,1)][SerializeField] float startingWaterPercentage;
+    [SerializeField] float constantFillRate; //this is the rate the water fills at while in a constant water source
     public float currentWater;
+    public bool isConstantFill;
     bool isJetPackShooting;
-    bool isJetPacking;
-
+    bool isJetPacking; 
 
     // bools related to the weapon ui
     public bool isShotgunEquipped; // bool to help check if shotgun is equipped
@@ -199,6 +200,14 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         if (Input.GetButtonDown("Refill Test Tool"))
         {
             fillTank(7);
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (isConstantFill && currentWater < 200)
+        {
+            constFillTank(constantFillRate);
         }
     }
 
@@ -485,7 +494,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     }
 
     //Water Tank
-    public void fillTank(int fillAmount) //this is for testing purposes (it probably needs to be changed when actual water sources are added) constant source probably needs seperate logic
+    public void fillTank(int fillAmount) //this version of filltank is for collectable water sources
     {
         if (currentWater < maxWater) //if the current water is less than max water than follow fill logic
         {
@@ -503,6 +512,27 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
             currentWater = maxWater; //set it equal to max water
         }
     }
+
+    public void constFillTank(float fillAmount) //this version of filltank is used for the constant source
+    {
+        if (isJetPacking) { return; } //disable filling while jetpacking 
+        if (currentWater < maxWater) //if the current water is less than max water than follow fill logic
+        {
+            if ((currentWater + fillAmount) >= maxWater) //if curr water and fill amount combined are greater than or equal to tank capacity 
+            {
+                currentWater = maxWater; //fill to max
+            }
+            else
+            {
+                currentWater += fillAmount; //otherwise the fill amount is low enough to just add it 
+            }
+        }
+        if (currentWater > maxWater) //if current water somehow manages to go over tank capacity
+        {
+            currentWater = maxWater; //set it equal to max water
+        }
+    }
+
     //shooting
     IEnumerator Shoot()
     {
