@@ -28,7 +28,9 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     [SerializeField] float jump2Force = 15f; //this is how high the player jumps in combo jump 2
     [SerializeField] float jump3Force = 20f; //this is how high the player jumps in combo jump 3
     [SerializeField] float wallJumpForce = 10f; //this controls how high a player can jump from walls
+    [SerializeField] float longJumpForce = 12f;
     [Range(0, 1)][SerializeField] float variableJumpPercentage = .75f;
+    [SerializeField] float longJumpSpeedTuner = 2.5f;
 
     [SerializeField] float jetPackForce = 2f;
     [SerializeField] int jetPackUsage;
@@ -46,6 +48,9 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     [Header("Crouching")]
     [SerializeField]float crouchControllerHeight; //the controller height for crouching
     [SerializeField]float crouchColliderHeight; //the collider height for crouching
+
+    [SerializeField] float slideSpeedTuner = 2.5f;
+    [SerializeField] float slideSpeedFallOff = 2f;
 
     [Header("Weapon Stats")]
     [SerializeField] List<GunStats> gunList = new List<GunStats>(); //this list represents the players weapon loadout
@@ -125,6 +130,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     bool canJump; //a bool used to determine whether the player can currently jump
     bool isJumping;
     bool isWallJumping;
+    bool isLongJumping;
 
     //LaunchControls
     Vector3 pushBack;
@@ -210,9 +216,10 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
             isJumping = false;
             isWallJumping = false;
             isJetPacking = false;
+            isLongJumping = false;
         }
 
-        if (!isLaunching && !isSliding) //if the player is launching out of a pipe then ignore new inputs until they land or jump
+        if (!isLaunching && !isSliding && !isLongJumping) //if the player is launching out of a pipe then ignore new inputs until they land or jump
         {
             //GetAxis returns the direction value along the given axis. transform.right and transform.forward return a Vector3 value for the given axis (X,0,0) and (0,0,Z)
             //When added together they give the final Vector which will represent movement on the X and Z axis (X, 0, Z)
@@ -220,34 +227,51 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
             if (movement.magnitude > 1) { movement.Normalize(); } //diagonal movement returns a magnitude of 1.41 meaning the player moves faster than normal in that direction. If thats not intended then this line normalizes it to 1.
         }
 
-
+        if (isLongJumping) //if the player is longjumping then their movement gets handled differently
+        {
+            if (jumpTimer <= 0.5) //the player has to wait half a second after jumping before changing direction/speed
+            {
+                movement = transform.forward; //the player has to move forward when the long jump starts
+            }
+            else
+            {
+                float direction = Input.GetAxis("Vertical"); //get the direction of players vertical input
+                if (direction < 0) { currentSpeed = sprintSpeed; } //if its below 0 (backwards) then reduce the long jumps speed (im using sprint since its slower)
+                movement = direction * transform.forward; //apply the direction to the movement
+            }
+            if (movement.magnitude > 1) { movement.Normalize(); } //normalize the movement
+            
+        }
 
         playerController.Move(movement * currentSpeed * Time.deltaTime); //use the player controller to move the object based on the movement direction above multiplied by the speed (velocity). Time.deltaTime makes it frame rate independan
 
         ProcessSlide();
 
-        //this is the jump combo system
-        if (canJump && currentJumps == 1 && jumpTimer <= jump2Time && Input.GetButtonDown("Jump")) //if the player can jump, presses jump, is on their second jump, and the jump timer is less then jump 2 combo allowed time
+        if (!isSliding) //if the player is sliding than long jumping will be handled by process slide
         {
-            PlayJumpSound(1); //play the second sound in the list
-            ProcessJump(jump2Force); //process a jump with the jump 2 force
-        }
-        else if (canJump && currentJumps == 2 && jumpTimer <= jump3Time && Input.GetButtonDown("Jump")) //if the player can jump, presses jump, is on their third jump, and the jump timer is less then jump 3 combo allowed time
-        {
-            PlayJumpSound(2); //play the third sound in the list
-            ProcessJump(jump3Force); //process a jump with the jump 3 force
-        }
-        else if (canJump && Input.GetButtonDown("Jump")) //this is the default jump for when the player doesnt reach any of the above conditions
-        {
-            PlayJumpSound(0); //play the first sound in the list
-            currentJumps = 0; //this jump starts the combo, but is not guaranteed to be zero when the player jumps so reset it to zero
-            ProcessJump(jumpForce); //process a jump with regular jump force
-        }
+            //this is the jump combo system
+            if (canJump && currentJumps == 1 && jumpTimer <= jump2Time && Input.GetButtonDown("Jump")) //if the player can jump, presses jump, is on their second jump, and the jump timer is less then jump 2 combo allowed time
+            {
+                PlayJumpSound(1); //play the second sound in the list
+                ProcessJump(jump2Force); //process a jump with the jump 2 force
+            }
+            else if (canJump && currentJumps == 2 && jumpTimer <= jump3Time && Input.GetButtonDown("Jump")) //if the player can jump, presses jump, is on their third jump, and the jump timer is less then jump 3 combo allowed time
+            {
+                PlayJumpSound(2); //play the third sound in the list
+                ProcessJump(jump3Force); //process a jump with the jump 3 force
+            }
+            else if (canJump && Input.GetButtonDown("Jump")) //this is the default jump for when the player doesnt reach any of the above conditions
+            {
+                PlayJumpSound(0); //play the first sound in the list
+                currentJumps = 0; //this jump starts the combo, but is not guaranteed to be zero when the player jumps so reset it to zero
+                ProcessJump(jumpForce); //process a jump with regular jump force
+            }
 
-        //this if statement is the logic for variable jump
-        if (isJumping && Input.GetButtonUp("Jump") && verticleVelocity.y > 0f) //if the player has upward velocity and is jumping and lets off the jump button
-        {
-            verticleVelocity.y *= variableJumpPercentage;
+            //this if statement is the logic for variable jump
+            if (isJumping && Input.GetButtonUp("Jump") && verticleVelocity.y > 0f) //if the player has upward velocity and is jumping and lets off the jump button
+            {
+                verticleVelocity.y *= variableJumpPercentage;
+            }
         }
 
         ProcessJetpack();
@@ -287,7 +311,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
 
     private void ProcessCrouch()
     {
-        if (isSliding || isSprinting || isJumping) { return; }
+        if (isSliding || isSprinting || isJumping || isJetPacking) { return; }
         if (Input.GetKeyDown(KeyCode.LeftControl)) //if the player pressed the crouch button 
         {
             if (!isCrouched) //if they arent crouched
@@ -333,7 +357,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
             slideDirection = Quaternion.LookRotation(playerController.transform.forward, Vector3.up);  //store the players current forward direction
 
             isSprinting = false; //the player is no longer considered sprinting       
-            currentSpeed = sprintSpeed * 2.5f; //set the current speed to faster than sprint (it will drop quickly)
+            currentSpeed = sprintSpeed * slideSpeedTuner; //set the current speed to faster than sprint (it will drop quickly)
             isCrouched = true; //set crouched bool to true
             playerController.height = crouchControllerHeight; //reduce the controller and collider height
             playerCollider.height = crouchColliderHeight; //reduce the collider height
@@ -349,7 +373,12 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         if (isSliding) //this handles lerp the slide speed back to near zero
         {
             playerController.transform.rotation = slideDirection; //set the players rotation to the slide rotation while sliding
-            currentSpeed = Mathf.Lerp(currentSpeed, 0f, Time.deltaTime * 2f); //lerp the speed down to zero
+            currentSpeed = Mathf.Lerp(currentSpeed, 0f, Time.deltaTime * slideSpeedFallOff); //lerp the speed down to zero
+
+            if (Input.GetButtonDown("Jump"))
+            {
+                ProcessLongJump();
+            }
             if (currentSpeed <= 0.5f) //if the current speed drops low enough (its hard to check zero itself) 
             { 
                 isSliding = false; //the player is no longer sliding (this leaves them in crouch state without sliding restrictions on speed and rotation)
@@ -361,11 +390,33 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     private void ProcessJump(float jumpforce)
     {
         jumpVFX.Play(); //play the jump particle effect
+        isSliding = false;
         isJumping = true;
         canJump = false;
         isSpeedChangeable = false; //you cant change speed when already in the air
         isLaunching = false; //jumping cancels out the launch
         verticleVelocity.y = jumpforce; //set the verticle velocity to the jump force (this makes the player go up)
+        currentJumps++; //increment the current jump count
+        jumpTimer = 0; //reset the jump timer if the player is grounded
+    }
+
+    private void ProcessLongJump()
+    {
+        PlayJumpSound(2);
+        jumpVFX.Play(); //play the jump particle effect
+        isJumping = true;
+        isLongJumping = true;
+        canJump = false;
+        isSliding = false;
+
+        isCrouched = false;
+        playerController.height = defaultControllerHeight; //set the controller and collider heights back to default
+        playerCollider.height = defaultColliderHeight; //reset the collider height
+
+        currentSpeed = sprintSpeed * longJumpSpeedTuner;
+
+        isSpeedChangeable = false; //you cant change speed when already in the air
+        verticleVelocity.y = longJumpForce; //set the verticle velocity to the jump force (this makes the player go up)
         currentJumps++; //increment the current jump count
         jumpTimer = 0; //reset the jump timer if the player is grounded
     }
@@ -380,6 +431,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
             isJetPacking = true;
             isSpeedChangeable = true; //allow them to control sprint speed
             isJumping = false; //they are no longer considered jumping after using the jetpack
+            isLongJumping = false;
             isLaunching = false; //they are no longer considered launchign after using the jetpack
             verticleVelocity.y = jetPackForce; //set the y velocity to jetpack force each frame they hold
             if (isSprinting) //if the player is sprinting while using the jetpack
@@ -425,6 +477,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         PlayJumpSound(1);
         isWallJumping = true;
         isJumping = true;
+        isLongJumping = false;
         canJump = false;
         isSpeedChangeable = false; //you cant change speed when already in the air
         verticleVelocity.y = wallJumpForce; //set the verticle velocity to the jump force (this makes the player go up)
@@ -808,6 +861,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         canJump = false; //if the player launches they shouldn't be able to jump until after landing
         isJumping = false; //if the player launches while jumping they should no longer be considered jumping
         isWallJumping = false; //if the player launches while wall jumping they are no longer considered wall jumping
+        isLongJumping = false;
     }
 
     public void BounceOff(float BounceForce) //this is called if the player stomps on an enemies head
