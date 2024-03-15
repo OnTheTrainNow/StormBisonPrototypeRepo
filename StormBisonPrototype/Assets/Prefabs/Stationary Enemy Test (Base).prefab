@@ -339,6 +339,7 @@ GameObject:
   - component: {fileID: 1198200925954748703}
   - component: {fileID: 6876428331880366413}
   - component: {fileID: 7151192157182840769}
+  - component: {fileID: 3486738917812981122}
   m_Layer: 0
   m_Name: Stationary Enemy Test (Base)
   m_TagString: Untagged
@@ -383,8 +384,8 @@ MonoBehaviour:
   shootPos2: {fileID: 0}
   shootPos3: {fileID: 0}
   headPos: {fileID: 4212367540428972761}
-  enemyAudio: {fileID: 0}
-  HP: 10
+  enemyAudio: {fileID: 3486738917812981122}
+  HP: 3
   viewCone: 45
   shootCone: 35
   targetFaceSpeed: 12
@@ -401,12 +402,14 @@ MonoBehaviour:
   enemyStepsVol: 0.5
   enemyHurtSound: []
   enemyHurtVol: 0.5
-  enemyShots: {fileID: 0}
+  enemyShots: {fileID: 8300000, guid: 3e2bf76f2e1588649b341ccdba3e5ccc, type: 3}
   enemyShotsVol: 0.5
   isPatrolling: 0
   patrolPauseTime: 0
   patrolPos: []
   isStationary: 1
+  isTurret: 1
+  panSpeed: 2
   panPauseTime: 3
   stationaryLookPos:
   - {fileID: 0}
@@ -531,6 +534,102 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 15
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!82 &3486738917812981122
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3114810154435544941}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &3662923928995370984
 GameObject:
   m_ObjectHideFlags: 0
@@ -556,7 +655,7 @@ Transform:
   m_GameObject: {fileID: 3662923928995370984}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -0, y: -0, z: 1.5810015}
+  m_LocalPosition: {x: -0, y: -0, z: 1.57}
   m_LocalScale: {x: 0.6666666, y: 0.6666666, z: 0.5000001}
   m_ConstrainProportionsScale: 0
   m_Children: []

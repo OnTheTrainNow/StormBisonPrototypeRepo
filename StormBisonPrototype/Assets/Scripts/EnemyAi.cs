@@ -55,6 +55,8 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
 
     [Header("Stationary")]
     [SerializeField] bool isStationary;
+    [SerializeField] bool isTurret;
+    [SerializeField] int panSpeed;
     [SerializeField] int panPauseTime;
     [SerializeField] Transform[] stationaryLookPos;
 
@@ -216,14 +218,14 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
 
     IEnumerator stationaryPan() 
     {
-        angleToPanPos = Vector3.Angle(new Vector3(stationaryLookPos[stationaryItr].position.x, 0, stationaryLookPos[stationaryItr].position.z), headPos.transform.forward);
-        if (angleToPanPos <= 5 && !destChosen)
+        angleToPanPos = Vector3.Angle(headPos.position, stationaryLookPos[stationaryItr].position);
+        if (angleToPanPos <= 15 && !destChosen)
         {
             destChosen = true;
-            
+
             yield return new WaitForSeconds(panPauseTime);
-            faceTargetStationary(stationaryLookPos[stationaryItr].position);
-//if stationaryDir is true iterate forward through array and if its false reverse
+            faceTargetStationaryPan(stationaryLookPos[stationaryItr].position - headPos.position);
+            //if stationaryDir is true iterate forward through array and if its false reverse
             if (stationaryDir)
             {
                 stationaryItr++;
@@ -245,7 +247,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
         }
         else
         {
-            faceTargetStationary(stationaryLookPos[stationaryItr].position);
+            faceTargetStationaryPan(stationaryLookPos[stationaryItr].position - headPos.position);
         }
 
     }
@@ -304,8 +306,15 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
     {
         Quaternion rot = Quaternion.LookRotation(new Vector3(target.x, transform.position.y, target.z));
         transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * targetFaceSpeed);
-        Quaternion rot1 = Quaternion.LookRotation(new Vector3(transform.rotation.x + target.x, target.y + 1, target.z));
+        Quaternion rot1 = Quaternion.LookRotation(new Vector3(transform.rotation.x + target.x, target.y+1, target.z));
         headPos.transform.rotation = Quaternion.Lerp(headPos.transform.rotation, rot1, Time.deltaTime * targetFaceSpeed);
+    }
+    void faceTargetStationaryPan(Vector3 target)
+    {
+        Quaternion rot = Quaternion.LookRotation(new Vector3(target.x, transform.position.y, target.z));
+        transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * panSpeed);
+        //Quaternion rot1 = Quaternion.LookRotation(new Vector3(transform.rotation.x + target.x, target.y, target.z));
+        //headPos.transform.rotation = Quaternion.Lerp(headPos.transform.rotation, rot1, Time.deltaTime * panSpeed);
     }
 
     void OnTriggerEnter(Collider other)
@@ -382,7 +391,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
         playerDir2 = playerDir;//copy player direction
         playerDir2.y = playerDir2.y + 1; //raise target by 1
         //rotate shootPos to player
-        if (!isStationary)
+        if (!isTurret)
         {
             Quaternion rot1 = Quaternion.LookRotation(new Vector3(transform.rotation.x + playerDir2.x, playerDir2.y, playerDir2.z));
             shootPos.transform.rotation = rot1;
