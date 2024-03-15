@@ -52,4 +52,9 @@ public class starManager : MonoBehaviour , IPersistence //most of this functiona
         }
         gameManager.instance.updateStarUI();
     }
+
+    public int getStarCount()
+    {
+        return starCount;
+    }
 }
