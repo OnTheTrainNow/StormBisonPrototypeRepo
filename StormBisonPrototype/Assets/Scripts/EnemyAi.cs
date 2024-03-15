@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
+using static UnityEngine.GraphicsBuffer;
 
 public class enemyAI : MonoBehaviour, IDamage, IPushBack
 {
@@ -48,8 +49,14 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
     [Range(0, 1)] [SerializeField] float enemyShotsVol = 0.5f;
 
     [Header("Patrolling")]
-    [SerializeField] bool patrolling;
+    [SerializeField] bool isPatrolling;
+    [SerializeField] int patrolPauseTime;
     [SerializeField] Transform[] patrolPos;
+
+    [Header("Stationary")]
+    [SerializeField] bool isStationary;
+    [SerializeField] int panPauseTime;
+    [SerializeField] Transform[] stationaryLookPos;
 
     [Header("Drops")]
     [SerializeField] bool isRNG;
@@ -71,27 +78,34 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
     bool isPlayingSteps;
     int patrolItr;
     bool patrolDir;
+    int stationaryItr;
+    bool stationaryDir;
+    float angleToPanPos;
     bool sawPlayer;
 
     bool isDead; // bool to prevent player shotgun pellets from causing issue with enemycount
     Color defaultColor;
 
     void Start()
-    {
+    {   
         stoppingDistOrig = agent.stoppingDistance;
         HPOriginal = HP;
         updateUI();
         gameManager.instance.updateGameGoal(1);
         defaultColor = model.material.GetColor("_Color"); //get the default color of the enemy;
-        patrolItr = -1; //set patrol iterator to 0
+        patrolItr = -1; //set patrol iterator to -1
         patrolDir = true;//set patrol direction to forward
+        stationaryItr = 0; //set patrol iterator to -1
+        stationaryDir = true;//set patrol direction to forward
     }
 
     void Update()
     {
-        float animSpeed = agent.velocity.normalized.magnitude;
-        animator.SetFloat("Speed", Mathf.Lerp(animator.GetFloat("Speed"), animSpeed, Time.deltaTime * animSpeedTrans));
-
+        if (!isStationary)
+        {
+            float animSpeed = agent.velocity.normalized.magnitude;
+            animator.SetFloat("Speed", Mathf.Lerp(animator.GetFloat("Speed"), animSpeed, Time.deltaTime * animSpeedTrans));
+    }
         if (playerInRange && !canSeePlayer())
         {
             if (sawPlayer) //if enemy lost sight of player
@@ -108,8 +122,13 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
                     sawPlayer = false;
                 }
             }
+            //if Stationary pan between designated points
+            else if (isStationary)
+            {
+                StartCoroutine(stationaryPan());
+            }
             // roam/patroling if I'm in your range but i can't see you
-            else if (patrolling)
+            else if (isPatrolling)
             {
                 StartCoroutine(patrol());
             }
@@ -121,8 +140,13 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
         }
         else if (!playerInRange)
         {
+            //if Stationary pan between designated points
+            if (isStationary)
+            {
+                StartCoroutine(stationaryPan());
+            }
             // roam/patroling because you are not in range
-            if (patrolling)
+            else if (isPatrolling)
             {
                 StartCoroutine(patrol());
             }
@@ -171,7 +195,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
             {
                 patrolItr--;
             }
-            yield return new WaitForSeconds(roamPauseTime);
+            yield return new WaitForSeconds(patrolPauseTime);
             agent.SetDestination(patrolPos[patrolItr].position);
             //if patrolItr is at the end of patrolPos reverse direction and if its at teh start set direction to forward
             if (patrolItr == patrolPos.Length - 1)
@@ -190,11 +214,48 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
         }
     }
 
+    IEnumerator stationaryPan() 
+    {
+        angleToPanPos = Vector3.Angle(new Vector3(stationaryLookPos[stationaryItr].position.x, 0, stationaryLookPos[stationaryItr].position.z), headPos.transform.forward);
+        if (angleToPanPos <= 5 && !destChosen)
+        {
+            destChosen = true;
+            
+            yield return new WaitForSeconds(panPauseTime);
+            faceTargetStationary(stationaryLookPos[stationaryItr].position);
+//if stationaryDir is true iterate forward through array and if its false reverse
+            if (stationaryDir)
+            {
+                stationaryItr++;
+            }
+            else
+            {
+                stationaryItr--;
+            }
+            //if stationaryItr is at the end of stationaryPos reverse direction and if its at the start set direction to forward
+            if (stationaryItr == stationaryLookPos.Length - 1)
+            {
+                stationaryDir = false;
+            }
+            if (stationaryItr == 0)
+            {
+                stationaryDir = true;
+            }
+            destChosen = false;
+        }
+        else
+        {
+            faceTargetStationary(stationaryLookPos[stationaryItr].position);
+        }
+
+    }
+
     public bool IsDead() { return isDead; } //getter method for if the enemy isDead
 
     bool canSeePlayer()
     {
         agent.stoppingDistance = stoppingDistOrig;
+       
         playerDir = gameManager.instance.player.transform.position - headPos.position;
 
         angleToPlayer = Vector3.Angle(new Vector3(playerDir.x, 0, playerDir.z), transform.forward);
@@ -206,19 +267,26 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
             Debug.Log(hit.collider.name);
 
             if (hit.collider.CompareTag("Player") && angleToPlayer <= viewCone)
-            {
-                agent.SetDestination(gameManager.instance.player.transform.position);
-
+            { 
+                agent.SetDestination(gameManager.instance.player.transform.position);                
+                if (agent.remainingDistance < agent.stoppingDistance)
+                {
+                    if (isStationary)
+                    {
+                        faceTargetStationary(playerDir);
+                    }
+                    else
+                    {
+                        faceTarget();
+                    }
+                    
+                }
                 if (!isShooting && angleToPlayer <= shootCone)
                 {
                     StartCoroutine(shoot());
                     enemyAudio.PlayOneShot(enemyShots, enemyShotsVol);
                 }
 
-                if (agent.remainingDistance < agent.stoppingDistance)
-                {
-                    faceTarget();
-                }
                 agent.stoppingDistance = stoppingDistOrig;
                 sawPlayer = true;
                 return true;
@@ -231,6 +299,13 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
     {
         Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, transform.position.y, playerDir.z));
         transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * targetFaceSpeed);
+    }
+    void faceTargetStationary(Vector3 target)
+    {
+        Quaternion rot = Quaternion.LookRotation(new Vector3(target.x, transform.position.y, target.z));
+        transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * targetFaceSpeed);
+        Quaternion rot1 = Quaternion.LookRotation(new Vector3(transform.rotation.x + target.x, target.y + 1, target.z));
+        headPos.transform.rotation = Quaternion.Lerp(headPos.transform.rotation, rot1, Time.deltaTime * targetFaceSpeed);
     }
 
     void OnTriggerEnter(Collider other)
@@ -307,8 +382,16 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
         playerDir2 = playerDir;//copy player direction
         playerDir2.y = playerDir2.y + 1; //raise target by 1
         //rotate shootPos to player
-        Quaternion rot1 = Quaternion.LookRotation(new Vector3(transform.rotation.x + playerDir2.x, playerDir2.y, playerDir2.z));
-        shootPos.transform.rotation = rot1;
+        if (!isStationary)
+        {
+            Quaternion rot1 = Quaternion.LookRotation(new Vector3(transform.rotation.x + playerDir2.x, playerDir2.y, playerDir2.z));
+            shootPos.transform.rotation = rot1;
+        }
+        else
+        {
+            Quaternion rot1 = Quaternion.LookRotation(new Vector3(transform.rotation.x + playerDir2.x, playerDir2.y, playerDir2.z));
+            headPos.transform.rotation = rot1;
+        }
         //shootPos 2 and 3 rotate with shootPos1 because they are attached to it
         Instantiate(bullet, shootPos.position, shootPos.transform.rotation);
         if (shootPos2 != null)
