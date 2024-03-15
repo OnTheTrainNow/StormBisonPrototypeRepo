@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-public class gameManager : MonoBehaviour
+public class gameManager : MonoBehaviour, IPersistence
 {
     public static gameManager instance;
 
@@ -40,6 +40,7 @@ public class gameManager : MonoBehaviour
     public PlayerController playerScript; //the player script component
 
     public bool isPaused;
+    public bool gotFinalKey;
     int enemyCount;
 
     void Awake()
@@ -167,5 +168,15 @@ public class gameManager : MonoBehaviour
         statePaused();
         menuActive = menuShop;
         menuActive.SetActive(true);
+    }
+
+    public void SavePersistentData(ref PlayerSaveData saveData)
+    {
+        saveData.gotFinalKey = this.gotFinalKey;
+    }
+
+    public void LoadPersistentData(PlayerSaveData saveData)
+    {
+        this.gotFinalKey = saveData.gotFinalKey;
     }
 }
