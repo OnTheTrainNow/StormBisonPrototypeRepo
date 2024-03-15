@@ -43,6 +43,9 @@ public class gameManager : MonoBehaviour, IPersistence
     public bool gotFinalKey;
     int enemyCount;
 
+    // temp coin generator
+    public int coin;
+
     void Awake()
     {
         instance = this;
@@ -50,6 +53,7 @@ public class gameManager : MonoBehaviour, IPersistence
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<PlayerController>(); //get the player controller script
         playerSpawnPosition = GameObject.FindWithTag("PlayerSpawnPos"); //get the player spawn position
+        updateCoinUI();
     }
 
     public void loadSettings()
@@ -154,7 +158,7 @@ public class gameManager : MonoBehaviour, IPersistence
 
     public void updateCoinUI()
     {
-        //coinCountText.text = 
+        coinCountText.text = coin.ToString();
     }
 
     public void loadLobby()
