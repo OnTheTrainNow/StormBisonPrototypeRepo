@@ -1090,7 +1090,7 @@ MonoBehaviour:
   shootPos3: {fileID: 0}
   headPos: {fileID: 5568720683977873843}
   enemyAudio: {fileID: 9207500740571993553}
-  HP: 3
+  HP: 25
   viewCone: 45
   shootCone: 35
   targetFaceSpeed: 12
@@ -1102,7 +1102,7 @@ MonoBehaviour:
   HPUI: {fileID: 2133158659421360917}
   HPCircle: {fileID: 5619732354873900569}
   playerStompBounceForce: 0
-  dropsStar: 0
+  dropsStar: 1
   enemySteps: []
   enemyStepsVol: 0.5
   enemyHurtSound: []

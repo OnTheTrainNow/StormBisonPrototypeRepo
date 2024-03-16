@@ -14460,6 +14460,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 7238048206842002786, guid: 53f1b45e24f182b478fba34bc43cac7d, type: 3}
+      propertyPath: HP
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7238048206842002786, guid: 53f1b45e24f182b478fba34bc43cac7d, type: 3}
+      propertyPath: dropsStar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7238048206842002786, guid: 53f1b45e24f182b478fba34bc43cac7d, type: 3}
       propertyPath: stationaryLookPos.Array.data[0]
       value: 
       objectReference: {fileID: 398378654}
