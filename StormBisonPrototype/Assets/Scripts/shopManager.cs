@@ -17,7 +17,6 @@ public class shopManager : MonoBehaviour
     void Start()
     {
         coins = gameManager.instance.coin; // gets the coin int from gameManager to set here
-        coinUI();
         loadItemPanels();
     }
 
@@ -25,6 +24,7 @@ public class shopManager : MonoBehaviour
     void Update()
     {
         checkBuyable();
+        coinUI();
     }
 
     public void coinUI()
@@ -53,16 +53,34 @@ public class shopManager : MonoBehaviour
 
     public void checkBuyable()
     {
-            for (int i = 0; i < shopItemSO.Length; i++)
+        for (int i = 0; i < shopItemSO.Length; i++)
+        {
+            if (coins >= shopItemSO[i].price)
             {
-                if (coins >= shopItemSO[i].price)
-                {
-                    buyButtons[i].interactable = true;
-                }
-                else
-                {
-                    buyButtons[i].interactable = false;
-                }
+                buyButtons[i].interactable = true;
             }
+            else
+            {
+                buyButtons[i].interactable = false;
+            }
+        }
+    }
+
+    public void PurchaseItem(int buttonNum)
+    {
+        coins = coins - shopItemSO[buttonNum].price;
+        if (buttonNum == 0)
+        {
+            Debug.Log("test");
+        }
+        else if (buttonNum == 1)
+        {
+            Debug.Log("wow");
+        }
+        else if (buttonNum == 2)
+        {
+            gameManager.instance.playerScript.maxWater = 500.0f;
+            gameManager.instance.playerScript.UpdateWaterUI();
+        }
     }
 }
