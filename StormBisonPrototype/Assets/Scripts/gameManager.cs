@@ -163,7 +163,8 @@ public class gameManager : MonoBehaviour, IPersistence
 
     public void loadLobby()
     {
-        SceneManager.LoadScene("Test Lobby");
+        DataManager.instance.savePlayerData();
+        SceneManager.LoadScene("MainLobby");
         gameManager.instance.stateUnpaused();
     }
 
