@@ -48,6 +48,17 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
     [SerializeField] AudioClip enemyShots;
     [Range(0, 1)] [SerializeField] float enemyShotsVol = 0.5f;
 
+    [Header("Grass Boss")]
+    [SerializeField] bool isGrassBoss;
+    [SerializeField] int distanceTillShotgun;
+
+    [Header("Sewer Boss")]
+    [SerializeField] bool isSewerBoss;
+    [SerializeField] int bulletsUntilExplosive;
+
+    [Header("Mini Boss")]
+    [SerializeField] bool isMiniBoss;
+
     [Header("Patrolling")]
     [SerializeField] bool isPatrolling;
     [SerializeField] int patrolPauseTime;
