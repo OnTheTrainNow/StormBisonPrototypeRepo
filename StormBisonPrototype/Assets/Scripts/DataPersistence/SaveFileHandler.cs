@@ -4,7 +4,7 @@ using UnityEngine;
 using System.IO;
 using System;
 
-public class SaveFileHandler : MonoBehaviour
+public class SaveFileHandler
 {
     string fileName; //this is the files name
     string fileDirectoryPath; //this is the files directory path

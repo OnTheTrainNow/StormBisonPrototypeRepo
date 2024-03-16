@@ -857,10 +857,10 @@ MonoBehaviour:
   jumpForce: 10
   jump2Force: 15
   jump3Force: 20
-  wallJumpForce: 10
+  wallJumpForce: 15
   longJumpForce: 12
   variableJumpPercentage: 0.8
-  longJumpSpeedTuner: 2.5
+  longJumpSpeedTuner: 1.8
   jetPackForce: 1.5
   jetPackUsage: 10
   jetPackSprintUsageScaler: 2
