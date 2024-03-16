@@ -51,10 +51,12 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
     [Header("Grass Boss")]
     [SerializeField] bool isGrassBoss;
     [SerializeField] int distanceTillShotgun;
+    [SerializeField] float shotgunShootRate;
 
     [Header("Sewer Boss")]
     [SerializeField] bool isSewerBoss;
     [SerializeField] int bulletsUntilExplosive;
+    [SerializeField] GameObject sewerBossBullet;
 
     [Header("Mini Boss")]
     [SerializeField] bool isMiniBoss;
@@ -95,6 +97,8 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
     bool stationaryDir;
     float angleToPanPos;
     bool sawPlayer;
+    int sewerBulletCount;
+    float origShootrate;
 
     bool isDead; // bool to prevent player shotgun pellets from causing issue with enemycount
     Color defaultColor;
@@ -110,6 +114,8 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
         patrolDir = true;//set patrol direction to forward
         stationaryItr = 0; //set patrol iterator to -1
         stationaryDir = true;//set patrol direction to forward
+        sewerBulletCount = 0;
+        origShootrate = shootRate;
     }
 
     void Update()
@@ -413,14 +419,53 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
             headPos.transform.rotation = rot1;
         }
         //shootPos 2 and 3 rotate with shootPos1 because they are attached to it
-        Instantiate(bullet, shootPos.position, shootPos.transform.rotation);
-        if (shootPos2 != null)
+        
+        if (isGrassBoss) 
         {
-            Instantiate(bullet, shootPos2.position, shootPos2.transform.rotation);
+            shootRate = shotgunShootRate;
+            float distance = Vector3.Distance(transform.position, gameManager.instance.player.transform.position);
+            if (distance <= distanceTillShotgun)
+            {
+                Instantiate(bullet, shootPos.position, shootPos.transform.rotation);
+                if (shootPos2 != null)
+                {
+                    Instantiate(bullet, shootPos2.position, shootPos2.transform.rotation);
+                }
+                if (shootPos3 != null)
+                {
+                    Instantiate(bullet, shootPos3.position, shootPos3.transform.rotation);
+                }
+            }
+            else
+            {
+                shootRate = origShootrate;
+                Instantiate(bullet, shootPos.position, shootPos.transform.rotation);
+            }
         }
-        if (shootPos3 != null)
+        else if (isSewerBoss) 
         {
-            Instantiate(bullet, shootPos3.position, shootPos3.transform.rotation);
+            if (sewerBulletCount >= bulletsUntilExplosive)
+            {
+                Instantiate(sewerBossBullet, shootPos.position, shootPos.transform.rotation);
+                sewerBulletCount = 0;
+            }
+            else
+            {
+                Instantiate(bullet, shootPos.position, shootPos.transform.rotation);
+                sewerBulletCount++;
+            }
+        }
+        else
+        {
+            Instantiate(bullet, shootPos.position, shootPos.transform.rotation);
+            if (shootPos2 != null)
+            {
+                Instantiate(bullet, shootPos2.position, shootPos2.transform.rotation);
+            }
+            if (shootPos3 != null)
+            {
+                Instantiate(bullet, shootPos3.position, shootPos3.transform.rotation);
+            }
         }
 
         yield return new WaitForSeconds(shootRate);
