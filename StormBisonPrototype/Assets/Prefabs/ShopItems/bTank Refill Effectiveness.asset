@@ -15,4 +15,4 @@ MonoBehaviour:
   itemName: Refill Effectiveness Upgrade
   description: Increases the speed of which you refill your tank from permanent eater
     sources
-  price: 500
+  price: 0

@@ -77,11 +77,13 @@ public class shopManager : MonoBehaviour
         {
             gameManager.instance.playerScript.HP = 20.0f;
             gameManager.instance.playerScript.HPOriginal = gameManager.instance.playerScript.HP;
+            //gameManager.instance.boughtMaxHPUpgrade = true;
         }
         else if (buttonNum == 2)
         {
             gameManager.instance.playerScript.maxWater = 500.0f;
-            gameManager.instance.playerScript.UpdateWaterUI();
+            //gameManager.instance.playerScript.UpdateWaterUI();
+            //gameManager.instance.boughtWaterCapUpgrade = true;
         }
         else if (buttonNum == 3)
         {

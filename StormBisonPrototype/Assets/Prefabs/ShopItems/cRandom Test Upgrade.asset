@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Cat Upgrade
   description: Will increase work effeiciency knowing you have a cat at home
-  price: 9999999
+  price: 100

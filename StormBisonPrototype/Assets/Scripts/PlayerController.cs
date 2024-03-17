@@ -155,9 +155,9 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         UpdateWaterUI(); //update the water UI
     }
 
-    
     void Update()
     {
+        //upgradeHandler();
         gameManager.instance.updateWeaponEquipped();
         if (!gameManager.instance.isPaused) //if the gameManager is not set to paused 
         {
@@ -902,4 +902,21 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     {
         verticleVelocity.y = BounceForce; //set the players vertical velocity to the bounce force
     }
+
+    /*
+    public void upgradeHandler()
+    {
+        if (gameManager.instance.boughtMaxHPUpgrade == true)
+        {
+            HP = 20.0f;
+            HPOriginal = HP;
+        }
+        /*
+        else if (gameManager.instance.boughtWaterCapUpgrade == true)
+        {
+            maxWater = 500.0f;
+            UpdateWaterUI();
+        }
+        
+    }*/
 }

@@ -44,6 +44,8 @@ public class gameManager : MonoBehaviour, IPersistence
     int enemyCount;
     public int coinCount = 0;
     public bool extraLifeEE = false;
+    //public bool boughtMaxHPUpgrade;
+    //public bool boughtWaterCapUpgrade;
 
     void Awake()
     {
@@ -101,6 +103,7 @@ public class gameManager : MonoBehaviour, IPersistence
         Cursor.lockState = CursorLockMode.Locked; // Lockes the cursor
         menuActive.SetActive(false); // Sets Menu's active state to false
         menuActive = null;
+        //DataManager.instance.savePlayerData();
     }
 
     public void updateGameGoal(int amount)
@@ -199,10 +202,12 @@ public class gameManager : MonoBehaviour, IPersistence
     public void SavePersistentData(ref PlayerSaveData saveData)
     {
         saveData.gotFinalKey = this.gotFinalKey;
+        //saveData.boughtMaxHPUpgrade = this.boughtMaxHPUpgrade;
     }
 
     public void LoadPersistentData(PlayerSaveData saveData)
     {
         this.gotFinalKey = saveData.gotFinalKey;
+        //this.boughtMaxHPUpgrade = saveData.boughtMaxHPUpgrade;
     }
 }
