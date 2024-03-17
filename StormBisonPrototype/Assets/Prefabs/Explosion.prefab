@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6216375765906423325}
+  - component: {fileID: 8120914820105883092}
   - component: {fileID: 3995809422639131426}
   - component: {fileID: 3795867300926415788}
   - component: {fileID: 5646871934028022665}
   - component: {fileID: 6818615251463679498}
-  - component: {fileID: 8120914820105883092}
   m_Layer: 0
   m_Name: Explosion
   m_TagString: Untagged
@@ -36,6 +36,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8120914820105883092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8511964262598392887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4957dd3a11e5024189e30e33714eaaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 0.05
+  damageAmount: 5
+  knockBackStrength: 100
+  FX: {fileID: 1843210199114657685, guid: 96d80b21ceaf8874b899da8a3c87385b, type: 3}
 --- !u!33 &3995809422639131426
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -134,19 +150,3 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &8120914820105883092
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8511964262598392887}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4957dd3a11e5024189e30e33714eaaa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  duration: 0.05
-  damageAmount: 5
-  knockBackStrength: 100
-  FX: {fileID: 1843210199114657685, guid: 96d80b21ceaf8874b899da8a3c87385b, type: 3}

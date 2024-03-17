@@ -101,7 +101,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     bool isSpeedChangeable; //this bool determines if the speed can currently be changed or not (you cant change speed when jumping)
 
     //water tank
-    [SerializeField] float maxWater;
+    [SerializeField] public float maxWater;
     [Range(0,1)][SerializeField] float startingWaterPercentage;
     [SerializeField] float constantFillRate; //this is the rate the water fills at while in a constant water source
     public float currentWater;
@@ -859,7 +859,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         }
     }
 
-    void UpdateWaterUI()
+    public void UpdateWaterUI()
     {
         gameManager.instance.playerWaterBar.fillAmount = currentWater / maxWater;
         int waterInt = (int)currentWater;
