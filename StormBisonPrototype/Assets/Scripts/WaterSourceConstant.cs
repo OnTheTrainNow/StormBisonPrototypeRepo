@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class WaterSourceConstant : MonoBehaviour
 {
+    [SerializeField] float constantFillRate; //this is the rate the water fills at while in a constant water source
     float stopFillBackUp;
+    bool isConstantFill;
 
     void Start()
     {
@@ -16,7 +18,15 @@ public class WaterSourceConstant : MonoBehaviour
         stopFillBackUp += Time.deltaTime; //increment the timer
         if (stopFillBackUp > 3f) //if the player doesnt stand in the fill area for more than 3 seconds then set the constant fill bool to false
         {
-            gameManager.instance.playerScript.isConstantFill = false;
+            isConstantFill = false;
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (isConstantFill && gameManager.instance.playerScript.currentWater < 200)
+        {
+            gameManager.instance.playerScript.constFillTank(constantFillRate);
         }
     }
 
@@ -24,7 +34,7 @@ public class WaterSourceConstant : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player")) //when the player enters this trigger set the constant fill bool to true
         {
-            gameManager.instance.playerScript.isConstantFill = true;
+            isConstantFill = true;
         }
     }
 
@@ -37,7 +47,7 @@ public class WaterSourceConstant : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player")) //when the player exits this trigger set the contant fill bool to false
         {
-            gameManager.instance.playerScript.isConstantFill = false;
+            isConstantFill = false;
         }
     }
 }

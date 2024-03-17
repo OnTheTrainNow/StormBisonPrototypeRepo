@@ -103,9 +103,8 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     //water tank
     [SerializeField] public float maxWater;
     [Range(0,1)][SerializeField] float startingWaterPercentage;
-    [SerializeField] float constantFillRate; //this is the rate the water fills at while in a constant water source
     public float currentWater;
-    public bool isConstantFill;
+    
     bool isJetPackShooting;
     bool isJetPacking; 
 
@@ -201,14 +200,6 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         if (Input.GetButtonDown("Refill Test Tool"))
         {
             fillTank(7);
-        }
-    }
-
-    private void FixedUpdate()
-    {
-        if (isConstantFill && currentWater < 200)
-        {
-            constFillTank(constantFillRate);
         }
     }
 
