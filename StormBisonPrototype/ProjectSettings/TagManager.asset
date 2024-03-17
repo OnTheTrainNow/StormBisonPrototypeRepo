@@ -8,6 +8,7 @@ TagManager:
   - PlayerSpawnPos
   - GunModel
   - Enemy
+  - Coin
   layers:
   - Default
   - TransparentFX

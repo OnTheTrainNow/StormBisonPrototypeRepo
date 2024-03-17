@@ -42,6 +42,7 @@ public class gameManager : MonoBehaviour, IPersistence
     public bool isPaused;
     public bool gotFinalKey;
     int enemyCount;
+    int coinCount = 0;
 
     void Awake()
     {
@@ -152,9 +153,10 @@ public class gameManager : MonoBehaviour, IPersistence
         starCountText.text = starManager.instance.starCount.ToString();
     }
 
-    public void updateCoinUI()
+    public void updateCoinUI(int amount)
     {
-        //coinCountText.text = 
+        coinCount += amount;
+        coinCountText.text = coinCount.ToString("F0");
     }
 
     public void loadLobby()
