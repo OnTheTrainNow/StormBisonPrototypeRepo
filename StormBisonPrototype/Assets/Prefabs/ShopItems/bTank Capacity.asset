@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5aaccaf095a3c6e46a735694d60d3505, type: 3}
-  m_Name: Player Max Health
+  m_Name: bTank Capacity
   m_EditorClassIdentifier: 
-  itemName: Max Health Upgrade
-  description: Increases your max health
-  price: 100
+  itemName: Water Capacity Upgrade
+  description: Increases your water suppy
+  price: 200

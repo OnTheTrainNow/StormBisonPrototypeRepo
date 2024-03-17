@@ -43,6 +43,7 @@ public class gameManager : MonoBehaviour, IPersistence
     public bool gotFinalKey;
     int enemyCount;
     public int coinCount = 0;
+    public bool extraLifeEE = false;
 
     void Awake()
     {
@@ -73,6 +74,12 @@ public class gameManager : MonoBehaviour, IPersistence
             statePaused();
             menuActive = menuPause;
             menuActive.SetActive(isPaused);
+        }
+
+        if (extraLifeEE == false && coinCount == 69)
+        {
+            extraLifeEE = true;
+            gameManager.instance.playerScript.playerLives += 1;
         }
     }
 
@@ -178,7 +185,7 @@ public class gameManager : MonoBehaviour, IPersistence
 
     public void loadLobby()
     {
-        SceneManager.LoadScene("Test Lobby");
+        SceneManager.LoadScene("MainLobby");
         gameManager.instance.stateUnpaused();
     }
 

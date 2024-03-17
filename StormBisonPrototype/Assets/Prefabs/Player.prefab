@@ -803,6 +803,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8214468546571601349}
+  - component: {fileID: 6200049770122797364}
   - component: {fileID: 3901616942316194201}
   - component: {fileID: 6581359598466913242}
   - component: {fileID: 7022742002639814754}
@@ -836,6 +837,21 @@ Transform:
   - {fileID: 5938620561201423123}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6200049770122797364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8325518595973490225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 697fcb8be777d514daa71fba576c0ccb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactableLayerMask:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!114 &3901616942316194201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -915,9 +931,7 @@ MonoBehaviour:
   selectedGun: 0
   maxWater: 200
   startingWaterPercentage: 0.5
-  constantFillRate: 1
   currentWater: 0
-  isConstantFill: 0
   isShotgunEquipped: 0
   isPistolEquipped: 0
   isRifleEquipped: 0

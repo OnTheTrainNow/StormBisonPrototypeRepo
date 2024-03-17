@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     //a camera field may be added later 
 
     [Header("Stats")]
-    [SerializeField] float HP = 10; //the player health points
+    [SerializeField] public float HP = 10; //the player health points
     [SerializeField] float movementSpeed = 5f; //the movement speed tuning variable for the player
     [SerializeField] float sprintSpeed = 10f; //the movement speed while sprinting
 
@@ -113,7 +113,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     public bool isPistolEquipped;
     public bool isRifleEquipped;
 
-    float HPOriginal; //player starting HP
+    public float HPOriginal; //player starting HP
     bool isDead; //a bool that checks if the player is dead already when processing bullet hits
 
     //crouch/sprint values

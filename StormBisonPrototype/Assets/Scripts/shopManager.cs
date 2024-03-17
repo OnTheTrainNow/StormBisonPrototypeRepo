@@ -71,16 +71,21 @@ public class shopManager : MonoBehaviour
         coins = coins - shopItemSO[buttonNum].price;
         if (buttonNum == 0)
         {
-            Debug.Log("test");
+            gameManager.instance.playerScript.playerLives += 1;
         }
         else if (buttonNum == 1)
         {
-            Debug.Log("wow");
+            gameManager.instance.playerScript.HP = 20.0f;
+            gameManager.instance.playerScript.HPOriginal = gameManager.instance.playerScript.HP;
         }
         else if (buttonNum == 2)
         {
             gameManager.instance.playerScript.maxWater = 500.0f;
             gameManager.instance.playerScript.UpdateWaterUI();
+        }
+        else if (buttonNum == 3)
+        {
+            // Not sure how to handle our refill effectiveness at the moment
         }
     }
 }

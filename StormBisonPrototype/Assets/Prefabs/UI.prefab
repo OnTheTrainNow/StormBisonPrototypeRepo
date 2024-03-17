@@ -6432,10 +6432,11 @@ MonoBehaviour:
   coins: 0
   coinCountText: {fileID: 8181343752868803626}
   shopItemSO:
+  - {fileID: 11400000, guid: 01597a3ad4d081149a4e4fd8ae1c2774, type: 2}
   - {fileID: 11400000, guid: 48dddc349c3817e4ea2a13e933be341e, type: 2}
-  - {fileID: 11400000, guid: a2c6e6d48a3670e40ac5f9d4a394088d, type: 2}
   - {fileID: 11400000, guid: 1ec82e8c1877d0344b1770cd7661908a, type: 2}
   - {fileID: 11400000, guid: d8346fd3ee02b974da62a767e5322c7b, type: 2}
+  - {fileID: 11400000, guid: a2c6e6d48a3670e40ac5f9d4a394088d, type: 2}
   shopItemTemplate:
   - {fileID: 1942167474064505786}
   - {fileID: 1367117530153195817}
@@ -6541,7 +6542,8 @@ MonoBehaviour:
   playerScript: {fileID: 0}
   isPaused: 0
   gotFinalKey: 0
-  coin: 1000
+  coinCount: 0
+  extraLifeEG: 0
 --- !u!114 &5069844316476815849
 MonoBehaviour:
   m_ObjectHideFlags: 0

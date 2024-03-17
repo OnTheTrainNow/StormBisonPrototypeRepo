@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5aaccaf095a3c6e46a735694d60d3505, type: 3}
-  m_Name: Random Test Upgrade
+  m_Name: aExtra Life
   m_EditorClassIdentifier: 
-  itemName: Cat Upgrade
-  description: Will increase work effeiciency knowing you have a cat at home
-  price: 9999999
+  itemName: Extra life
+  description: A blessing from the gods!
+  price: 600
