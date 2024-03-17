@@ -16,7 +16,7 @@ public class shopManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        coins = gameManager.instance.coin; // gets the coin int from gameManager to set here
+        coins = gameManager.instance.coinCount; // gets the coin int from gameManager to set here
         loadItemPanels();
     }
 

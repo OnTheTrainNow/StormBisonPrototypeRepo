@@ -42,7 +42,7 @@ public class gameManager : MonoBehaviour, IPersistence
     public bool isPaused;
     public bool gotFinalKey;
     int enemyCount;
-    int coinCount = 0;
+    public int coinCount = 0;
 
     void Awake()
     {
@@ -119,6 +119,8 @@ public class gameManager : MonoBehaviour, IPersistence
     // Player Lose function Will be called
     public void youLose()
     {
+        updateCoinUI(-50);
+        
         statePaused();
         menuActive = menuLose;
         menuActive.SetActive(true);
@@ -126,6 +128,8 @@ public class gameManager : MonoBehaviour, IPersistence
 
     public void youDied()
     {
+        updateCoinUI(-100);
+        
         statePaused();
         menuActive = menuDied;
         menuActive.SetActive(true);
@@ -155,8 +159,21 @@ public class gameManager : MonoBehaviour, IPersistence
 
     public void updateCoinUI(int amount)
     {
-        coinCount += amount;
-        coinCountText.text = coinCount.ToString("F0");
+        if (coinCount < 50 && amount == -50)
+        {
+            coinCount = 0;
+            coinCountText.text = coinCount.ToString("F0");
+        }
+        else if (coinCount < 100 && amount == -100)
+        {
+            coinCount = 0;
+            coinCountText.text = coinCount.ToString("F0");
+        }
+        else
+        {
+            coinCount += amount;
+            coinCountText.text = coinCount.ToString("F0");
+        }
     }
 
     public void loadLobby()

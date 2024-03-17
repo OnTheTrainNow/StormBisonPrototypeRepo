@@ -496,10 +496,23 @@ MonoBehaviour:
   enemyHurtVol: 1
   enemyShots: {fileID: 8300000, guid: 94c5c23c515ee524db2d8b4816842a68, type: 3}
   enemyShotsVol: 0.5
-  patrolling: 0
+  isGrassBoss: 0
+  distanceTillShotgun: 0
+  shotgunShootRate: 0
+  isSewerBoss: 0
+  bulletsUntilExplosive: 0
+  sewerBossBullet: {fileID: 0}
+  isMiniBoss: 0
+  isPatrolling: 0
+  patrolPauseTime: 0
   patrolPos: []
+  isStationary: 0
+  isTurret: 0
+  panSpeed: 0
+  panPauseTime: 0
+  stationaryLookPos: []
   isRNG: 0
-  drop: {fileID: 0}
+  drop: {fileID: 1161294568278913083, guid: 2f7bf3414690bff42a6fba5536771ed1, type: 3}
   rngDrops: []
   rngDropsRate: []
 --- !u!95 &8013512473165784994
