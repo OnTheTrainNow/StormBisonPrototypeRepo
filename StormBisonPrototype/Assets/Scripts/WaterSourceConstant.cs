@@ -24,7 +24,7 @@ public class WaterSourceConstant : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (isConstantFill && gameManager.instance.playerScript.currentWater < 200)
+        if (isConstantFill && gameManager.instance.playerScript.currentWater < gameManager.instance.playerScript.maxWater)
         {
             gameManager.instance.playerScript.constFillTank(constantFillRate);
         }
