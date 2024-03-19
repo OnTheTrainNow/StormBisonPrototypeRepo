@@ -903,7 +903,7 @@ MonoBehaviour:
   JetPackShootDamage: 1
   JetPackFiringRate: 0.2
   characterSoundsSource: {fileID: 1109491848800434123}
-  characterMovementSource: {fileID: 1827323197496362254}
+  characterMovementSource: {fileID: 1109491848800434123}
   jumpSounds:
   - {fileID: 8300000, guid: 0a95547a32737f747813833c6cb5a2ca, type: 3}
   - {fileID: 8300000, guid: 0f47265b5d3fe4d4eb3733bb40d0dc45, type: 3}
@@ -924,8 +924,8 @@ MonoBehaviour:
   stepVolume: 0.1
   stepTimeNormal: 0.5
   stepTimeSprint: 0.25
-  pickUpSoundSource: {fileID: 7275668383643740846}
-  gunSoundsSource: {fileID: 3097428807527442880}
+  pickUpSoundSource: {fileID: 1109491848800434123}
+  gunSoundsSource: {fileID: 1109491848800434123}
   jumpVFX: {fileID: 8646079237418123920}
   bulletImpactFX: {fileID: 2162287870825052246, guid: a14d40c50b8f4e44c9cf41f060a210c0, type: 3}
   selectedGun: 0
@@ -935,6 +935,7 @@ MonoBehaviour:
   isShotgunEquipped: 0
   isPistolEquipped: 0
   isRifleEquipped: 0
+  HPOriginal: 0
 --- !u!33 &6581359598466913242
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1043,7 +1044,7 @@ AudioSource:
   m_GameObject: {fileID: 8325518595973490225}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -2850294262522990120, guid: 1de03fd35f777a64da630cf6dbddfbd4, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
