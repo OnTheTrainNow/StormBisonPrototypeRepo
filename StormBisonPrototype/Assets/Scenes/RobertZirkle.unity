@@ -2448,7 +2448,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2307301218259941284, guid: 0872a0021681a114f957aed8712bc8d4, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3616107050274334167, guid: 0872a0021681a114f957aed8712bc8d4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5583,9 +5583,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: Machinegun Turret
       objectReference: {fileID: 0}
-    - target: {fileID: 4443464486566202028, guid: 770f09dbb6d954c4ca9e18df17570edb, type: 3}
-      propertyPath: m_IsActive
-      value: 0
+    - target: {fileID: 4936374405091227272, guid: 770f09dbb6d954c4ca9e18df17570edb, type: 3}
+      propertyPath: stationaryLookPos.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4936374405091227272, guid: 770f09dbb6d954c4ca9e18df17570edb, type: 3}
+      propertyPath: stationaryLookPos.Array.data[0]
+      value: 
+      objectReference: {fileID: 398378654}
+    - target: {fileID: 4936374405091227272, guid: 770f09dbb6d954c4ca9e18df17570edb, type: 3}
+      propertyPath: stationaryLookPos.Array.data[1]
+      value: 
+      objectReference: {fileID: 287211090}
+    - target: {fileID: 4936374405091227272, guid: 770f09dbb6d954c4ca9e18df17570edb, type: 3}
+      propertyPath: stationaryLookPos.Array.data[2]
+      value: 
+      objectReference: {fileID: 2054116010}
+    - target: {fileID: 6183829684852354093, guid: 770f09dbb6d954c4ca9e18df17570edb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.552
       objectReference: {fileID: 0}
     - target: {fileID: 7091424484583795022, guid: 770f09dbb6d954c4ca9e18df17570edb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5626,6 +5642,14 @@ PrefabInstance:
     - target: {fileID: 7091424484583795022, guid: 770f09dbb6d954c4ca9e18df17570edb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8930355858349741094, guid: 770f09dbb6d954c4ca9e18df17570edb, type: 3}
+      propertyPath: m_Size.z
+      value: 1.9514803
+      objectReference: {fileID: 0}
+    - target: {fileID: 8930355858349741094, guid: 770f09dbb6d954c4ca9e18df17570edb, type: 3}
+      propertyPath: m_Center.z
+      value: 0.47573948
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -14389,6 +14413,10 @@ PrefabInstance:
       propertyPath: starPositions.Array.data[2]
       value: 
       objectReference: {fileID: 1913428881}
+    - target: {fileID: 9188901214476645868, guid: c233304938321b6429920f21cdffdb51, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -14460,14 +14488,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 7238048206842002786, guid: 53f1b45e24f182b478fba34bc43cac7d, type: 3}
-      propertyPath: HP
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 7238048206842002786, guid: 53f1b45e24f182b478fba34bc43cac7d, type: 3}
-      propertyPath: dropsStar
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7238048206842002786, guid: 53f1b45e24f182b478fba34bc43cac7d, type: 3}
       propertyPath: stationaryLookPos.Array.data[0]
       value: 
       objectReference: {fileID: 398378654}
@@ -14478,6 +14498,10 @@ PrefabInstance:
     - target: {fileID: 7899340573246906992, guid: 53f1b45e24f182b478fba34bc43cac7d, type: 3}
       propertyPath: m_Name
       value: Mini Boss
+      objectReference: {fileID: 0}
+    - target: {fileID: 7899340573246906992, guid: 53f1b45e24f182b478fba34bc43cac7d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8172479819141671951, guid: 53f1b45e24f182b478fba34bc43cac7d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -14538,7 +14562,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2307301218259941284, guid: 0872a0021681a114f957aed8712bc8d4, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3616107050274334167, guid: 0872a0021681a114f957aed8712bc8d4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -14637,18 +14661,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3691671826862118675, guid: 3d1baef56a0e5b7458df1d3d869a83d2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.535
+      objectReference: {fileID: 0}
     - target: {fileID: 6302993321197700779, guid: 3d1baef56a0e5b7458df1d3d869a83d2, type: 3}
       propertyPath: m_Name
       value: Machinegun Turret (Explosive rounds)
       objectReference: {fileID: 0}
-    - target: {fileID: 6302993321197700779, guid: 3d1baef56a0e5b7458df1d3d869a83d2, type: 3}
-      propertyPath: m_IsActive
-      value: 0
+    - target: {fileID: 6637040853785797840, guid: 3d1baef56a0e5b7458df1d3d869a83d2, type: 3}
+      propertyPath: m_Size.z
+      value: 1.9308996
+      objectReference: {fileID: 0}
+    - target: {fileID: 6637040853785797840, guid: 3d1baef56a0e5b7458df1d3d869a83d2, type: 3}
+      propertyPath: m_Center.z
+      value: 0.4654495
       objectReference: {fileID: 0}
     - target: {fileID: 7826945998685873548, guid: 3d1baef56a0e5b7458df1d3d869a83d2, type: 3}
-      propertyPath: bullet
+      propertyPath: stationaryLookPos.Array.data[0]
       value: 
-      objectReference: {fileID: 8887045118100809065, guid: d4ca8fb942fb15c47997529bae65b1ef, type: 3}
+      objectReference: {fileID: 398378654}
+    - target: {fileID: 7826945998685873548, guid: 3d1baef56a0e5b7458df1d3d869a83d2, type: 3}
+      propertyPath: stationaryLookPos.Array.data[1]
+      value: 
+      objectReference: {fileID: 287211090}
+    - target: {fileID: 7826945998685873548, guid: 3d1baef56a0e5b7458df1d3d869a83d2, type: 3}
+      propertyPath: stationaryLookPos.Array.data[2]
+      value: 
+      objectReference: {fileID: 2054116010}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -15150,6 +15190,10 @@ PrefabInstance:
     - target: {fileID: 2662533426251649705, guid: b0996b0b3a0f74d429406af62d69f23a, type: 3}
       propertyPath: m_Name
       value: Grass Boss
+      objectReference: {fileID: 0}
+    - target: {fileID: 2662533426251649705, guid: b0996b0b3a0f74d429406af62d69f23a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8539675808981732068, guid: b0996b0b3a0f74d429406af62d69f23a, type: 3}
       propertyPath: m_LocalPosition.x

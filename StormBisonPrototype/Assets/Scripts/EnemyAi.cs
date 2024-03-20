@@ -359,7 +359,14 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
 
         updateUI();
         StartCoroutine(flashMat());
-
+        if (isStationary)
+        {
+            faceTargetStationary(playerDir);
+        }
+        else
+        {
+            faceTarget();
+        }
         if (HP <= 0 && !isDead)
         {
             isDead = true;

@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     [Header("Components")]
     [SerializeField] CharacterController playerController; //the character controller for the player
     [SerializeField] CapsuleCollider playerCollider; //the characters main collider
+    [SerializeField] GameObject playerDummy; //fix for enemy not having a target and erroring after player death
     //a camera field may be added later 
 
     [Header("Stats")]
@@ -794,11 +795,14 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
             isDead = true; //set the player to dead
             if (playerLives <= 0 && isDead == true)
             {
+                Instantiate(playerDummy,transform.position, Quaternion.identity); //fix for enemy not having a target and erroring after player death
                 gameManager.instance.youLose();
                 Debug.Log("Oops No More Lives For You");
+                
             }
             else
             {
+                Instantiate(playerDummy, transform.position, Quaternion.identity); //fix for enemy not having a target and erroring after player death
                 gameManager.instance.youDied(); //tell the game manager to display the death screen
             }
         }

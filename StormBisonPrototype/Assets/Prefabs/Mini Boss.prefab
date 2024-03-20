@@ -167,7 +167,7 @@ RectTransform:
   m_GameObject: {fileID: 1624929382244750565}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3759541498995443040}
@@ -176,7 +176,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 1.9}
+  m_AnchoredPosition: {x: 0, y: 2.733}
   m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &2133158659421360917
@@ -1040,6 +1040,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8172479819141671951}
   - component: {fileID: 7238048206842002786}
+  - component: {fileID: 3083743762262084932}
   - component: {fileID: 7631470231509690392}
   - component: {fileID: 8514881670559665929}
   - component: {fileID: 6097461492700963023}
@@ -1105,7 +1106,9 @@ MonoBehaviour:
   dropsStar: 1
   enemySteps: []
   enemyStepsVol: 0.5
-  enemyHurtSound: []
+  enemyHurtSound:
+  - {fileID: 8300000, guid: bc44f20371929fc4cabd9a0a40ca2a82, type: 3}
+  - {fileID: 8300000, guid: 851bee342871bb548837094229361c84, type: 3}
   enemyHurtVol: 0.5
   enemyShots: {fileID: 8300000, guid: 3e2bf76f2e1588649b341ccdba3e5ccc, type: 3}
   enemyShotsVol: 0.5
@@ -1115,7 +1118,7 @@ MonoBehaviour:
   isSewerBoss: 0
   bulletsUntilExplosive: 0
   sewerBossBullet: {fileID: 0}
-  isMiniBoss: 0
+  isMiniBoss: 1
   isPatrolling: 0
   patrolPauseTime: 0
   patrolPos: []
@@ -1130,6 +1133,21 @@ MonoBehaviour:
   drop: {fileID: 0}
   rngDrops: []
   rngDropsRate: []
+--- !u!114 &3083743762262084932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7899340573246906992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e74cbdb83a6c96645a92d1e42e7ebffc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bossStar: {fileID: 2307301218259941284, guid: 0872a0021681a114f957aed8712bc8d4, type: 3}
+  positionIndex: 0
+  starID: 0
 --- !u!33 &7631470231509690392
 MeshFilter:
   m_ObjectHideFlags: 0
