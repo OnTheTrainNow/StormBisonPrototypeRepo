@@ -352,7 +352,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 999
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d1dd245b14606044a9e05e110a2d8169, type: 2}
   m_sharedMaterial: {fileID: -8478471507340715083, guid: d1dd245b14606044a9e05e110a2d8169, type: 2}
@@ -8582,7 +8582,6 @@ MonoBehaviour:
   menuLose: {fileID: 7987452656049477148}
   menuDied: {fileID: 87037985243135072}
   menuShop: {fileID: 7038583107423174140}
-  Mastervolume: {fileID: 1908284472144571385}
   weaponEquipped: {fileID: 4927669904689952401}
   enemyCountText: {fileID: 4995923645980054731}
   starCountText: {fileID: 4825216083388017896}
@@ -8603,6 +8602,8 @@ MonoBehaviour:
   gotFinalKey: 0
   coinCount: 0
   extraLifeEE: 0
+  boughtMaxHPUpgrade: 0
+  boughtWaterCapUpgrade: 0
 --- !u!114 &5069844316476815849
 MonoBehaviour:
   m_ObjectHideFlags: 0

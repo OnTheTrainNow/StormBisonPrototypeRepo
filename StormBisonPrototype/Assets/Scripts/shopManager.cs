@@ -41,6 +41,7 @@ public class shopManager : MonoBehaviour
             shopItemTemplate[i].itemNameText.text = shopItemSO[i].itemName;
             shopItemTemplate[i].descriptionText.text = shopItemSO[i].description;
             shopItemTemplate[i].priceText.text = "Coins: " + shopItemSO[i].price.ToString();
+            shopItemTemplate[i].itemUpgradeImage.sprite = shopItemSO[i].itemUpgradeSprite;
         }
 
         // This is will only show the upgrade/item panels that actually have a SO(scriptable objects) for an item
@@ -75,19 +76,17 @@ public class shopManager : MonoBehaviour
         }
         else if (buttonNum == 1)
         {
-            gameManager.instance.playerScript.HP = 20.0f;
-            gameManager.instance.playerScript.HPOriginal = gameManager.instance.playerScript.HP;
-            //gameManager.instance.boughtMaxHPUpgrade = true;
+            gameManager.instance.boughtMaxHPUpgrade = true;
         }
         else if (buttonNum == 2)
         {
-            gameManager.instance.playerScript.maxWater = 500.0f;
-            //gameManager.instance.playerScript.UpdateWaterUI();
-            //gameManager.instance.boughtWaterCapUpgrade = true;
+            gameManager.instance.boughtWaterCapUpgrade = true;
         }
         else if (buttonNum == 3)
         {
             // Not sure how to handle our refill effectiveness at the moment
         }
+        gameManager.instance.playerScript.upgradeHandler();
+        DataManager.instance.savePlayerData();
     }
 }

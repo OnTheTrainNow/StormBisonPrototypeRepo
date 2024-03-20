@@ -157,7 +157,6 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
 
     void Update()
     {
-        //upgradeHandler();
         gameManager.instance.updateWeaponEquipped();
         if (!gameManager.instance.isPaused) //if the gameManager is not set to paused 
         {
@@ -866,17 +865,18 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
 
     public void respawn()
     {
-            currentJumps = 0;
-            isDead = false;
-            HP = HPOriginal; //reset the players HP
-            UpdatePlayerUI(); //update the players UI
+        currentJumps = 0;
+        isDead = false;
+        HP = HPOriginal; //reset the players HP
+        UpdatePlayerUI(); //update the players UI
 
-            playerController.enabled = false; //disable the controller
-            transform.SetParent(null); //this fixes any issues where the player dies on a moving platform
-            transform.position = gameManager.instance.playerSpawnPosition.transform.position; //change the players position to the spawn point position
-            playerController.enabled = true; //re enable the controller
+        playerController.enabled = false; //disable the controller
+        transform.SetParent(null); //this fixes any issues where the player dies on a moving platform
+        transform.position = gameManager.instance.playerSpawnPosition.transform.position; //change the players position to the spawn point position
+        playerController.enabled = true; //re enable the controller
 
-            pushBack = Vector3.zero;
+        pushBack = Vector3.zero;
+        upgradeHandler();
     }
 
     //bouncing and launching
@@ -903,7 +903,6 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         verticleVelocity.y = BounceForce; //set the players vertical velocity to the bounce force
     }
 
-    /*
     public void upgradeHandler()
     {
         if (gameManager.instance.boughtMaxHPUpgrade == true)
@@ -911,12 +910,11 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
             HP = 20.0f;
             HPOriginal = HP;
         }
-        /*
-        else if (gameManager.instance.boughtWaterCapUpgrade == true)
+
+        if (gameManager.instance.boughtWaterCapUpgrade == true)
         {
             maxWater = 500.0f;
             UpdateWaterUI();
         }
-        
-    }*/
+    }
 }

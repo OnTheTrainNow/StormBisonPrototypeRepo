@@ -7,6 +7,7 @@ using UnityEngine;
 public class shopItemSO : ScriptableObject
 {
     public string itemName;
+    public Sprite itemUpgradeSprite;
     public string description;
     public int price;
 }

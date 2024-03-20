@@ -17,7 +17,7 @@ public class interactor : MonoBehaviour
     void Update()
     {
         RaycastHit hit;
-        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 2, interactableLayerMask))
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 6, interactableLayerMask))
         {
             if (hit.collider.GetComponent<interactable>() != false)
             {
