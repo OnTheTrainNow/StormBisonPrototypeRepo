@@ -69,6 +69,8 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
     [Header("Stationary")]
     [SerializeField] bool isStationary;
     [SerializeField] bool isTurret;
+    [SerializeField] Transform barrelPos;
+    [SerializeField] Transform barrelAlinPos;
     [SerializeField] int panSpeed;
     [SerializeField] int panPauseTime;
     [SerializeField] Transform[] stationaryLookPos;
@@ -99,6 +101,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
     bool sawPlayer;
     int sewerBulletCount;
     float origShootrate;
+    Vector3 barrelAl;
 
     bool isDead; // bool to prevent player shotgun pellets from causing issue with enemycount
     Color defaultColor;
@@ -108,7 +111,10 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
         stoppingDistOrig = agent.stoppingDistance;
         HPOriginal = HP;
         updateUI();
-        gameManager.instance.updateGameGoal(1);
+        if (!isGrassBoss || !isSewerBoss || !isMiniBoss)
+        {
+            gameManager.instance.updateGameGoal(1);
+        }
         defaultColor = model.material.GetColor("_Color"); //get the default color of the enemy;
         patrolItr = -1; //set patrol iterator to -1
         patrolDir = true;//set patrol direction to forward
@@ -124,10 +130,22 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
         {
             float animSpeed = agent.velocity.normalized.magnitude;
             animator.SetFloat("Speed", Mathf.Lerp(animator.GetFloat("Speed"), animSpeed, Time.deltaTime * animSpeedTrans));
-    }
+        }
         if (playerInRange && !canSeePlayer())
-        {
-            if (sawPlayer) //if enemy lost sight of player
+        {   
+            if (isGrassBoss || isSewerBoss || isMiniBoss)
+            {
+                if (isMiniBoss)
+                {
+                    playerDir = gameManager.instance.player.transform.position - headPos.position;
+                    faceTargetStationary(playerDir);
+                }
+                else
+                {
+                    faceTarget();
+                }
+            }
+            else if (sawPlayer) //if enemy lost sight of player
             {
                 playerDir = gameManager.instance.player.transform.position - headPos.position;
                 RaycastHit hit;
@@ -138,12 +156,14 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
                 }
                 else
                 {
+                    BarrelAlign();
                     sawPlayer = false;
                 }
             }
             //if Stationary pan between designated points
             else if (isStationary)
             {
+                BarrelAlign();
                 StartCoroutine(stationaryPan());
             }
             // roam/patroling if I'm in your range but i can't see you
@@ -159,9 +179,12 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
         }
         else if (!playerInRange)
         {
+            if (isGrassBoss || isSewerBoss || isMiniBoss)
+            { }
             //if Stationary pan between designated points
-            if (isStationary)
+            else if (isStationary)
             {
+                BarrelAlign();
                 StartCoroutine(stationaryPan());
             }
             // roam/patroling because you are not in range
@@ -290,7 +313,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
                 agent.SetDestination(gameManager.instance.player.transform.position);                
                 if (agent.remainingDistance < agent.stoppingDistance)
                 {
-                    if (isStationary)
+                    if (isTurret)
                     {
                         faceTargetStationary(playerDir);
                     }
@@ -324,14 +347,14 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
         Quaternion rot = Quaternion.LookRotation(new Vector3(target.x, transform.position.y, target.z));
         transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * targetFaceSpeed);
         Quaternion rot1 = Quaternion.LookRotation(new Vector3(transform.rotation.x + target.x, target.y+1, target.z));
-        headPos.transform.rotation = Quaternion.Lerp(headPos.transform.rotation, rot1, Time.deltaTime * targetFaceSpeed);
+        barrelPos.transform.rotation = Quaternion.Lerp(barrelPos.transform.rotation, rot1, Time.deltaTime * targetFaceSpeed);
     }
     void faceTargetStationaryPan(Vector3 target)
     {
         Quaternion rot = Quaternion.LookRotation(new Vector3(target.x, transform.position.y, target.z));
         transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * panSpeed);
-        //Quaternion rot1 = Quaternion.LookRotation(new Vector3(transform.rotation.x + target.x, target.y, target.z));
-        //headPos.transform.rotation = Quaternion.Lerp(headPos.transform.rotation, rot1, Time.deltaTime * panSpeed);
+        //Quaternion rot1 = Quaternion.LookRotation(new Vector3(transform.rotation.x + target.x, target.y+1, target.z));
+        //barrelPos.transform.rotation = Quaternion.Lerp(barrelPos.transform.rotation, rot1, Time.deltaTime * panSpeed);
     }
 
     void OnTriggerEnter(Collider other)
@@ -358,8 +381,11 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
         enemyAudio.PlayOneShot(enemyHurtSound[Random.Range(0, enemyHurtSound.Length)], enemyHurtVol);
 
         updateUI();
-        StartCoroutine(flashMat());
-        if (isStationary)
+        if (!isTurret) 
+        {
+            StartCoroutine(flashMat());
+        }
+        if (isTurret)
         {
             faceTargetStationary(playerDir);
         }
@@ -371,7 +397,10 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
         {
             isDead = true;
             checkForStarDrop();
-            gameManager.instance.updateGameGoal(-1);
+            if (!isGrassBoss || !isSewerBoss || !isMiniBoss)
+            {
+                gameManager.instance.updateGameGoal(-1);
+            }
             Destroy(gameObject);
             Drop();
         }
@@ -423,7 +452,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
         else
         {
             Quaternion rot1 = Quaternion.LookRotation(new Vector3(transform.rotation.x + playerDir2.x, playerDir2.y, playerDir2.z));
-            headPos.transform.rotation = rot1;
+            barrelPos.transform.rotation = rot1;
         }
         //shootPos 2 and 3 rotate with shootPos1 because they are attached to it
         
@@ -499,6 +528,13 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
         {
             Instantiate(drop, dropPos, transform.rotation);
         }
+    }
+
+    void BarrelAlign()
+    {
+        barrelAl = barrelAlinPos.position - headPos.position;
+        Quaternion rot1 = Quaternion.LookRotation(new Vector3(transform.rotation.x + barrelAl.x, barrelAl.y + 1, barrelAl.z));
+        barrelPos.transform.rotation = Quaternion.Lerp(barrelPos.transform.rotation, rot1, Time.deltaTime * targetFaceSpeed);
     }
 
     void updateUI()

@@ -9,6 +9,7 @@ TagManager:
   - GunModel
   - Enemy
   - Coin
+  - Boss
   layers:
   - Default
   - TransparentFX
