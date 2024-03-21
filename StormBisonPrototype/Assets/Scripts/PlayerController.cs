@@ -71,6 +71,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     [SerializeField] int JetPackShootRange = 10;
     [SerializeField] float JetPackShootDamage = 1f;
     [SerializeField] float JetPackFiringRate = .2f;
+    [SerializeField] ParticleSystem JetPackFX;
 
     [Header("Sound & Visual Effects")]
     [SerializeField] AudioSource characterSoundsSource; //this is the sound source for the player character (most player sounds shouldn't overlap)
@@ -453,12 +454,14 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
                 currentWater -= (int)(jetPackUsage) * Time.deltaTime; //drain the water based on regular usage amount
             }
 
+            JetPackFX.gameObject.SetActive(true);
             if (!isJetPackShooting) { StartCoroutine(JetPackShoot()); }
             if (currentWater < 0) { currentWater = 0; } //if the water drops below 0 during this process set it back to 0
             UpdateWaterUI(); //update the water UI
         }
         else
         {
+            JetPackFX.gameObject.SetActive(false);
             isJetPacking = false;
         }
     }
