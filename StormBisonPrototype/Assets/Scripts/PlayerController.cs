@@ -62,7 +62,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     [SerializeField] int shootRange = 20; //how far the player can shoot (this is the raycast range)
     [SerializeField] float firingRate = .2f; //the time between shots (determines how many times the player can fire in a specified time frame)
 
-    // shotgun test
+    // shotgun
     [SerializeField] float pelletDmg; // controls the damage each individual pellet does
     [SerializeField] int pellets; // this controls the number of pellets in each shot (the lower the amount the lower the damage, the higher the amount the higher the damage)
     [SerializeField] float pelletsSpreadAngle; // this sets the spread angle (smaller values = tighter spread, higher values = wider spread)
@@ -105,7 +105,8 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     [SerializeField] public float maxWater;
     [Range(0,1)][SerializeField] float startingWaterPercentage;
     public float currentWater;
-    
+    public int fillAmountMultiplier = 1;
+
     bool isJetPackShooting;
     bool isJetPacking; 
 
@@ -497,7 +498,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
             }
             else
             {
-                currentWater += (int)fillAmount; //otherwise the fill amount is low enough to just add it 
+                currentWater += (fillAmount * fillAmountMultiplier); //otherwise the fill amount is low enough to just add it 
             }
         }
         if (currentWater > maxWater) //if current water somehow manages to go over tank capacity
@@ -518,7 +519,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
             }
             else
             {
-                currentWater += fillAmount; //otherwise the fill amount is low enough to just add it 
+                currentWater += (fillAmount * fillAmountMultiplier); //otherwise the fill amount is low enough to just add it 
             }
         }
         if (currentWater > maxWater) //if current water somehow manages to go over tank capacity
@@ -873,12 +874,12 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         isDead = false;
         HP = HPOriginal; //reset the players HP
         UpdatePlayerUI(); //update the players UI
-        upgradeHandler();
 
         playerController.enabled = false; //disable the controller
         transform.SetParent(null); //this fixes any issues where the player dies on a moving platform
         transform.position = gameManager.instance.playerSpawnPosition.transform.position; //change the players position to the spawn point position
         playerController.enabled = true; //re enable the controller
+        upgradeHandler();
 
         pushBack = Vector3.zero;
     }
@@ -909,6 +910,11 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
 
     public void upgradeHandler()
     {
+        if (gameManager.instance.boughtExtraLife == true)
+        {
+            playerLives += 1;
+        }
+
         if (gameManager.instance.boughtMaxHPUpgrade == true)
         {
             HP = 20.0f;
@@ -919,6 +925,11 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         {
             maxWater = 500.0f;
             UpdateWaterUI();
+        }
+
+        if (gameManager.instance.boughtWaterRefillEff == true)
+        {
+            fillAmountMultiplier = 3;
         }
     }
 }
