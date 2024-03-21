@@ -25,6 +25,14 @@ public class shopManager : MonoBehaviour
     {
         checkBuyable();
         coinUI();
+        if (gameManager.instance.boughtMaxHPUpgrade == true)
+        {
+            shopItemTemplate[1].gameObject.SetActive(false);
+        }
+        if (gameManager.instance.boughtWaterCapUpgrade == true)
+        {
+            shopItemTemplate[2].gameObject.SetActive(false);
+        }
     }
 
     public void coinUI()
@@ -74,15 +82,15 @@ public class shopManager : MonoBehaviour
         {
             gameManager.instance.playerScript.playerLives += 1;
         }
-        else if (buttonNum == 1)
+        if (buttonNum == 1)
         {
             gameManager.instance.boughtMaxHPUpgrade = true;
         }
-        else if (buttonNum == 2)
+        if (buttonNum == 2)
         {
             gameManager.instance.boughtWaterCapUpgrade = true;
         }
-        else if (buttonNum == 3)
+        if (buttonNum == 3)
         {
             // Not sure how to handle our refill effectiveness at the moment
         }

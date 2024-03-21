@@ -869,6 +869,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         isDead = false;
         HP = HPOriginal; //reset the players HP
         UpdatePlayerUI(); //update the players UI
+        upgradeHandler();
 
         playerController.enabled = false; //disable the controller
         transform.SetParent(null); //this fixes any issues where the player dies on a moving platform
@@ -876,7 +877,6 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         playerController.enabled = true; //re enable the controller
 
         pushBack = Vector3.zero;
-        upgradeHandler();
     }
 
     //bouncing and launching
