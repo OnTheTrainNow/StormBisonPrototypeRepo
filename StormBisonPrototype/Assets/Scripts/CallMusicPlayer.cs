@@ -7,6 +7,9 @@ public class CallMusicPlayer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        MusicPlayer.Instance.loadMusic();
+        if (MusicPlayer.Instance != null)
+        {
+            MusicPlayer.Instance.loadMusic();
+        }
     }
 }
