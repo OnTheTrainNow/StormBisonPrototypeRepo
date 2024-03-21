@@ -50,7 +50,7 @@ MonoBehaviour:
   rb: {fileID: 4953223510745369253}
   explosion: {fileID: 5933148075467879769, guid: d0d6699818669224db152f46f15a0258, type: 3}
   damageAmount: 1
-  speed: 25
+  speed: 10
   destroyTime: 3
   isHoming: 1
   isExplosive: 1

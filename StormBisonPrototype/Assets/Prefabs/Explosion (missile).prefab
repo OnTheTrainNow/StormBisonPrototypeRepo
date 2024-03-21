@@ -49,8 +49,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   duration: 0.05
-  damageAmount: 4
-  knockBackStrength: 100
+  damageAmount: 2
+  knockBackStrength: 50
   FX: {fileID: 1843210199114657685, guid: 96d80b21ceaf8874b899da8a3c87385b, type: 3}
 --- !u!33 &539106986671351465
 MeshFilter:

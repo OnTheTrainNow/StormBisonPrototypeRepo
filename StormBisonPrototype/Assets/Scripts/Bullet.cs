@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class bullet : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class bullet : MonoBehaviour
     [SerializeField] bool isHoming;
     [SerializeField] bool isExplosive;
 
+    bool explode;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,7 +29,10 @@ public class bullet : MonoBehaviour
     {
         if (isHoming)
         {
-            transform.position = Vector3.MoveTowards(transform.position, gameManager.instance.player.transform.position, Time.deltaTime * speed);
+            Vector3 playerDir = gameManager.instance.player.transform.position - rb.position;
+            Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, playerDir.y, playerDir.z));
+            rb.MoveRotation(Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * speed));
+            rb.velocity = transform.forward * speed;
         }
     }
 
@@ -43,9 +49,10 @@ public class bullet : MonoBehaviour
         {
             dmg.TakeDamage(damageAmount);
         }
-        if (isExplosive)
+        if (isExplosive && !explode)
         {
             Instantiate(explosion, transform.position, transform.rotation);
+            explode = true;
         }
         Destroy(gameObject);
     }

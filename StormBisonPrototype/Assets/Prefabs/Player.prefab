@@ -866,6 +866,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerController: {fileID: 4013128310524657863}
   playerCollider: {fileID: 0}
+  playerDummy: {fileID: 8425801050575664778, guid: 79f0551ad3eb5bf4f88d962606679a24, type: 3}
   HP: 10
   movementSpeed: 5
   sprintSpeed: 10
