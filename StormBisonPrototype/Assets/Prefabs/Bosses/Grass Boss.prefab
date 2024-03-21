@@ -314,7 +314,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8539675808981732068
 Transform:
   m_ObjectHideFlags: 0
@@ -351,6 +351,7 @@ MonoBehaviour:
   shootPos: {fileID: 3791842144943437425}
   shootPos2: {fileID: 3582933129254001674}
   shootPos3: {fileID: 584049185905094950}
+  shootPos4: {fileID: 0}
   headPos: {fileID: 2767606587513454377}
   enemyAudio: {fileID: 7730321198043470222}
   HP: 25
@@ -393,6 +394,8 @@ MonoBehaviour:
   patrolPos: []
   isStationary: 0
   isTurret: 0
+  barrelPos: {fileID: 0}
+  barrelAlinPos: {fileID: 0}
   panSpeed: 0
   panPauseTime: 0
   stationaryLookPos: []

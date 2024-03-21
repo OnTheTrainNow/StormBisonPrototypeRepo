@@ -16,6 +16,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
     [SerializeField] Transform shootPos;
     [SerializeField] Transform shootPos2;
     [SerializeField] Transform shootPos3;
+    [SerializeField] Transform shootPos4;
     [SerializeField] Transform headPos;
     [SerializeField] AudioSource enemyAudio;
 
@@ -102,6 +103,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
     int sewerBulletCount;
     float origShootrate;
     Vector3 barrelAl;
+    int miniBossBarrelItr = 1;
 
     bool isDead; // bool to prevent player shotgun pellets from causing issue with enemycount
     Color defaultColor;
@@ -126,7 +128,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
 
     void Update()
     {
-        if (!isStationary)
+        if (!isTurret)
         {
             float animSpeed = agent.velocity.normalized.magnitude;
             animator.SetFloat("Speed", Mathf.Lerp(animator.GetFloat("Speed"), animSpeed, Time.deltaTime * animSpeedTrans));
@@ -150,14 +152,18 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
                 playerDir = gameManager.instance.player.transform.position - headPos.position;
                 RaycastHit hit;
                 Physics.Raycast(headPos.position, playerDir, out hit);
-                if (hit.collider.CompareTag("Player")) //if player is not obstructed face player else set sawplayer to false
+                if (!gameManager.instance.isPaused)
                 {
-                    faceTarget();
+                    if (hit.collider.CompareTag("Player")) //if player is not obstructed face player else set sawplayer to false
+                    {
+                        faceTarget();
+                    }
+                    else
+                    {
+                        sawPlayer = false;
+                    }
                 }
-                else
-                {
-                    sawPlayer = false;
-                }
+                
             }
             //if Stationary pan between designated points
             else if (isStationary)
@@ -488,6 +494,29 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
             {
                 Instantiate(bullet, shootPos.position, shootPos.transform.rotation);
                 sewerBulletCount++;
+            }
+        }
+        else if (isMiniBoss)
+        {
+            if (miniBossBarrelItr == 1)
+            {
+                Instantiate(bullet, shootPos.position, shootPos.transform.rotation);
+                miniBossBarrelItr++;
+            }
+            else if (miniBossBarrelItr == 2)
+            {
+                Instantiate(bullet, shootPos2.position, shootPos2.transform.rotation);
+                miniBossBarrelItr++;
+            }
+            else if (miniBossBarrelItr == 3)
+            {
+                Instantiate(bullet, shootPos3.position, shootPos3.transform.rotation);
+                miniBossBarrelItr++;
+            }
+            else if (miniBossBarrelItr == 4)
+            {
+                Instantiate(bullet, shootPos4.position, shootPos4.transform.rotation);
+                miniBossBarrelItr = 1;
             }
         }
         else
