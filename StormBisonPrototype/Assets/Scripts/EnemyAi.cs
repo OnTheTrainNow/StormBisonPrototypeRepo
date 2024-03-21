@@ -156,7 +156,6 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
                 }
                 else
                 {
-                    BarrelAlign();
                     sawPlayer = false;
                 }
             }
