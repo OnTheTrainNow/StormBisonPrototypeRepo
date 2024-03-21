@@ -390,11 +390,11 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
         {
             StartCoroutine(flashMat());
         }
-        if (isTurret)
+        if (isTurret && HP !<1)
         {
             faceTargetStationary(playerDir);
         }
-        else
+        else if (HP! < 1)
         {
             faceTarget();
         }
