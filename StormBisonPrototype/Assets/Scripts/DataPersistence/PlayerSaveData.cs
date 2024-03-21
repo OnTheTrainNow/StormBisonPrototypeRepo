@@ -11,6 +11,8 @@ public class PlayerSaveData
     public bool gotFinalKey;
     public bool boughtMaxHPUpgrade;
     public bool boughtWaterCapUpgrade;
+    public bool boughtWaterRefillEff;
+    public bool boughtExtraLife;
 
     public PlayerSaveData () 
     {
@@ -19,5 +21,7 @@ public class PlayerSaveData
         gotFinalKey = false;
         boughtMaxHPUpgrade = false;
         boughtWaterCapUpgrade = false;
+        boughtWaterRefillEff = false;
+        boughtExtraLife = false;
     }
 }

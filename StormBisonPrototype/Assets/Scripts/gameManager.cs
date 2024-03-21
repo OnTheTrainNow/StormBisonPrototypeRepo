@@ -15,6 +15,8 @@ public class gameManager : MonoBehaviour, IPersistence
     [SerializeField] GameObject menuLose;
     [SerializeField] GameObject menuDied;
     [SerializeField] GameObject menuShop;
+    [SerializeField] GameObject menuSettingsActive;
+    [SerializeField] GameObject menuSettings;
 
     [SerializeField] TMP_Text weaponEquipped; //weapon equipped text component
     [SerializeField] TMP_Text enemyCountText; //enemy count text component
@@ -46,6 +48,8 @@ public class gameManager : MonoBehaviour, IPersistence
     public bool extraLifeEE = false;
     public bool boughtMaxHPUpgrade;
     public bool boughtWaterCapUpgrade;
+    public bool boughtWaterRefillEff;
+    public bool boughtExtraLife;
 
     void Awake()
     {
@@ -103,7 +107,11 @@ public class gameManager : MonoBehaviour, IPersistence
         Cursor.lockState = CursorLockMode.Locked; // Lockes the cursor
         menuActive.SetActive(false); // Sets Menu's active state to false
         menuActive = null;
-        DataManager.instance.savePlayerData();
+        if (menuSettingsActive != null)
+        {
+            menuSettingsActive.SetActive(false);
+            menuSettingsActive = null;
+        }
     }
 
     public void updateGameGoal(int amount)
@@ -199,11 +207,19 @@ public class gameManager : MonoBehaviour, IPersistence
         menuActive.SetActive(true);
     }
 
+    public void pauseMenuSettings() 
+    {
+        menuSettingsActive = menuSettings;
+        menuSettings.SetActive(true);
+    }
+
     public void SavePersistentData(ref PlayerSaveData saveData)
     {
         saveData.gotFinalKey = this.gotFinalKey;
         saveData.boughtMaxHPUpgrade = this.boughtMaxHPUpgrade;
         saveData.boughtWaterCapUpgrade = this.boughtWaterCapUpgrade;
+        saveData.boughtWaterRefillEff = this.boughtWaterRefillEff;
+        saveData.boughtExtraLife = this.boughtExtraLife;
     }
 
     public void LoadPersistentData(PlayerSaveData saveData)
@@ -211,5 +227,7 @@ public class gameManager : MonoBehaviour, IPersistence
         this.gotFinalKey = saveData.gotFinalKey;
         this.boughtMaxHPUpgrade = saveData.boughtMaxHPUpgrade;
         this.boughtWaterCapUpgrade = saveData.boughtWaterCapUpgrade;
+        this.boughtWaterRefillEff = saveData.boughtWaterRefillEff;
+        this.boughtExtraLife = saveData.boughtExtraLife;
     }
 }

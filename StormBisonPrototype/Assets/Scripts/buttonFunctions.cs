@@ -7,12 +7,12 @@ using TMPro;
 
 public class buttonFunctions : MonoBehaviour
 {
-    [Header("Volume Settings")]
-    [SerializeField] private TMP_Text volumeTextValue = null;
-    [SerializeField] private Slider volumeSlider = null;
-    [SerializeField] private float defaultVolume = 0.2f;
+    //[Header("Volume Settings")]
+    //[SerializeField] private TMP_Text volumeTextValue = null;
+    //[SerializeField] private Slider volumeSlider = null;
+    //[SerializeField] private float defaultVolume = 0.2f;
 
-    [SerializeField] private GameObject confirmationPrompt = null;
+    private GameObject confirmationPrompt = null;
 
     [Header("Gameplay Settings")]
     [SerializeField] private TMP_Text controllerSenTextValue = null;
@@ -27,6 +27,9 @@ public class buttonFunctions : MonoBehaviour
     public string _newGameLevel;
     private string levelToLoad;
     [SerializeField] private GameObject noSavedGameDialog = null;
+
+    public AudioSource sfxPreviewSource;
+    public AudioClip sfxPreview;
 
     public void NewGameDialogYes()
     {
@@ -80,17 +83,20 @@ public class buttonFunctions : MonoBehaviour
         gameManager.instance.sensitivityTextY.text = gameManager.instance.sensitivitySliderY.value.ToString("F0");
     }
 
+    /*
     public void SetVolume(float volume)
     {
         AudioListener.volume = volume;
         volumeTextValue.text = volume.ToString("0.0");
-    }
+    }*/
 
+    /*
     public void VolumeApply()
     {
         PlayerPrefs.SetFloat("masterVolume", AudioListener.volume);
         StartCoroutine(ConfirmationBox());
     }
+    */
 
     public void SetControllerSen(float sensitivity)
     {
@@ -115,6 +121,7 @@ public class buttonFunctions : MonoBehaviour
 
     public void resetButton(string MenuType)
     {
+        /*
         if(MenuType == "Audio")
         {
             AudioListener.volume = defaultVolume;
@@ -122,6 +129,7 @@ public class buttonFunctions : MonoBehaviour
             volumeTextValue.text = defaultVolume.ToString("0.0");
             VolumeApply();
         }
+        */
 
         if (MenuType == "Gameplay")
         {
@@ -138,5 +146,15 @@ public class buttonFunctions : MonoBehaviour
         confirmationPrompt.SetActive(true);
         yield return new WaitForSeconds(2);
         confirmationPrompt.SetActive(false);
+    }
+
+    public void SFXPreview()
+    {
+        sfxPreviewSource.PlayOneShot(sfxPreview, 1);
+    }
+
+    public void menuSettings()
+    {
+        gameManager.instance.pauseMenuSettings();
     }
 }

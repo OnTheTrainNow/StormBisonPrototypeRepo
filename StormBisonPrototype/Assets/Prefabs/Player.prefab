@@ -887,8 +887,8 @@ MonoBehaviour:
   jump3Time: 2
   gravity: -20
   pushBackResolve: 5
-  crouchControllerHeight: 0
-  crouchColliderHeight: 0
+  crouchControllerHeight: 1
+  crouchColliderHeight: 1
   slideSpeedTuner: 2.5
   slideSpeedFallOff: 2
   gunList: []
@@ -928,11 +928,12 @@ MonoBehaviour:
   pickUpSoundSource: {fileID: 1109491848800434123}
   gunSoundsSource: {fileID: 1109491848800434123}
   jumpVFX: {fileID: 8646079237418123920}
-  bulletImpactFX: {fileID: 2162287870825052246, guid: a14d40c50b8f4e44c9cf41f060a210c0, type: 3}
+  bulletImpactFX: {fileID: 0}
   selectedGun: 0
   maxWater: 200
   startingWaterPercentage: 0.5
   currentWater: 0
+  fillAmountMultiplier: 1
   isShotgunEquipped: 0
   isPistolEquipped: 0
   isRifleEquipped: 0
@@ -5955,4 +5956,4 @@ Rigidbody:
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1

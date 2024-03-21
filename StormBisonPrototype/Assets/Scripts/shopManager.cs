@@ -18,6 +18,7 @@ public class shopManager : MonoBehaviour
     {
         coins = gameManager.instance.coinCount; // gets the coin int from gameManager to set here
         loadItemPanels();
+        removePurchasedItem();
     }
 
     // Update is called once per frame
@@ -25,6 +26,7 @@ public class shopManager : MonoBehaviour
     {
         checkBuyable();
         coinUI();
+        removePurchasedItem();
     }
 
     public void coinUI()
@@ -72,21 +74,43 @@ public class shopManager : MonoBehaviour
         coins = coins - shopItemSO[buttonNum].price;
         if (buttonNum == 0)
         {
-            gameManager.instance.playerScript.playerLives += 1;
+            gameManager.instance.boughtExtraLife = true;
         }
-        else if (buttonNum == 1)
+        if (buttonNum == 1)
         {
             gameManager.instance.boughtMaxHPUpgrade = true;
         }
-        else if (buttonNum == 2)
+        if (buttonNum == 2)
         {
             gameManager.instance.boughtWaterCapUpgrade = true;
         }
-        else if (buttonNum == 3)
+        if (buttonNum == 3)
         {
-            // Not sure how to handle our refill effectiveness at the moment
+            gameManager.instance.boughtWaterRefillEff = true;
         }
-        gameManager.instance.playerScript.upgradeHandler();
         DataManager.instance.savePlayerData();
+    }
+
+    public void removePurchasedItem()
+    {
+        if (gameManager.instance.boughtExtraLife == true)
+        {
+            shopItemTemplate[0].gameObject.SetActive(false);
+        }
+
+        if (gameManager.instance.boughtMaxHPUpgrade == true)
+        {
+            shopItemTemplate[1].gameObject.SetActive(false);
+        }
+
+        if (gameManager.instance.boughtWaterCapUpgrade == true)
+        {
+            shopItemTemplate[2].gameObject.SetActive(false);
+        }
+
+        if (gameManager.instance.boughtWaterRefillEff == true)
+        {
+            shopItemTemplate[3].gameObject.SetActive(false);
+        }
     }
 }
