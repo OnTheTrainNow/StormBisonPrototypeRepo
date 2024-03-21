@@ -88,7 +88,6 @@ public class shopManager : MonoBehaviour
         {
             gameManager.instance.boughtWaterRefillEff = true;
         }
-        gameManager.instance.playerScript.upgradeHandler();
         DataManager.instance.savePlayerData();
     }
 

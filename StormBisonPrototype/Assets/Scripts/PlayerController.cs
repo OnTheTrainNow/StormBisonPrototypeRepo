@@ -142,6 +142,8 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     //soundcontrols
     bool isPlayingSteps;
 
+    bool upgradeBool;
+
     void Start()
     {
         currentWater = (int)(maxWater * startingWaterPercentage); //current water is based on starting water percentage
@@ -201,6 +203,12 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         if (Input.GetButtonDown("Refill Test Tool"))
         {
             fillTank(7);
+        }
+
+        if (upgradeBool == false)
+        {
+            upgradeBool = true;
+            upgradeHandler();
         }
     }
 
@@ -879,7 +887,6 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         transform.SetParent(null); //this fixes any issues where the player dies on a moving platform
         transform.position = gameManager.instance.playerSpawnPosition.transform.position; //change the players position to the spawn point position
         playerController.enabled = true; //re enable the controller
-        upgradeHandler();
 
         pushBack = Vector3.zero;
     }
