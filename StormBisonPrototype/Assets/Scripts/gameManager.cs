@@ -106,9 +106,12 @@ public class gameManager : MonoBehaviour, IPersistence
         Cursor.visible = false; // Hides the cursor
         Cursor.lockState = CursorLockMode.Locked; // Lockes the cursor
         menuActive.SetActive(false); // Sets Menu's active state to false
-        menuSettingsActive.SetActive(false);
         menuActive = null;
-        menuSettingsActive = null;
+        if (menuSettingsActive != null)
+        {
+            menuSettingsActive.SetActive(false);
+            menuSettingsActive = null;
+        }
     }
 
     public void updateGameGoal(int amount)
