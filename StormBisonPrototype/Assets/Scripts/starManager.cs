@@ -11,6 +11,13 @@ public class starManager : MonoBehaviour , IPersistence //most of this functiona
     public bool[] starTracker = new bool[30]; //this bool tracks which stars are collected by the player
     public int starCount = 0;
 
+    [SerializeField] GameObject Star;
+    [SerializeField] int positionIndex;
+    [SerializeField] int StarID;
+    [SerializeField] GameObject SpawnPositon;
+
+    bool activated;
+
     MeshRenderer render;
 
     private void Awake()
@@ -56,5 +63,16 @@ public class starManager : MonoBehaviour , IPersistence //most of this functiona
     public int getStarCount()
     {
         return starCount;
+    }
+
+    public void spawnEnemyStar()
+    {
+        if (!activated)
+        {
+            activated = true;
+            GameObject spawned = Instantiate(Star, SpawnPositon.transform.position, SpawnPositon.transform.rotation);
+            spawned.GetComponent<Star>().positionIndex = positionIndex;
+            spawned.GetComponent<Star>().starArrayID = StarID;
+        }
     }
 }

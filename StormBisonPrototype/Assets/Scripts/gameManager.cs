@@ -122,7 +122,10 @@ public class gameManager : MonoBehaviour, IPersistence
         // Player Win condition is met when all enemies are dead
         if (enemyCount <= 0)
         {
-            youWin();
+            if (starManager.instance != null)
+            {
+                starManager.instance.spawnEnemyStar();
+            }
         }
     }
 
