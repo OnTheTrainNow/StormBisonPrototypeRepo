@@ -74,8 +74,8 @@ public class gameManager : MonoBehaviour, IPersistence
     }
 
     void Update()
-    {       
-
+    {
+        coinCountText.text = coinCount.ToString();
         // esc key will bring up Pause Menu, requires button functionality script
         if (Input.GetButtonDown("Cancel") && menuActive == null)
         {

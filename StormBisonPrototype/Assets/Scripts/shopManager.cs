@@ -16,7 +16,6 @@ public class shopManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        coins = gameManager.instance.coinCount; // gets the coin int from gameManager to set here
         loadItemPanels();
         removePurchasedItem();
     }
@@ -24,9 +23,11 @@ public class shopManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        checkBuyable();
+        coins = gameManager.instance.coinCount; // gets the coin int from gameManager to set here
         coinUI();
+        checkBuyable();
         removePurchasedItem();
+        gameManager.instance.coinCount = coins;
     }
 
     public void coinUI()
@@ -71,7 +72,7 @@ public class shopManager : MonoBehaviour
 
     public void PurchaseItem(int buttonNum)
     {
-        coins = coins - shopItemSO[buttonNum].price;
+        gameManager.instance.coinCount -= shopItemSO[buttonNum].price;
         if (buttonNum == 0)
         {
             gameManager.instance.boughtExtraLife = true;

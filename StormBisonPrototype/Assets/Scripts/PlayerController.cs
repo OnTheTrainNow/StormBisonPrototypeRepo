@@ -509,7 +509,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
             }
             else
             {
-                currentWater += (fillAmount * fillAmountMultiplier); //otherwise the fill amount is low enough to just add it 
+                currentWater += fillAmount; //otherwise the fill amount is low enough to just add it 
             }
         }
         if (currentWater > maxWater) //if current water somehow manages to go over tank capacity
