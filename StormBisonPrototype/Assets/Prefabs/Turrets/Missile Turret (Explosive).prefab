@@ -5439,6 +5439,7 @@ MonoBehaviour:
   shootPos: {fileID: 9173122393359662562}
   shootPos2: {fileID: 0}
   shootPos3: {fileID: 0}
+  shootPos4: {fileID: 0}
   headPos: {fileID: 3186743198448974939}
   enemyAudio: {fileID: 6956472760340578175}
   HP: 3
@@ -5473,8 +5474,8 @@ MonoBehaviour:
   patrolPos: []
   isStationary: 0
   isTurret: 1
-  barrelPos: {fileID: 0}
-  barrelAlinPos: {fileID: 0}
+  barrelPos: {fileID: 7933449633935105585}
+  barrelAlinPos: {fileID: 4677903935594229562}
   panSpeed: 2
   panPauseTime: 3
   stationaryLookPos:
