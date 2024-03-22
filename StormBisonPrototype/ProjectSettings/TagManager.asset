@@ -10,6 +10,9 @@ TagManager:
   - Enemy
   - Coin
   - Boss
+  - Grass
+  - Sewer
+  - Mini
   layers:
   - Default
   - TransparentFX

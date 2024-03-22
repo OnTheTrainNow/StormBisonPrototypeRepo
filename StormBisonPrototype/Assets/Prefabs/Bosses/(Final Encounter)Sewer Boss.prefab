@@ -400,7 +400,7 @@ GameObject:
   - component: {fileID: 4126737489723235543}
   - component: {fileID: 3424056886359601092}
   m_Layer: 0
-  m_Name: Sewer Boss
+  m_Name: (Final Encounter)Sewer Boss
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -457,7 +457,7 @@ MonoBehaviour:
   HPUI: {fileID: 1520305801384380168}
   HPCircle: {fileID: 4651802572028059846}
   playerStompBounceForce: 0
-  dropsStar: 1
+  dropsStar: 0
   enemySteps:
   - {fileID: 8300000, guid: f3faa451c6f20bc498ba444f9b6d743d, type: 3}
   - {fileID: 8300000, guid: fce1eafb504ee404d8c47133addaee45, type: 3}
