@@ -23,6 +23,8 @@ public class gameManager : MonoBehaviour, IPersistence
     [SerializeField] TMP_Text starCountText; //star count text component
     [SerializeField] TMP_Text coinCountText; //coin count text component
 
+    [SerializeField] AudioSource musicMenuAudioSource;
+
     public TMP_Text waterCountText; //enemy count text component
 
     public TMP_Text sensitivityTextX; //the text for the horizontal sensitivity
@@ -96,6 +98,11 @@ public class gameManager : MonoBehaviour, IPersistence
         Time.timeScale = 0; // Pauses the game
         Cursor.visible = true; // re-enables cursor
         Cursor.lockState = CursorLockMode.Confined; // confines the cursor to the window
+        if (musicMenuAudioSource != null)
+        {
+            musicMenuAudioSource.Play();
+            musicMenuAudioSource.UnPause();
+        }
     }
 
     // Unpauses the game after Resume Gets pressed, requires button functionality
@@ -111,6 +118,11 @@ public class gameManager : MonoBehaviour, IPersistence
         {
             menuSettingsActive.SetActive(false);
             menuSettingsActive = null;
+        }
+
+        if (musicMenuAudioSource != null)
+        {
+            musicMenuAudioSource.Pause();
         }
     }
 
