@@ -394,7 +394,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
         {
             faceTargetStationary(playerDir);
         }
-        else if (HP! < 1)
+        else if (HP !< 1)
         {
             faceTarget();
         }
@@ -467,6 +467,9 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
             float distance = Vector3.Distance(transform.position, gameManager.instance.player.transform.position);
             if (distance <= distanceTillShotgun)
             {
+                playerDir2.y = playerDir2.y - 1;
+                Quaternion rot1 = Quaternion.LookRotation(new Vector3(transform.rotation.x + playerDir2.x, playerDir2.y, playerDir2.z));
+                shootPos.transform.rotation = rot1;
                 Instantiate(bullet, shootPos.position, shootPos.transform.rotation);
                 if (shootPos2 != null)
                 {
