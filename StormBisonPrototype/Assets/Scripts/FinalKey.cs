@@ -7,7 +7,7 @@ public class FinalKey : MonoBehaviour
     [SerializeField] MeshRenderer thisRenderer;
     [SerializeField] AudioSource KeySFX;
 
-    [SerializeField] Transform keyMovePosition;
+    public Transform keyMovePosition;
 
     [SerializeField] float moveSpeed = 0; //how fast the key moves towards its positon
 

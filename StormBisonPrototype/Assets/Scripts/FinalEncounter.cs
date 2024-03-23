@@ -6,6 +6,7 @@ public class FinalEncounter : MonoBehaviour
 {
     [SerializeField] Transform playerSpawnPos;
     [SerializeField] Transform keySpawnPos;
+    [SerializeField] Transform keyMovePos;
     [SerializeField] GameObject key;
     [SerializeField] GameObject grassBoss;
     [SerializeField] GameObject sewerBoss;
@@ -14,11 +15,18 @@ public class FinalEncounter : MonoBehaviour
 
     int bossItr;
     int keyItr;
-    void Start()
+
+    bool isActivated;
+
+    public void StartEncounter()
     {
-        grassBoss.SetActive(true);
-        bossItr = 1;
-        keyItr = 0;
+        if (!isActivated)
+        {
+            isActivated = true;
+            grassBoss.SetActive(true);
+            bossItr = 1;
+            keyItr = 0;
+        }
     }
 
 
@@ -40,8 +48,7 @@ public class FinalEncounter : MonoBehaviour
             {
                 if (keyItr == 0)
                 {
-                    Instantiate(key, keySpawnPos);
-                    keyItr = 1;
+                    spawnKey();
                 }
             }
         }
@@ -49,9 +56,15 @@ public class FinalEncounter : MonoBehaviour
         {
             if (keyItr == 0)
             {
-                Instantiate(key, keySpawnPos);
-                keyItr = 1;
+                spawnKey();
             }
         } 
+    }
+
+    void spawnKey()
+    {
+        GameObject spawned = Instantiate(key, keySpawnPos.position, keySpawnPos.rotation);
+        spawned.GetComponent<FinalKey>().keyMovePosition = keyMovePos;
+        keyItr = 1;
     }
 }

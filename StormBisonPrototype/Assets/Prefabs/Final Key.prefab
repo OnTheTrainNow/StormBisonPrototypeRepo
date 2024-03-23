@@ -5033,7 +5033,7 @@ MonoBehaviour:
   thisRenderer: {fileID: 4382738740637715622}
   KeySFX: {fileID: 2565988995581928726}
   keyMovePosition: {fileID: 5884885893006679781}
-  moveSpeed: 0
+  moveSpeed: 3
 --- !u!54 &4829037962246573100
 Rigidbody:
   m_ObjectHideFlags: 0
