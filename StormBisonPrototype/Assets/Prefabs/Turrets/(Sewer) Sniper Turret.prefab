@@ -5105,7 +5105,7 @@ GameObject:
   - component: {fileID: 4931795347540491923}
   - component: {fileID: 6852114951633588954}
   - component: {fileID: 6517154265275617085}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: CannonB_Barrel01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5125,6 +5125,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 8186517731273399307}
   - {fileID: 6620105756598087293}
   m_Father: {fileID: 5777440342102930733}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5257,12 +5258,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6754404949301282890}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.641, z: 2.811}
+  m_LocalRotation: {x: -0.000000021855694, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5777440342102930733}
+  m_Father: {fileID: 4573511074166180954}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6758764986536238572
 GameObject:
@@ -5302,7 +5303,6 @@ Transform:
   - {fileID: 4573511074166180954}
   - {fileID: 2070120133126192283}
   - {fileID: 3604957060042870645}
-  - {fileID: 8186517731273399307}
   - {fileID: 2328313566770382940}
   m_Father: {fileID: 1250854913137421764}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

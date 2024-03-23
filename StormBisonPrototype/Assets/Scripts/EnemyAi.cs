@@ -380,23 +380,28 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
 
     public void TakeDamage(float amount)
     {
-        agent.SetDestination(gameManager.instance.player.transform.position); //have the enemy move to the position they were shot from
+        if (!isTurret)
+        {
+            agent.stoppingDistance = 0;
+        }
         HP -= amount;
-
+        if (HP > 0)
+        {
+            agent.SetDestination(gameManager.instance.player.transform.position); //have the enemy move to the position they were shot from
+            if (isTurret)
+            {
+                playerDir = gameManager.instance.player.transform.position - headPos.position;
+                faceTarget();
+                sawPlayer = true;
+            }
+        }
+        
         enemyAudio.PlayOneShot(enemyHurtSound[Random.Range(0, enemyHurtSound.Length)], enemyHurtVol);
 
         updateUI();
         if (!isTurret) 
         {
             StartCoroutine(flashMat());
-        }
-        if (isTurret && HP !<1)
-        {
-            faceTargetStationary(playerDir);
-        }
-        else if (HP !< 1)
-        {
-            faceTarget();
         }
         if (HP <= 0 && !isDead)
         {

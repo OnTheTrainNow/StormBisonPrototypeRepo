@@ -5007,7 +5007,7 @@ GameObject:
   - component: {fileID: 6342602666079977169}
   - component: {fileID: 7226013153253200689}
   - component: {fileID: 8511734378597055413}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: CannonB_Barrel00
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5027,6 +5027,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 6381378246933902951}
   - {fileID: 334450301388815284}
   m_Father: {fileID: 1426336635146439786}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5171,7 +5172,6 @@ Transform:
   m_Children:
   - {fileID: 7272993296764893882}
   - {fileID: 3844999756078579801}
-  - {fileID: 6381378246933902951}
   - {fileID: 7301988386436466748}
   - {fileID: 5114867913814798398}
   m_Father: {fileID: 1464440723184906439}
@@ -5194,6 +5194,7 @@ MonoBehaviour:
   shootPos: {fileID: 334450301388815284}
   shootPos2: {fileID: 0}
   shootPos3: {fileID: 0}
+  shootPos4: {fileID: 0}
   headPos: {fileID: 6381378246933902951}
   enemyAudio: {fileID: 2625181954904265657}
   HP: 3
@@ -5822,10 +5823,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8523388630934938652}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.841, z: 1.454}
+  m_LocalRotation: {x: -0.000000021855694, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.64, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1426336635146439786}
+  m_Father: {fileID: 7301988386436466748}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

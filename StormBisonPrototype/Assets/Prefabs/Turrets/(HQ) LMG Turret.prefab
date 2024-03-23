@@ -10062,12 +10062,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2908291320480512794}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.618, z: 2.738}
+  m_LocalRotation: {x: -0.00000008146034, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 694324781303604160}
+  m_Father: {fileID: 6827616184969634476}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3694516167377429161
 GameObject:
@@ -10224,7 +10224,6 @@ Transform:
   - {fileID: 8829689632331723610}
   - {fileID: 4013427346827400502}
   - {fileID: 9139361442065778345}
-  - {fileID: 8167404356715104226}
   - {fileID: 822710846981298672}
   m_Father: {fileID: 7229448002234307330}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10509,7 +10508,7 @@ GameObject:
   - component: {fileID: 2050004112417640889}
   - component: {fileID: 5501361374148519927}
   - component: {fileID: 5492734601093042116}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: CannonR_Guard01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10723,7 +10722,7 @@ GameObject:
   - component: {fileID: 3234818779110423251}
   - component: {fileID: 3115524719614984496}
   - component: {fileID: 3147172987979382527}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: CannonR_Barrel03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10743,6 +10742,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 8167404356715104226}
   - {fileID: 7279484584927981880}
   m_Father: {fileID: 694324781303604160}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -140,12 +140,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1469790800733939771}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.934, z: 2.055}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0.388}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6470932587891836680}
+  m_Father: {fileID: 2151888567961287922}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2030477613517199446
 GameObject:
@@ -159,7 +159,7 @@ GameObject:
   - component: {fileID: 2228376707730633388}
   - component: {fileID: 5672844501180553874}
   - component: {fileID: 8518296124825403849}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: MortarG_Stand00
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5533,7 +5533,7 @@ GameObject:
   - component: {fileID: 2067524378261873179}
   - component: {fileID: 4012977782709777888}
   - component: {fileID: 812828004006020874}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: MortarG_Barrel02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5553,6 +5553,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 703639104392830186}
   - {fileID: 6496817222641099791}
   m_Father: {fileID: 6470932587891836680}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5698,7 +5699,6 @@ Transform:
   - {fileID: 1098171548303749424}
   - {fileID: 8818342774291208900}
   - {fileID: 7612124973541364590}
-  - {fileID: 703639104392830186}
   - {fileID: 517519603190385301}
   m_Father: {fileID: 8088086278900524784}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4839835840622566621}
   - component: {fileID: 666602923957778074}
   - component: {fileID: 7857104388766221524}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: CannonB_Barrel02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32,6 +32,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 8270607021139515447}
   - {fileID: 3229185700497389039}
   m_Father: {fileID: 7347863762643099137}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4993,7 +4994,6 @@ Transform:
   - {fileID: 2206330759788835067}
   - {fileID: 2912115097360568122}
   - {fileID: 8578392489389749112}
-  - {fileID: 8270607021139515447}
   - {fileID: 681623279155438395}
   m_Father: {fileID: 2977813157078570075}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5290,12 +5290,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4036536711838713587}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.841, z: 2.47}
+  m_LocalRotation: {x: -0.000000021855694, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.65, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7347863762643099137}
+  m_Father: {fileID: 3214114907541490693}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4467771099369877705
 GameObject:
@@ -5405,7 +5405,7 @@ GameObject:
   - component: {fileID: 3754583469757229971}
   - component: {fileID: 553027523280366460}
   - component: {fileID: 5604467619961272254}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: CannonB_Guard00
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5490,7 +5490,7 @@ MeshCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0

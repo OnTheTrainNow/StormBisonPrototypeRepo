@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6972771133280941693}
   - component: {fileID: 9170964998089584573}
   - component: {fileID: 345173175071083607}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: MissileB_Stand00
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5146,7 +5146,7 @@ GameObject:
   - component: {fileID: 2041817046986479244}
   - component: {fileID: 508105927704421620}
   - component: {fileID: 8791669609575629760}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: MissileB_Radar00
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5252,7 +5252,7 @@ GameObject:
   - component: {fileID: 1560750049048987178}
   - component: {fileID: 8536593039409986217}
   - component: {fileID: 4424927644760707824}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: MissileB_Barrel00
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5408,6 +5408,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 8311924811776377441}
   - {fileID: 94293745111543965}
   - {fileID: 8464209651604414348}
   m_Father: {fileID: 1876246227432734913}
@@ -5667,7 +5668,6 @@ Transform:
   - {fileID: 1404526418825693129}
   - {fileID: 658492962195832578}
   - {fileID: 2111158592418585144}
-  - {fileID: 8311924811776377441}
   - {fileID: 6580334464310539925}
   m_Father: {fileID: 8439966868494055110}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6071,9 +6071,9 @@ Transform:
   m_GameObject: {fileID: 8236988125442745634}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.002, y: 1.834, z: 1.013}
+  m_LocalPosition: {x: -0.0019989014, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1876246227432734913}
+  m_Father: {fileID: 1677815107205293866}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
