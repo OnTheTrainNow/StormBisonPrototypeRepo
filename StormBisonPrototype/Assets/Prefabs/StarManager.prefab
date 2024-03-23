@@ -99,7 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   starPositions:
   - {fileID: 0}
-  starTracker: 000000000000000000000000000000000000000000000000000000000000
+  starTracker: 000000000000000000000000000000000000
   starCount: 0
   Star: {fileID: 2307301218259941284, guid: 0872a0021681a114f957aed8712bc8d4, type: 3}
   positionIndex: 0

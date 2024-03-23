@@ -8,7 +8,7 @@ public class starManager : MonoBehaviour , IPersistence //most of this functiona
 
     public List<Transform> starPositions = new List<Transform>(); //the main functionality of this manager is to track positions for stars to move towards
 
-    public bool[] starTracker = new bool[30]; //this bool tracks which stars are collected by the player
+    public bool[] starTracker = new bool[18]; //this bool tracks which stars are collected by the player 
     public int starCount = 0;
 
     [SerializeField] GameObject Star;
