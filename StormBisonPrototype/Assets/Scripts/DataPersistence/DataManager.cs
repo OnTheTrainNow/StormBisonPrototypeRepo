@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq; //this is used in getSaveDataList to find objects using the persistence interface (you can't search for Interfaces normally without this)
+using UnityEngine.Windows;
+using System.IO;
 
 public class DataManager : MonoBehaviour
 {
@@ -58,5 +60,17 @@ public class DataManager : MonoBehaviour
         {
             pesistentDataObject.LoadPersistentData(saveData); //call their load method passing in the save data as a parameter
         }
+    }
+
+    public void forceNewGameFile()
+    {
+        string fileDirectoryPath = Application.persistentDataPath; //set the directory path to the persistent data path of the application
+        string fullFilePath = Path.Combine(fileDirectoryPath, fileName); //combine the two strings above to get the full file path
+        
+        if (System.IO.File.Exists(fullFilePath))
+        {
+            System.IO.File.Delete(fullFilePath);
+        }
+        createNewSaveFile();
     }
 }
