@@ -22,6 +22,7 @@ public class gameManager : MonoBehaviour, IPersistence
     [SerializeField] TMP_Text enemyCountText; //enemy count text component
     [SerializeField] TMP_Text starCountText; //star count text component
     [SerializeField] TMP_Text coinCountText; //coin count text component
+    [SerializeField] TMP_Text livesCountText; //lives count text component
 
     [SerializeField] AudioSource musicMenuAudioSource;
 
@@ -76,6 +77,7 @@ public class gameManager : MonoBehaviour, IPersistence
     void Update()
     {
         coinCountText.text = coinCount.ToString();
+        livesCountText.text = gameManager.instance.playerScript.playerLives.ToString();
         // esc key will bring up Pause Menu, requires button functionality script
         if (Input.GetButtonDown("Cancel") && menuActive == null)
         {
@@ -211,6 +213,12 @@ public class gameManager : MonoBehaviour, IPersistence
 
     public void loadLobby()
     {
+        StartCoroutine(loadLobbyWithDelay());
+    }
+
+    IEnumerator loadLobbyWithDelay()
+    {
+        yield return new WaitForSecondsRealtime(0.2f);
         SceneManager.LoadScene("MainLobby");
         gameManager.instance.stateUnpaused();
     }

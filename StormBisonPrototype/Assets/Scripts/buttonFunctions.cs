@@ -31,6 +31,9 @@ public class buttonFunctions : MonoBehaviour
     public AudioSource sfxPreviewSource;
     public AudioClip sfxPreview;
 
+    public AudioSource menuSFXSource;
+    public AudioClip menuSFX;
+
     public void NewGameDialogYes()
     {
         SceneManager.LoadScene(_newGameLevel);
@@ -51,6 +54,7 @@ public class buttonFunctions : MonoBehaviour
 
     public void resume()
     {
+        onClickSFX();
         gameManager.instance.stateUnpaused();
 
         PlayerPrefs.SetInt("Mouse Sensitivity X", (int)gameManager.instance.sensitivitySliderX.value);
@@ -59,17 +63,26 @@ public class buttonFunctions : MonoBehaviour
 
     public void restart()
     {
+        onClickSFX();
+        StartCoroutine(restartWithDelay());
+    }
+
+    IEnumerator restartWithDelay()
+    {
+        yield return new WaitForSecondsRealtime(0.2f);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         gameManager.instance.stateUnpaused();
     }
 
     public void quit()
     {
+        onClickSFX();
         Application.Quit();
     }
 
     public void respawn()
     {
+        onClickSFX();
         if (gameManager.instance.playerScript.playerLives > 0)
         {
             gameManager.instance.stateUnpaused(); //unpause the game
@@ -155,6 +168,12 @@ public class buttonFunctions : MonoBehaviour
 
     public void menuSettings()
     {
+        onClickSFX();
         gameManager.instance.pauseMenuSettings();
+    }
+
+    public void onClickSFX()
+    {
+        menuSFXSource.PlayOneShot(menuSFX, 1);
     }
 }
