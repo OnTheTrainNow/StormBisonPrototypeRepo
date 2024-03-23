@@ -558,7 +558,7 @@ MonoBehaviour:
   doorCollider: {fileID: 7992205726344532763}
   doorRenderer: {fileID: 5688553901413486410}
   starDisplay: {fileID: 5983457490519283432}
-  starRequirementDisplay: {fileID: 2745185262442140825}
+  starRequirementDisplay: {fileID: 0}
   starRequirement: 0
 --- !u!1 &7703356509310008962
 GameObject:

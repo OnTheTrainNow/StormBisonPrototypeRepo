@@ -16,7 +16,7 @@ public class PlayerSaveData
 
     public PlayerSaveData () 
     {
-        playerStars = new bool[30]; //the array size here should match that of the star manager since the two will save and load from each other
+        playerStars = new bool[18]; //the array size here should match that of the star manager since the two will save and load from each other 
         starCount = 0;
         gotFinalKey = false;
         boughtMaxHPUpgrade = false;

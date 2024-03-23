@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class StarLockDoorTrigger : MonoBehaviour
 {
@@ -17,7 +18,10 @@ public class StarLockDoorTrigger : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        starRequirementDisplay.text = starRequirement.ToString();
+        if (starRequirementDisplay != null)
+        {
+            starRequirementDisplay.text = starRequirement.ToString();
+        }
     }
 
     private void OnTriggerEnter(Collider other)

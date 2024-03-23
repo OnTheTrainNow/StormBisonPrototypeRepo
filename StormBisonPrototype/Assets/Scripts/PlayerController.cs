@@ -323,7 +323,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     private void ProcessCrouch()
     {
         if (isSliding || isSprinting || isJumping || isJetPacking) { return; }
-        if (Input.GetKeyDown(KeyCode.LeftControl)) //if the player pressed the crouch button 
+        if (Input.GetButtonDown("Crouch")) //if the player pressed the crouch button 
         {
             if (!isCrouched) //if they arent crouched
             {
@@ -361,7 +361,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     private void ProcessSlide()
     {
         if (isJumping || isWallJumping || isJetPacking || isLaunching) { return; } //the player can't slide in the follow conditons
-        if (isSprinting && Input.GetKeyDown(KeyCode.LeftControl)) //this activates the slide
+        if (isSprinting && Input.GetButtonDown("Crouch")) //this activates the slide
         {
             isSliding = true; //set the sliding state to true
 
@@ -373,7 +373,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
             playerController.height = crouchControllerHeight; //reduce the controller and collider height
             playerCollider.height = crouchColliderHeight; //reduce the collider height
         }
-        else if (isSliding && Input.GetKeyDown(KeyCode.LeftControl)) //this cancels the slide early
+        else if (isSliding && Input.GetButtonDown("Crouch")) //this cancels the slide early
         {
             isCrouched = false; //set crouched bool to false
             isSliding = false; //uncrouching stops sliding
@@ -831,13 +831,27 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
 
     public void killBox() //this method is called when the player falls off the world into the kill box
     {
+        UpdatePlayerUI(); //update the player UI
         PlayHurtSound(); //play the hurt sound
         StartCoroutine(flashDamage()); //flash the damage effect panel with a coroutine
 
         if (!isDead) //if the isDead bool is not set
         {
             isDead = true; //set the player to dead
-            gameManager.instance.youLose(); //tell the game manager to display the Loss screen
+            playerLives -= 1;
+
+            if (playerLives <= 0 && isDead == true)
+            {
+                Instantiate(playerDummy, transform.position, Quaternion.identity); //fix for enemy not having a target and erroring after player death
+                gameManager.instance.youLose();
+                Debug.Log("Oops No More Lives For You");
+
+            }
+            else
+            {
+                Instantiate(playerDummy, transform.position, Quaternion.identity); //fix for enemy not having a target and erroring after player death
+                gameManager.instance.youDied(); //tell the game manager to display the death screen
+            }
         }
     }
 
