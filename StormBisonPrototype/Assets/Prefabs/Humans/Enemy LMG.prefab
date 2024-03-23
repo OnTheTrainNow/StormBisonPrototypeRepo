@@ -326,6 +326,7 @@ MonoBehaviour:
   shootPos: {fileID: 7606034228193512986}
   shootPos2: {fileID: 0}
   shootPos3: {fileID: 0}
+  shootPos4: {fileID: 0}
   headPos: {fileID: 2169412418928527945}
   enemyAudio: {fileID: -4825209319157097512}
   HP: 9
@@ -368,11 +369,13 @@ MonoBehaviour:
   patrolPos: []
   isStationary: 0
   isTurret: 0
+  barrelPos: {fileID: 0}
+  barrelAlinPos: {fileID: 0}
   panSpeed: 0
   panPauseTime: 0
   stationaryLookPos: []
   isRNG: 0
-  drop: {fileID: 6589241419509288320, guid: 07226d4f5f7be794d9e46263e003337e, type: 3}
+  drop: {fileID: 1161294568278913083, guid: 2f7bf3414690bff42a6fba5536771ed1, type: 3}
   rngDrops: []
   rngDropsRate: []
 --- !u!95 &8121291022707772453

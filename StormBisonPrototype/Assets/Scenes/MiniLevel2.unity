@@ -13118,6 +13118,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4923888467152133586, guid: c233304938321b6429920f21cdffdb51, type: 3}
+      propertyPath: StarID
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 4923888467152133586, guid: c233304938321b6429920f21cdffdb51, type: 3}
       propertyPath: SpawnPositon
       value: 
       objectReference: {fileID: 116778326}
