@@ -435,6 +435,7 @@ MonoBehaviour:
   shootPos: {fileID: 1423226948656795986}
   shootPos2: {fileID: 0}
   shootPos3: {fileID: 0}
+  shootPos4: {fileID: 0}
   headPos: {fileID: 7840628684990827865}
   enemyAudio: {fileID: -3788929693599086162}
   HP: 3
@@ -477,6 +478,8 @@ MonoBehaviour:
   patrolPos: []
   isStationary: 0
   isTurret: 0
+  barrelPos: {fileID: 0}
+  barrelAlinPos: {fileID: 0}
   panSpeed: 0
   panPauseTime: 0
   stationaryLookPos: []
@@ -569,7 +572,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 15
+  m_Radius: 25
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!82 &-3788929693599086162
 AudioSource:

@@ -56,13 +56,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 865223172874561676}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.0032864504, y: 0.060470074, z: -0.00030198687, w: -0.99816453}
+  m_LocalRotation: {x: 0, y: -0.08715578, z: 0, w: 0.9961947}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4875305511695528325}
-  m_LocalEulerAnglesHint: {x: 1.819, y: -94, z: -96.732}
+  m_LocalEulerAnglesHint: {x: 0, y: -10, z: 0}
 --- !u!1 &975458185676205658
 GameObject:
   m_ObjectHideFlags: 0
@@ -1098,6 +1098,7 @@ MonoBehaviour:
   shootPos: {fileID: 4875305511695528325}
   shootPos2: {fileID: 4962809863943905227}
   shootPos3: {fileID: 8679342387545040319}
+  shootPos4: {fileID: 0}
   headPos: {fileID: 3308129647038322174}
   enemyAudio: {fileID: -6298050844954029422}
   HP: 6
@@ -1140,6 +1141,8 @@ MonoBehaviour:
   patrolPos: []
   isStationary: 0
   isTurret: 0
+  barrelPos: {fileID: 0}
+  barrelAlinPos: {fileID: 0}
   panSpeed: 0
   panPauseTime: 0
   stationaryLookPos: []
@@ -1232,7 +1235,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 15
+  m_Radius: 20
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!82 &-6298050844954029422
 AudioSource:
@@ -1535,13 +1538,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7514701445247523190}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.021881813, y: -0.0026145868, z: -0.003388881, w: -0.99975145}
+  m_LocalRotation: {x: 0, y: 0.08715578, z: 0, w: 0.9961947}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4875305511695528325}
-  m_LocalEulerAnglesHint: {x: 8.749, y: -97, z: -96.808}
+  m_LocalEulerAnglesHint: {x: 0, y: 10, z: 0}
 --- !u!1 &7737301744115769828
 GameObject:
   m_ObjectHideFlags: 0

@@ -178,7 +178,10 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
             }
             else
             {
-                StartCoroutine(roam());
+                if (!isTurret)
+                {
+                    StartCoroutine(roam());
+                }
             }
             
         }
@@ -199,7 +202,10 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
             }
             else
             {
-                StartCoroutine(roam());
+                if (!isTurret)
+                {
+                    StartCoroutine(roam());
+                }
             }
         }
     }
@@ -217,7 +223,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
 
             NavMeshHit hit;
             NavMesh.SamplePosition(randomPos, out hit, roamDist, 1);
-            agent.SetDestination(hit.position);
+            SetDesti(hit.position);
 
             destChosen = false;
         }
@@ -243,7 +249,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
                 patrolItr--;
             }
             yield return new WaitForSeconds(patrolPauseTime);
-            agent.SetDestination(patrolPos[patrolItr].position);
+            SetDesti(patrolPos[patrolItr].position);
             //if patrolItr is at the end of patrolPos reverse direction and if its at teh start set direction to forward
             if (patrolItr == patrolPos.Length - 1)
             {
@@ -314,8 +320,8 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
             Debug.Log(hit.collider.name);
 
             if (hit.collider.CompareTag("Player") && angleToPlayer <= viewCone)
-            { 
-                agent.SetDestination(gameManager.instance.player.transform.position);                
+            {
+                SetDesti(gameManager.instance.player.transform.position);                
                 if (agent.remainingDistance < agent.stoppingDistance)
                 {
                     if (isTurret)
@@ -378,6 +384,14 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
         }
     }
 
+    void SetDesti(Vector3 desti) 
+    {
+        if (!isDead)
+        {
+            agent.SetDestination(desti);
+        }
+    }
+
     public void TakeDamage(float amount)
     {
         if (!isTurret)
@@ -385,9 +399,9 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
             agent.stoppingDistance = 0;
         }
         HP -= amount;
-        if (HP > 0)
+        if (!isDead)
         {
-            agent.SetDestination(gameManager.instance.player.transform.position); //have the enemy move to the position they were shot from
+            SetDesti(gameManager.instance.player.transform.position); //have the enemy move to the position they were shot from
             if (isTurret)
             {
                 playerDir = gameManager.instance.player.transform.position - headPos.position;
