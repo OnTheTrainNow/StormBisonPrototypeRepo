@@ -312,12 +312,12 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
         playerDir = gameManager.instance.player.transform.position - headPos.position;
 
         angleToPlayer = Vector3.Angle(new Vector3(playerDir.x, 0, playerDir.z), transform.forward);
-        Debug.DrawRay(headPos.position, playerDir);
+        //Debug.DrawRay(headPos.position, playerDir);
 
         RaycastHit hit;
         if (Physics.Raycast(headPos.position, playerDir, out hit))
         {
-            Debug.Log(hit.collider.name);
+            //Debug.Log(hit.collider.name);
 
             if (hit.collider.CompareTag("Player") && angleToPlayer <= viewCone)
             {

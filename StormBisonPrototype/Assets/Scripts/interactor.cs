@@ -7,13 +7,6 @@ public class interactor : MonoBehaviour
 {
     public LayerMask interactableLayerMask = 9;
     UnityEvent onInteract;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
         RaycastHit hit;

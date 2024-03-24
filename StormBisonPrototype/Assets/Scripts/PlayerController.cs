@@ -165,7 +165,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         gameManager.instance.updateWeaponEquipped();
         if (!gameManager.instance.isPaused) //if the gameManager is not set to paused 
         {
-            Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootRange, Color.blue); //show the rayCast for debug purposes
+            //Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootRange, Color.blue); //show the rayCast for debug purposes
 
             ProcessCrouch(); //process if the player is crouching (the player can only crouch/sprint when unpaused)
             ProcessSprint(); //process if the player is moving
@@ -194,6 +194,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         jumpTimer += Time.deltaTime; 
         launchTimer += Time.deltaTime;
 
+        /*
         // Self Damage Tool
         if (Input.GetButtonDown("Self Damage Tool"))
         {
@@ -205,6 +206,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         {
             fillTank(7);
         }
+        */
 
         if (upgradeBool == false)
         {
@@ -474,11 +476,11 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         {
             if (Input.GetButtonDown("Jump") || Input.GetButtonUp("Jump")) //the timing is kinda hard so wall jumping checks for either button up or down
             {
-                Debug.DrawRay(playerController.transform.position, playerController.transform.forward * 1f, Color.yellow, 1f); //debug ray 
+                //Debug.DrawRay(playerController.transform.position, playerController.transform.forward * 1f, Color.yellow, 1f); //debug ray 
                 if (!Physics.Raycast(playerController.transform.position, playerController.transform.forward, 1f)) { return; } //use a forward facing raycast to determine if the player is facing the wall enough
                 
                 Vector3 direction = Vector3.Reflect(playerController.transform.forward, other.normal); //get their reflected direction off the normal
-                Debug.DrawRay(other.point, direction, Color.red, 2f); //this draws the direction for debugging
+                //Debug.DrawRay(other.point, direction, Color.red, 2f); //this draws the direction for debugging
                 playerController.transform.rotation = Quaternion.LookRotation(direction, Vector3.up); //set the players rotation to that of the direction
                 movement = direction; //change the players movement direction to match the direction
                 ProcessWallJump();
@@ -560,7 +562,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         {
             bulletImpact(hit); //tell the bullet impact effect to move to the hit location
 
-            Debug.Log(hit.collider.name); //out put the hit object for testing purposes. this can be removed later
+            //Debug.Log(hit.collider.name); //out put the hit object for testing purposes. this can be removed later
             IDamage dmg = hit.collider.GetComponent<IDamage>(); //get the IDamage component from the hit collider
 
             if (hit.transform != transform && dmg != null) //if the IDamage componenet was found
@@ -600,7 +602,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
             {
                 bulletImpact(hit); //tell the bullet impact effect to move to the hit location
 
-                Debug.Log(hit.collider.name);
+                //Debug.Log(hit.collider.name);
 
                 IDamage dmg = hit.collider.GetComponent<IDamage>();
 
@@ -610,13 +612,13 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
                 }
 
                 // This is for Debugging purposes
-                Debug.DrawLine(pelletRay.origin, hit.point, Color.red, 0.5f);
-            }
+                //Debug.DrawLine(pelletRay.origin, hit.point, Color.red, 0.5f);
+            }/*
             else
             {
                 // This is for Debuggin purposes
                 Debug.DrawLine(pelletRay.origin, pelletRay.origin + spread * shootRange, Color.red, 0.5f);
-            }
+            }*/
         }
 
         yield return new WaitForSeconds(firingRate);
@@ -634,12 +636,12 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
 
         RaycastHit hit;
         //send a raycast out below the player
-        Debug.DrawRay(playerController.transform.position, Vector3.down * 10, Color.yellow, 1f);
+        //Debug.DrawRay(playerController.transform.position, Vector3.down * 10, Color.yellow, 1f);
         if (Physics.Raycast(playerController.transform.position, Vector3.down , out hit, JetPackShootRange)) //The raycast is a bool which can output a Raycast hit. The shootRange is how far the ray shoots
         {
             //bulletImpact(hit); //tell the bullet impact effect to move to the hit location
 
-            Debug.Log(hit.collider.name); //out put the hit object for testing purposes. this can be removed later
+            //Debug.Log(hit.collider.name); //out put the hit object for testing purposes. this can be removed later
             IDamage dmg = hit.collider.GetComponent<IDamage>(); //get the IDamage component from the hit collider
 
             if (hit.transform != transform && dmg != null) //if the IDamage componenet was found
@@ -809,7 +811,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
             {
                 Instantiate(playerDummy,transform.position, Quaternion.identity); //fix for enemy not having a target and erroring after player death
                 gameManager.instance.youLose();
-                Debug.Log("Oops No More Lives For You");
+                //Debug.Log("Oops No More Lives For You");
                 
             }
             else
@@ -844,7 +846,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
             {
                 Instantiate(playerDummy, transform.position, Quaternion.identity); //fix for enemy not having a target and erroring after player death
                 gameManager.instance.youLose();
-                Debug.Log("Oops No More Lives For You");
+                //Debug.Log("Oops No More Lives For You");
 
             }
             else
