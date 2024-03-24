@@ -73,4 +73,11 @@ public class DataManager : MonoBehaviour
         }
         createNewSaveFile();
     }
+
+    public string getFullFilePath()
+    {
+        string fileDirectoryPath = Application.persistentDataPath; //set the directory path to the persistent data path of the application
+        string fullFilePath = Path.Combine(fileDirectoryPath, fileName); //combine the two strings above to get the full file path
+        return fullFilePath;
+    }
 }

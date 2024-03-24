@@ -159,11 +159,12 @@ public class gameManager : MonoBehaviour, IPersistence
         statePaused();
         menuActive = menuLose;
         menuActive.SetActive(true);
+        DataManager.instance.savePlayerData();
     }
 
     public void youDied()
     {
-        updateCoinUI(-100);
+        updateCoinUI(-10);
         
         statePaused();
         menuActive = menuDied;
@@ -194,12 +195,12 @@ public class gameManager : MonoBehaviour, IPersistence
 
     public void updateCoinUI(int amount)
     {
-        if (coinCount < 50 && amount == -50)
+        if (coinCount < 10 && amount == -10)
         {
             coinCount = 0;
             coinCountText.text = coinCount.ToString("F0");
         }
-        else if (coinCount < 100 && amount == -100)
+        else if (coinCount < 50 && amount == -50)
         {
             coinCount = 0;
             coinCountText.text = coinCount.ToString("F0");
@@ -246,6 +247,7 @@ public class gameManager : MonoBehaviour, IPersistence
 
     public void SavePersistentData(ref PlayerSaveData saveData)
     {
+        saveData.coinCount = this.coinCount;
         saveData.gotFinalKey = this.gotFinalKey;
         saveData.boughtMaxHPUpgrade = this.boughtMaxHPUpgrade;
         saveData.boughtWaterCapUpgrade = this.boughtWaterCapUpgrade;
@@ -255,6 +257,7 @@ public class gameManager : MonoBehaviour, IPersistence
 
     public void LoadPersistentData(PlayerSaveData saveData)
     {
+        this.coinCount = saveData.coinCount;
         this.gotFinalKey = saveData.gotFinalKey;
         this.boughtMaxHPUpgrade = saveData.boughtMaxHPUpgrade;
         this.boughtWaterCapUpgrade = saveData.boughtWaterCapUpgrade;

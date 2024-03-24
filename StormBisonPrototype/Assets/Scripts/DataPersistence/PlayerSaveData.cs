@@ -9,6 +9,7 @@ public class PlayerSaveData
     public bool[] playerStars; //this array of bools tracks the players current collected stars (the star manager handles the setting of the bools)
     public int starCount;
     public bool gotFinalKey;
+    public int coinCount;
     public bool boughtMaxHPUpgrade;
     public bool boughtWaterCapUpgrade;
     public bool boughtWaterRefillEff;
@@ -19,6 +20,7 @@ public class PlayerSaveData
         playerStars = new bool[18]; //the array size here should match that of the star manager since the two will save and load from each other 
         starCount = 0;
         gotFinalKey = false;
+        coinCount = 0;
         boughtMaxHPUpgrade = false;
         boughtWaterCapUpgrade = false;
         boughtWaterRefillEff = false;

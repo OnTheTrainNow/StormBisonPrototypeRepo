@@ -9,6 +9,10 @@ public class SceneTeleportTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        SceneManager.LoadScene(sceneName);
+        if (other.CompareTag("Player"))
+        {
+            DataManager.instance.savePlayerData();
+            SceneManager.LoadScene(sceneName);
+        }
     }
 }

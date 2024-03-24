@@ -38,7 +38,7 @@ public class buttonFunctions : MonoBehaviour
 
     [Header("Levels To Load")]
     public string _newGameLevel;
-    private string levelToLoad;
+    //private string levelToLoad;
     [SerializeField] private GameObject noSavedGameDialog = null;
 
     [Header("Resolution Dropdowns")]
@@ -54,7 +54,10 @@ public class buttonFunctions : MonoBehaviour
     private void Start()
     {
         resolutions = Screen.resolutions;
-        resolutionDropdown.ClearOptions();
+        if (resolutionDropdown != null)
+        {
+            resolutionDropdown.ClearOptions();
+        }
 
         List<string> options = new List<string>();
 
@@ -71,9 +74,12 @@ public class buttonFunctions : MonoBehaviour
             }
         }
 
-        resolutionDropdown.AddOptions(options);
-        resolutionDropdown.value = currentResolutionIndex;
-        resolutionDropdown.RefreshShownValue();
+        if (resolutionDropdown != null)
+        {
+            resolutionDropdown.AddOptions(options);
+            resolutionDropdown.value = currentResolutionIndex;
+            resolutionDropdown.RefreshShownValue();
+        }
     }
 
     public void SetResolution(int resolutionIndex)
@@ -84,15 +90,20 @@ public class buttonFunctions : MonoBehaviour
 
     public void NewGameDialogYes()
     {
+        DataManager.instance.forceNewGameFile();
         SceneManager.LoadScene(_newGameLevel);
     }
 
     public void LoadGameDialogYes()
     {
-        if(PlayerPrefs.HasKey("SavedLevel"))
+        /*if(PlayerPrefs.HasKey("SavedLevel"))
         {
             levelToLoad = PlayerPrefs.GetString("SavedLevel");
             SceneManager.LoadScene(levelToLoad);
+        }*/
+        if (System.IO.File.Exists(DataManager.instance.getFullFilePath()))
+        {
+            SceneManager.LoadScene("MainLobby");
         }
         else
         {
