@@ -236,6 +236,14 @@ public class gameManager : MonoBehaviour, IPersistence
         menuSettings.SetActive(true);
     }
 
+    public void OnShopExit()
+    {
+        if (menuActive = menuShop)
+        {
+            gameManager.instance.playerScript.upgradeHandler();
+        }
+    }
+
     public void SavePersistentData(ref PlayerSaveData saveData)
     {
         saveData.gotFinalKey = this.gotFinalKey;

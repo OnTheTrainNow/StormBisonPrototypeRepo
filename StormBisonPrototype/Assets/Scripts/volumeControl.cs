@@ -23,7 +23,6 @@ public class volumeControl : MonoBehaviour
     void Start()
     {
         slider.value = PlayerPrefs.GetFloat(volumeParameter, slider.value);
-        Debug.Log("wow");
     }
 
     private void HandleToggleValueChanged(bool enableSound)
