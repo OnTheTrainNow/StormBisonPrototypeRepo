@@ -15,4 +15,4 @@ MonoBehaviour:
   itemName: Water Capacity Upgrade
   itemUpgradeSprite: {fileID: 21300000, guid: 9a87e0cd81fa8764c867ea65cc43675a, type: 3}
   description: Increases your water suppy
-  price: 0
+  price: 100
