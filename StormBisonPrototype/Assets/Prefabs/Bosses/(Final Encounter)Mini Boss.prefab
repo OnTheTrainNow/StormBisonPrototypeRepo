@@ -10651,6 +10651,37 @@ Transform:
   - {fileID: 6462287527061147506}
   m_Father: {fileID: 4734215824397409851}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6390557648119038528
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5200713563836916235}
+  m_Layer: 0
+  m_Name: Barrel Realigne
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5200713563836916235
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6390557648119038528}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 165.653, y: 17.61, z: 95.475}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5068025611746350686}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6406843573873305417
 GameObject:
   m_ObjectHideFlags: 0
@@ -10802,6 +10833,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 5200713563836916235}
   - {fileID: 5581571485268074767}
   - {fileID: 1391411679877354756}
   - {fileID: 6910364426532450389}
@@ -10837,8 +10869,8 @@ MonoBehaviour:
   roamDist: 0
   bullet: {fileID: 8395705642562938990, guid: 8250260c4d277d644ada115aad58db79, type: 3}
   shootRate: 1.5
-  HPUI: {fileID: 0}
-  HPCircle: {fileID: 0}
+  HPUI: {fileID: 6554993674766203965}
+  HPCircle: {fileID: 1027185776273958546}
   playerStompBounceForce: 0
   dropsStar: 0
   enemySteps: []
@@ -10861,7 +10893,7 @@ MonoBehaviour:
   isStationary: 0
   isTurret: 1
   barrelPos: {fileID: 5581571485268074767}
-  barrelAlinPos: {fileID: 0}
+  barrelAlinPos: {fileID: 5200713563836916235}
   panSpeed: 2
   panPauseTime: 3
   stationaryLookPos:
