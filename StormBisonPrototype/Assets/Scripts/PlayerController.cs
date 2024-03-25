@@ -82,6 +82,10 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     [Range(0, 1)][SerializeField] float hurtVolume;
     [SerializeField] List<AudioClip> stepSounds = new List<AudioClip>(); //this list is the random collection of hurt sounds
     [Range(0, 1)][SerializeField] float stepVolume;
+    [SerializeField] AudioClip slideSound; //the sound that plays when the player slides
+    [Range(0, 1)][SerializeField] float slideVolume;
+    [SerializeField] AudioClip PickUpSound; //the sound that plays when the player slides
+    [Range(0, 1)][SerializeField] float pickUpVolume;
     [SerializeField] float stepTimeNormal; //how long between step sounds
     [SerializeField] float stepTimeSprint; //how long between step soudns while sprinting
     [SerializeField] AudioSource pickUpSoundSource; //this is the sound source for when the player picks up guns
@@ -310,7 +314,10 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     IEnumerator PlayMoveSound()
     {
         isPlayingSteps = true; //set playing steps to true
-        characterMovementSource.PlayOneShot(stepSounds[UnityEngine.Random.Range(0, stepSounds.Count)], stepVolume); //play a random step sound
+        if (!isSliding)
+        {
+            characterMovementSource.PlayOneShot(stepSounds[UnityEngine.Random.Range(0, stepSounds.Count)], stepVolume); //play a random step sound
+        }
         if (!isSprinting)
         {
             yield return new WaitForSeconds(stepTimeNormal);
@@ -366,6 +373,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         if (isSprinting && Input.GetButtonDown("Crouch")) //this activates the slide
         {
             isSliding = true; //set the sliding state to true
+            characterMovementSource.PlayOneShot(slideSound, slideVolume); //play the slide sfx
 
             slideDirection = Quaternion.LookRotation(playerController.transform.forward, Vector3.up);  //store the players current forward direction
 
@@ -678,7 +686,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         if (gunList.Count < 2)
         {
             bool newGun = false; //by default treat the gun like its not new
-            pickUpSoundSource.Play(); //play the pickup sound
+            pickUpSoundSource.PlayOneShot(PickUpSound, pickUpVolume); //play the pickup sound
 
             if (!gunList.Contains(gun)) //if the gun isnt in the list
             {
@@ -720,6 +728,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         if (gunList.Count == 2)
         {
             bool newGun = false;
+            pickUpSoundSource.PlayOneShot(PickUpSound, pickUpVolume);
 
             if (!gunList.Contains(gun))
             {
