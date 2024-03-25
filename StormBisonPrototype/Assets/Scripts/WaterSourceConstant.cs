@@ -5,11 +5,13 @@ using UnityEngine;
 public class WaterSourceConstant : MonoBehaviour
 {
     [SerializeField] float constantFillRate; //this is the rate the water fills at while in a constant water source
+    [SerializeField] AudioSource fillSFX; 
     float stopFillBackUp;
     bool isConstantFill;
 
     void Start()
     {
+        fillSFX.enabled = false;
         stopFillBackUp = 0;
     }
 
@@ -19,6 +21,12 @@ public class WaterSourceConstant : MonoBehaviour
         if (stopFillBackUp > 3f) //if the player doesnt stand in the fill area for more than 3 seconds then set the constant fill bool to false
         {
             isConstantFill = false;
+            fillSFX.enabled = false;
+        }
+
+        if (gameManager.instance.playerScript.currentWater >= gameManager.instance.playerScript.maxWater)
+        {
+            fillSFX.enabled = false;
         }
     }
 
@@ -35,6 +43,7 @@ public class WaterSourceConstant : MonoBehaviour
         if (other.gameObject.CompareTag("Player")) //when the player enters this trigger set the constant fill bool to true
         {
             isConstantFill = true;
+            fillSFX.enabled = true;
         }
     }
 
@@ -48,6 +57,7 @@ public class WaterSourceConstant : MonoBehaviour
         if (other.gameObject.CompareTag("Player")) //when the player exits this trigger set the contant fill bool to false
         {
             isConstantFill = false;
+            fillSFX.enabled = false;
         }
     }
 }

@@ -8,6 +8,11 @@ public class Coin : MonoBehaviour
     [SerializeField] int coinValue;
     [SerializeField] int healAmount;
 
+    [SerializeField]AudioSource coinAudioSource; 
+    [SerializeField]AudioClip coinClip;
+
+    bool collected;
+
     private void Awake()
     {
         instance = this;
@@ -15,11 +20,14 @@ public class Coin : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag ("Player"))
+        if(other.CompareTag ("Player") && !collected)
         {
+            collected = true;
             gameManager.instance.updateCoinUI(coinValue);
             gameManager.instance.playerScript.HealAmount(healAmount);
-            Destroy(gameObject);
+            GetComponent<MeshRenderer>().enabled = false;
+            coinAudioSource.PlayOneShot(coinClip, .6f);
+            Destroy(gameObject, 1f);
         }
     }
 }
