@@ -1,0 +1,98 @@
+Credits
+
+Main Team:
+Christian Nolasco
+Jeylon Guidi
+Lee Walker
+Robert Zirkle
+
+Models:
+Savino - Star Model - https://opengameart.org/content/star-0
+codeinfernogames - Key Model - https://opengameart.org/content/key-low-poly
+Fatty War - Turret Models - https://assetstore.unity.com/packages/3d/props/weapons/fatty-poly-turret-part2-159985, https://assetstore.unity.com/packages/3d/props/weapons/fatty-poly-turret-155250
+Sigmoid Button Assets - Shopkeeper - https://assetstore.unity.com/packages/3d/characters/kids-character-free-242192
+Polygon Blacksmith - Human Enemies - https://assetstore.unity.com/packages/3d/characters/toon-soldiers-demo-69684
+VillegasArts - Gun Models - https://assetstore.unity.com/packages/3d/props/weapons/lowpoly-shotguns-pixel-texture-240774
+
+Textures:
+Screaming Brain Studios - Majority of the textures used - https://opengameart.org/content/tiny-texture-pack-1, https://opengameart.org/content/tiny-texture-pack-2
+stereoscopic - Grass Texture - https://opengameart.org/content/grass-1
+josepharaoh99 - Metal Texture - https://opengameart.org/content/metal-from-frying-pan
+n4 - Stone Texture - https://opengameart.org/content/seamless-stone-256x256
+n4 - Fabric Texture - https://opengameart.org/content/seamless-fabric-256x256
+n4 - Whirl Texture - https://opengameart.org/node/30743
+Rattel - Ground Texture - https://opengameart.org/content/nature-texture-pack-256x256-ground1png
+Rattel - Sand Texture - https://opengameart.org/content/nature-texture-pack-256x256-sand1png
+Emerald Eel Entertainment - Cobblestone Texture - https://opengameart.org/content/cobblestone-wall-texture
+qubodup - Water Texture - https://opengameart.org/content/3-live-proceduraly-generated-tiling-water-textures-512px-running-brushes
+GoldenThumbs - Metal Grate Texture - https://opengameart.org/content/metal-grate
+
+HDRIs
+Greg Zaal - Main Lobby Skybox - https://polyhaven.com/a/potsdamer_platz
+Greg Zaal & Jarod Guest - Main Skybox Texture - https://polyhaven.com/a/kloofendal_48d_partly_cloudy_puresky
+
+Sprites:
+AntumDeluge - Skull Sprite - https://opengameart.org/content/skull-rework
+Fupi - Smoke/Vapor Sprite - https://opengameart.org/content/smoke-vapor-particles
+galangpiliang - Star Vector Sprite - https://opengameart.org/content/star-vector
+dbszabo1 - Gunfire Sprite - https://www.deviantart.com/dbszabo1/art/explosion-png-304309360
+Seth Sumrall - Heart Sprites 
+Jacob Guidi - Coin Sprite
+Full Sail University - Additional Sprites
+
+Shaders:
+Takeguchi-Syouten Inc. - Retro Game Shader - https://assetstore.unity.com/packages/vfx/shaders/fullscreen-camera-effects/retro-game-shader-92425
+
+Images:
+susannp4 - Picture Frame 1 - https://pixabay.com/illustrations/frame-picture-frame-outline-1192309/
+susannp4 - Picture Frame 2 - https://pixabay.com/illustrations/frame-picture-frame-outline-1192320/
+susannp4 - Picture Frame 3 - https://pixabay.com/illustrations/frame-picture-frame-outline-1192311/
+stevepb - Painting Image 1 - https://pixabay.com/photos/plumbing-pipe-wrenches-plumber-840835/
+starchim01 - Painting Image 2 - https://pixabay.com/illustrations/battery-water-tap-water-bathroom-8519101/
+Shutterbug75 - Painting Image 3 - https://pixabay.com/photos/background-clean-connection-1238972/
+JamesDeMers - Painting Image 4 - https://pixabay.com/photos/alligator-american-alligator-gator-439887/
+Buntysmum - Painting Image 5 - https://pixabay.com/photos/sink-plunger-plumbing-maintenance-3312441/
+jarmoluk - Painting Image 6 - https://pixabay.com/photos/toilets-toilet-purely-public-toilet-265278/
+Jacob Guidi - Additional Images
+Michael Guidi - Additional Images
+Isaac Calderon - Additional Images
+
+Fonts
+Alex Solis - Main UI Font - https://www.dafont.com/super-mario-64.font
+bunnywhip - Sign Font - https://www.dafont.com/mario64.font
+Astigmatic One Eye Typographic Institute - Hotel Font - https://www.1001fonts.com/grand-hotel-font.html
+JLH Fonts - Warning Sign Font - https://www.1001fonts.com/overhaul-font.html
+copypaste - Player Award Font - https://www.1001fonts.com/chomsky-font.html
+
+SFX:
+Pixabay - Jump & Hurt SFX - https://pixabay.com/sound-effects/guys-howling-fun-70344/
+Pixabay - Hurt SFX - https://pixabay.com/sound-effects/grunt1-84540/
+Pixabay - Stomp & Block Break SFX - https://pixabay.com/sound-effects/6-jump-sounds-for-the-game-95510/
+schademans - Pipe SFX - https://freesound.org/people/schademans/sounds/13289/
+baefild - Canon SFX - https://freesound.org/people/baefild/sounds/91293/
+LeMudCrab - Pistol SFX - https://freesound.org/people/LeMudCrab/sounds/163456/
+lumikon - Shotgun SFX - https://freesound.org/people/lumikon/sounds/564480/
+kyles - Rifle SFX - https://freesound.org/people/kyles/sounds/450851/
+FALL-E - Explosion SFX - https://freesound.org/people/FALL-E/sounds/703485/
+floraphonic - Pick Up SFX - https://pixabay.com/sound-effects/power-up-sparkle-1-177983/
+Pixabay - Wind SFX - https://pixabay.com/sound-effects/howling-wind-14499/
+qubodup - Star & Key SFX - https://freesound.org/people/qubodup/sounds/211624/
+Liecio - Star PickUp SFX - https://pixabay.com/sound-effects/magic-sparkle-190030/
+Full Sail University - Additional Sounds
+
+
+Music:
+UNIVERSFIELD - Menu Music - https://freemusicarchive.org/music/universfield/ambient-music/smooth-piano-for-documentaries/
+Monument_Music - Lobby Music - https://pixabay.com/music/smooth-jazz-soothing-moments-178951/
+Nesrality - Grass Level Music - https://pixabay.com/music/marching-band-marching-music-the-fairest-of-the-fair-by-john-philip-sousa-99086/
+Onoychenkomusic - Sewer Level Music - https://pixabay.com/music/old-school-funk-uplifting-retro-funk-133019/
+Anton_Vlasov - Enemy HQ Level Music - https://pixabay.com/music/beats-slow-trap-18565/
+Darockart - Mini Level 1 Music - https://pixabay.com/music/modern-jazz-bebop-era-300-170808/
+DSTechnician - Mini Level 2 Music - https://pixabay.com/music/upbeat-collidescope-118748/
+
+
+
+
+
+
+

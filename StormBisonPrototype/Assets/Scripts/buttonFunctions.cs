@@ -23,18 +23,18 @@ public class buttonFunctions : MonoBehaviour
     [Header("Toggle Settings")]
     [SerializeField] private Toggle invertYToggle = null;
 
-    [Header("Graphics Settings")]
-    [SerializeField] private Slider brightnessSlider = null;
-    [SerializeField] private TMP_Text brightnessTextValue = null;
-    [SerializeField] private float defaultBrightness = 4;
+    //[Header("Graphics Settings")]
+    //[SerializeField] private Slider brightnessSlider = null;
+    //[SerializeField] private TMP_Text brightnessTextValue = null;
+    //[SerializeField] private float defaultBrightness = 4;
 
-    [Space(10)]
-    [SerializeField] private TMP_Dropdown qualityDropdown;
-    [SerializeField] private Toggle fullscreenToggle;
+    //[Space(10)]
+    //[SerializeField] private TMP_Dropdown qualityDropdown;
+    //[SerializeField] private Toggle fullscreenToggle;
 
-    private int qualityLevel;
-    private bool isFullscreen;
-    private float brightnessLevel;
+    //private int qualityLevel;
+    //private bool isFullscreen;
+    //private float brightnessLevel;
 
     [Header("Levels To Load")]
     public string _newGameLevel;
@@ -191,29 +191,32 @@ public class buttonFunctions : MonoBehaviour
         StartCoroutine(ConfirmationBox());
     }
 
-    public void SetBrightness(float brightness)
-    {
-        brightnessLevel = brightness;
-        brightnessTextValue.text = brightness.ToString("0");
-    }
+    //public void SetBrightness(float brightness)
+    //{
+    //    brightnessLevel = brightness;
+    //    brightnessTextValue.text = brightness.ToString("0");
+    //}
 
-    public void SetFullscreen(bool fullscreen)
-    {
-        isFullscreen = fullscreen;
-    }
+    //public void SetFullscreen(bool fullscreen)
+    //{
+    //    isFullscreen = fullscreen;
+    //}
 
-    public void SetQuality(int qualityIndex)
-    {
-        qualityLevel = qualityIndex;
-    }
+    //public void SetQuality(int qualityIndex)
+    //{
+    //    qualityLevel = qualityIndex;
+    //}
 
     public void GraphicsApply()
     {
-        PlayerPrefs.SetFloat("MasterBrightness", brightnessLevel);
-        PlayerPrefs.SetInt("MasterQuality", qualityLevel);
-        QualitySettings.SetQualityLevel(qualityLevel);
-        PlayerPrefs.SetInt("MasterFullscreen", (isFullscreen ? 1 : 0));
-        Screen.fullScreen = isFullscreen;
+        //PlayerPrefs.SetFloat("MasterBrightness", brightnessLevel);
+        //PlayerPrefs.SetInt("MasterQuality", qualityLevel);
+        //QualitySettings.SetQualityLevel(qualityLevel);
+        //PlayerPrefs.SetInt("MasterFullscreen", (isFullscreen ? 1 : 0));
+        //Screen.fullScreen = isFullscreen;
+
+        Resolution currentResolution = Screen.currentResolution;
+        Screen.SetResolution(currentResolution.width, currentResolution.height, Screen.fullScreen);
 
         StartCoroutine(ConfirmationBox());
     }
@@ -241,14 +244,14 @@ public class buttonFunctions : MonoBehaviour
 
         if(MenuType == "Graphics")
         {
-            brightnessSlider.value = defaultBrightness;
-            brightnessTextValue.text = defaultBrightness.ToString("0.0");
+            //brightnessSlider.value = defaultBrightness;
+            //brightnessTextValue.text = defaultBrightness.ToString("0.0");
 
-            qualityDropdown.value = 1;
-            QualitySettings.SetQualityLevel(1);
+            //qualityDropdown.value = 1;
+            //QualitySettings.SetQualityLevel(1);
 
-            fullscreenToggle.isOn = false;
-            Screen.fullScreen = false;
+            //fullscreenToggle.isOn = false;
+            //Screen.fullScreen = false;
 
             Resolution currentResolution = Screen.currentResolution;
             Screen.SetResolution(currentResolution.width, currentResolution.height, Screen.fullScreen);
