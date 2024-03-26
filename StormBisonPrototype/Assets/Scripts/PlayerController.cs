@@ -74,6 +74,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     [SerializeField] ParticleSystem JetPackFX;
 
     [Header("Sound & Visual Effects")]
+    [SerializeField] AudioSource jetPackSoundSource;
     [SerializeField] AudioSource characterSoundsSource; //this is the sound source for the player character (most player sounds shouldn't overlap)
     [SerializeField] AudioSource characterMovementSource; //this is the sound source for moving
     [SerializeField] List<AudioClip> jumpSounds = new List<AudioClip>(); //this list is the sound of each jump in the combo in order
@@ -167,6 +168,17 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     void Update()
     {
         gameManager.instance.updateWeaponEquipped();
+
+        if (isJetPacking && !gameManager.instance.isPaused)
+        {
+            jetPackSoundSource.enabled = true;
+        }
+        else
+        {
+            jetPackSoundSource.enabled = false;
+        }
+        
+
         if (!gameManager.instance.isPaused) //if the gameManager is not set to paused 
         {
             //Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootRange, Color.blue); //show the rayCast for debug purposes

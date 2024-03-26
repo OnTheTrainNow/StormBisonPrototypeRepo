@@ -7,9 +7,26 @@ public class Wind : MonoBehaviour
     [SerializeField] float windSpeed; //the strength of the wind
     [SerializeField] AudioSource windSFX;
 
+    bool inWindBlock;
+
     private void Start()
     {
         windSFX.enabled = false; 
+    }
+
+    private void Update()
+    {
+        if (inWindBlock)
+        {
+            if (gameManager.instance.isPaused)
+            {
+                windSFX.enabled = false;
+            }
+            else
+            {
+                windSFX.enabled = true;
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -17,6 +34,7 @@ public class Wind : MonoBehaviour
         if(other.CompareTag("Player"))
         {
             windSFX.enabled = true;
+            inWindBlock = true;
         }
     }
 
@@ -25,6 +43,7 @@ public class Wind : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             windSFX.enabled = false;
+            inWindBlock = false;
         }
     }
 

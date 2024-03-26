@@ -18,6 +18,19 @@ public class WaterSourceConstant : MonoBehaviour
     private void Update() //the whole point of this update section is to turn off the constant fill bool if the player somehow exits the collider without actually triggering it
     {
         stopFillBackUp += Time.deltaTime; //increment the timer
+
+        if (isConstantFill)
+        {
+            if (gameManager.instance.isPaused) //if the game is paused
+            {
+                fillSFX.mute = true; //turn the volume down
+            }
+            else //otherwise the volume should be default 
+            {
+                fillSFX.mute = false;
+            }
+        }
+
         if (stopFillBackUp > 3f) //if the player doesnt stand in the fill area for more than 3 seconds then set the constant fill bool to false
         {
             isConstantFill = false;
