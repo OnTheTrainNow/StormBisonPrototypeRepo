@@ -5226,7 +5226,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 999
+  m_text: None
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d1dd245b14606044a9e05e110a2d8169, type: 2}
   m_sharedMaterial: {fileID: -8478471507340715083, guid: d1dd245b14606044a9e05e110a2d8169, type: 2}
@@ -9110,6 +9110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18f4eb3201c6cb74c94430f1366c1a16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  confirmationPrompt: {fileID: 0}
   controllerSenTextValue: {fileID: 0}
   controllerSenSlider: {fileID: 0}
   defaultSen: 4
@@ -9117,6 +9118,7 @@ MonoBehaviour:
   invertYToggle: {fileID: 0}
   _newGameLevel: 
   noSavedGameDialog: {fileID: 0}
+  resolutionDropdown: {fileID: 0}
   sfxPreviewSource: {fileID: 8224909638201848890}
   sfxPreview: {fileID: 8300000, guid: 94c5c23c515ee524db2d8b4816842a68, type: 3}
   menuSFXSource: {fileID: 8224909638201848890}
