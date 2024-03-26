@@ -122,6 +122,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isExitPipe: 1
   pipeCover: {fileID: 6855457392609620473}
+  pipeTrigger: {fileID: 0}
   disableTime: 0
   exitSFX: {fileID: 3038648167313912139}
 --- !u!82 &3038648167313912139
@@ -133,7 +134,7 @@ AudioSource:
   m_GameObject: {fileID: 5436512497290081989}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -2850294262522990120, guid: 1de03fd35f777a64da630cf6dbddfbd4, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1

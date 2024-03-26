@@ -26,7 +26,7 @@ public class Coin : MonoBehaviour
             gameManager.instance.updateCoinUI(coinValue);
             gameManager.instance.playerScript.HealAmount(healAmount);
             GetComponent<MeshRenderer>().enabled = false;
-            coinAudioSource.PlayOneShot(coinClip, .6f);
+            coinAudioSource.PlayOneShot(coinClip);
             Destroy(gameObject, 1f);
         }
     }
