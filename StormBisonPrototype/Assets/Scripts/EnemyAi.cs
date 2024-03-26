@@ -151,16 +151,18 @@ public class enemyAI : MonoBehaviour, IDamage, IPushBack
             {
                 playerDir = gameManager.instance.player.transform.position - headPos.position;
                 RaycastHit hit;
-                Physics.Raycast(headPos.position, playerDir, out hit);
-                if (!gameManager.instance.isPaused)
+                if (Physics.Raycast(headPos.position, playerDir, out hit))
                 {
-                    if (hit.collider.CompareTag("Player")) //if player is not obstructed face player else set sawplayer to false
+                    if (!gameManager.instance.isPaused)
                     {
-                        faceTarget();
-                    }
-                    else
-                    {
-                        sawPlayer = false;
+                        if (hit.collider.CompareTag("Player")) //if player is not obstructed face player else set sawplayer to false
+                        {
+                            faceTarget();
+                        }
+                        else
+                        {
+                            sawPlayer = false;
+                        }
                     }
                 }
                 
