@@ -397,6 +397,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         }
         else if (isSliding && Input.GetButtonDown("Crouch")) //this cancels the slide early
         {
+            characterMovementSource.Stop();
             isCrouched = false; //set crouched bool to false
             isSliding = false; //uncrouching stops sliding
             playerController.height = defaultControllerHeight; //set the controller and collider heights back to default
@@ -459,8 +460,16 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         if (launchTimer <= jetPackDisableLaunchTime) { return; } //if the launch timer is too low than don't give access to the jetpack
         if (isWallJumping && jumpTimer <= jetPackDisableWallTime) { return; } //if the player is wall jumping and the jump timer is low
         
-        if(!playerController.isGrounded && Input.GetButton("Jetpack M2") && currentWater > 0) //if the player holds the jetpack button and has water (being grounded is in debate as a requirment)
+        if(Input.GetButton("Jetpack M2") && currentWater > 0) //if the player holds the jetpack button and has water (being grounded is in debate as a requirment)
         {
+            if (isSliding) //if the player is sliding when they use the jetpack
+            {
+                characterMovementSource.Stop();
+                isSliding = false; //disable sliding
+                isCrouched = false; //disable crouching
+                playerController.height = defaultControllerHeight; //set the controller and collider heights back to default
+                playerCollider.height = defaultColliderHeight; //reset the collider height
+            }
             isJetPacking = true;
             isSpeedChangeable = true; //allow them to control sprint speed
             isJumping = false; //they are no longer considered jumping after using the jetpack
@@ -509,6 +518,14 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     }
     private void ProcessWallJump()
     {
+        if (isSliding) //if the player is sliding when wall jump (this isn't common but will bug out noticably if this isnt checked)
+        {
+            characterMovementSource.Stop();
+            isSliding = false; //disable sliding
+            isCrouched = false; //disable crouching
+            playerController.height = defaultControllerHeight; //set the controller and collider heights back to default
+            playerCollider.height = defaultColliderHeight; //reset the collider height
+        }
         jumpVFX.Play(); //play the jump particle effect
         PlayJumpSound(1);
         isWallJumping = true;
@@ -939,6 +956,14 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
 
     public void Launch(Vector3 LaunchMovement)
     {
+        if (isSliding) //if the player is sliding when they launch out of a pipe
+        {
+            characterMovementSource.Stop();
+            isSliding = false; //disable sliding
+            isCrouched = false; //disable crouching
+            playerController.height = defaultControllerHeight; //set the controller and collider heights back to default
+            playerCollider.height = defaultColliderHeight; //reset the collider height
+        }
         currentJumps = 0; //launching from a pipe resets the jump count
         launchTimer = 0; //reset the launch timer
         movement = new Vector3(LaunchMovement.x, 0, LaunchMovement.z); //get the non vertical movement of the player from the launch force
@@ -952,6 +977,14 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
 
     public void BounceOff(float BounceForce) //this is called if the player stomps on an enemies head
     {
+        if (isSliding) //if the player is sliding when they bounce off an enemy
+        {
+            characterMovementSource.Stop();
+            isSliding = false; //disable sliding
+            isCrouched = false; //disable crouching
+            playerController.height = defaultControllerHeight; //set the controller and collider heights back to default
+            playerCollider.height = defaultColliderHeight; //reset the collider height
+        }
         verticleVelocity.y = BounceForce; //set the players vertical velocity to the bounce force
     }
 
