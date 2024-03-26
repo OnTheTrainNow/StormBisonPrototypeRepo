@@ -1468,7 +1468,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   starToSpawn: {fileID: 2307301218259941284, guid: 0872a0021681a114f957aed8712bc8d4, type: 3}
   starPosIndex: 1
-  starID: 0
+  starID: 1
 --- !u!43 &93423430
 Mesh:
   m_ObjectHideFlags: 0
@@ -16291,6 +16291,14 @@ PrefabInstance:
     - target: {fileID: 2662533426251649705, guid: b0996b0b3a0f74d429406af62d69f23a, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2890833277897289473, guid: b0996b0b3a0f74d429406af62d69f23a, type: 3}
+      propertyPath: starID
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2890833277897289473, guid: b0996b0b3a0f74d429406af62d69f23a, type: 3}
+      propertyPath: positionIndex
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8539675808981732068, guid: b0996b0b3a0f74d429406af62d69f23a, type: 3}
       propertyPath: m_LocalPosition.x
