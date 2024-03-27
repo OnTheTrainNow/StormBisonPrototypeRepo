@@ -382,7 +382,10 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     private void ProcessSlide()
     {
         if (isJumping || isWallJumping || isJetPacking || isLaunching) { return; } //the player can't slide in the follow conditons
-        if (isSprinting && Input.GetButtonDown("Crouch")) //this activates the slide
+
+         float direction = Input.GetAxis("Vertical"); //get the direction of players vertical input (this will be used to make sure the player is moving forward)
+
+        if (isSprinting && direction > 0 && Input.GetButtonDown("Crouch")) //this activates the slide (sprinting forward and pressing crouch)
         {
             isSliding = true; //set the sliding state to true
             characterMovementSource.PlayOneShot(slideSound, slideVolume); //play the slide sfx
