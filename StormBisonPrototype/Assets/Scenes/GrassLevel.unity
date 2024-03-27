@@ -19559,7 +19559,11 @@ PrefabInstance:
       propertyPath: m_text
       value: 'I am a sign.
 
-        I hold useless information.'
+        I hold useless information...
+
+
+        And a
+        star.'
       objectReference: {fileID: 0}
     - target: {fileID: 6928893448522593164, guid: c519b78693e7c254c912b2dc908785de, type: 3}
       propertyPath: m_Mesh
@@ -24104,7 +24108,13 @@ PrefabInstance:
       propertyPath: m_text
       value: 'Hello Player.
 
-        You made a wrong turn.'
+        You made a wrong turn.
+
+        I''m just a
+        regular sign.
+
+        No secret stars here or anything. You should turn
+        around and go away.'
       objectReference: {fileID: 0}
     - target: {fileID: 6928893448522593164, guid: c519b78693e7c254c912b2dc908785de, type: 3}
       propertyPath: m_Mesh
