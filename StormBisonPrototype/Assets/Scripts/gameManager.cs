@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
 
 public class gameManager : MonoBehaviour, IPersistence
 {
@@ -237,11 +238,23 @@ public class gameManager : MonoBehaviour, IPersistence
         StartCoroutine(loadLobbyWithDelay());
     }
 
+    public void loadMainMenu()
+    {
+        StartCoroutine(loadMainMenuWithDelay());
+    }
+
+    IEnumerator loadMainMenuWithDelay()
+    {
+        yield return new WaitForSecondsRealtime(0.2f);
+        SceneManager.LoadScene("MainMenu");
+        Time.timeScale = 1;
+    }
+
     IEnumerator loadLobbyWithDelay()
     {
         yield return new WaitForSecondsRealtime(0.2f);
         SceneManager.LoadScene("MainLobby");
-        gameManager.instance.stateUnpaused();
+        stateUnpaused();
     }
 
     public void ShopUI()
@@ -262,6 +275,7 @@ public class gameManager : MonoBehaviour, IPersistence
         if (menuActive = menuShop)
         {
             gameManager.instance.playerScript.upgradeHandler();
+            menuActive = null;
         }
     }
 

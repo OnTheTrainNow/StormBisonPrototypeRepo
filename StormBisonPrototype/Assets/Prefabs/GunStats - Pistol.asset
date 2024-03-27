@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: GunStats - Pistol
   m_EditorClassIdentifier: 
   shootDamage: 1
-  shootRange: 50
-  firingRate: 0.2
+  shootRange: 35
+  firingRate: 0.3
   gunUsage: 2
   pelletDmg: 0
   pellets: 0
