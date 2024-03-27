@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     [SerializeField] float longJumpForce = 12f;
     [Range(0, 1)][SerializeField] float variableJumpPercentage = .75f;
     [SerializeField] float longJumpSpeedTuner = 2.5f;
+    [SerializeField] float groundedJumpCutOffTime = .25f; //this is time time window from which grounded jumps can be made (the grounded timer is reset whenever the player is grounded)
 
     [SerializeField] float jetPackForce = 2f;
     [SerializeField] int jetPackUsage;
@@ -139,6 +140,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     bool isJumping;
     bool isWallJumping;
     bool isLongJumping;
+    float groundedTimer; //since isGrounded is toggles itself on and off alot while grounded its too inconsistent for jumping (this timer will be used isntead)
 
     //LaunchControls
     Vector3 pushBack;
@@ -209,6 +211,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
 
         jumpTimer += Time.deltaTime; 
         launchTimer += Time.deltaTime;
+        groundedTimer += Time.deltaTime;
 
         /*
         // Self Damage Tool
@@ -238,6 +241,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         if (playerController.isGrounded) //if the player touches the ground
         {
             //currentJumps = 0; //reset their current jumps
+            groundedTimer = 0;
             verticleVelocity = Vector3.zero; //zero out their verticleVelocity so it doesnt build force while grounded
             isSpeedChangeable = true; //you can only change from normal speed to sprinting while on the ground
             isLaunching = false; //if you are grounded then you would be at the end of a launch
@@ -279,17 +283,17 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         if (!isSliding) //if the player is sliding than long jumping will be handled by process slide
         {
             //this is the jump combo system
-            if (canJump && currentJumps == 1 && jumpTimer <= jump2Time && Input.GetButtonDown("Jump")) //if the player can jump, presses jump, is on their second jump, and the jump timer is less then jump 2 combo allowed time
+            if (groundedTimer <= groundedJumpCutOffTime && canJump && currentJumps == 1 && jumpTimer <= jump2Time && Input.GetButtonDown("Jump")) //if the player can jump, presses jump, is on their second jump, and the jump timer is less then jump 2 combo allowed time
             {
                 PlayJumpSound(1); //play the second sound in the list
                 ProcessJump(jump2Force); //process a jump with the jump 2 force
             }
-            else if (canJump && currentJumps == 2 && jumpTimer <= jump3Time && Input.GetButtonDown("Jump")) //if the player can jump, presses jump, is on their third jump, and the jump timer is less then jump 3 combo allowed time
+            else if (groundedTimer <= groundedJumpCutOffTime && canJump && currentJumps == 2 && jumpTimer <= jump3Time && Input.GetButtonDown("Jump")) //if the player can jump, presses jump, is on their third jump, and the jump timer is less then jump 3 combo allowed time
             {
                 PlayJumpSound(2); //play the third sound in the list
                 ProcessJump(jump3Force); //process a jump with the jump 3 force
             }
-            else if (canJump && Input.GetButtonDown("Jump")) //this is the default jump for when the player doesnt reach any of the above conditions
+            else if (groundedTimer <= groundedJumpCutOffTime && canJump && Input.GetButtonDown("Jump")) //this is the default jump for when the player doesnt reach any of the above conditions
             {
                 PlayJumpSound(0); //play the first sound in the list
                 currentJumps = 0; //this jump starts the combo, but is not guaranteed to be zero when the player jumps so reset it to zero
@@ -412,7 +416,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
             playerController.transform.rotation = slideDirection; //set the players rotation to the slide rotation while sliding
             currentSpeed = Mathf.Lerp(currentSpeed, 0f, Time.deltaTime * slideSpeedFallOff); //lerp the speed down to zero
 
-            if (Input.GetButtonDown("Jump"))
+            if (groundedTimer <= groundedJumpCutOffTime && Input.GetButtonDown("Jump"))
             {
                 ProcessLongJump();
             }

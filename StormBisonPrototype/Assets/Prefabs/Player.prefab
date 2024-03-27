@@ -1101,6 +1101,7 @@ MonoBehaviour:
   longJumpForce: 12
   variableJumpPercentage: 0.8
   longJumpSpeedTuner: 1.8
+  groundedJumpCutOffTime: 0.25
   jetPackForce: 1.5
   jetPackUsage: 10
   jetPackSprintUsageScaler: 2
