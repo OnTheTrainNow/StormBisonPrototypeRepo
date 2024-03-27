@@ -9,6 +9,7 @@ public class RedCoin : MonoBehaviour
     void Start()
     {
         RedCoinManager.instance.UpdateRedCoins(1);
+        gameManager.instance.updateRedCoinUI(); //update the red coin UI
     }
 
     private void OnTriggerEnter(Collider other)
@@ -17,6 +18,7 @@ public class RedCoin : MonoBehaviour
         {
             isCollected = true;
             RedCoinManager.instance.UpdateRedCoins(-1);
+            gameManager.instance.updateRedCoinUI();
         }
     }
 }

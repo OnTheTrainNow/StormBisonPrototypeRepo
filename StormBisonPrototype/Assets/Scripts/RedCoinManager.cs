@@ -12,7 +12,7 @@ public class RedCoinManager : MonoBehaviour
     [SerializeField] GameObject SpawnPositon;
 
     bool activated;
-    int redCoinCount;
+    public int redCoinCount;
 
     MeshRenderer render;
 

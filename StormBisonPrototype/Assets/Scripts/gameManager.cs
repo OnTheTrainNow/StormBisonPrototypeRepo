@@ -22,6 +22,7 @@ public class gameManager : MonoBehaviour, IPersistence
     [SerializeField] TMP_Text enemyCountText; //enemy count text component
     [SerializeField] TMP_Text starCountText; //star count text component
     [SerializeField] TMP_Text coinCountText; //coin count text component
+    [SerializeField] TMP_Text redCoinsRemainingText;
     [SerializeField] TMP_Text livesCountText; //lives count text component
 
     [SerializeField] AudioSource musicMenuAudioSource;
@@ -32,6 +33,8 @@ public class gameManager : MonoBehaviour, IPersistence
     public Slider sensitivitySliderX; //the slider for the horzontal sensitivity
     public TMP_Text sensitivityTextY; //the text for the vertical sensitivity
     public Slider sensitivitySliderY; //the slider for the vertical sensitivity
+
+    public Image RedCoinImage; 
 
     public Image playerHPCircle; //player HP circle image
     public Image playerHPCircleBackground; //player HP circle image background
@@ -61,6 +64,15 @@ public class gameManager : MonoBehaviour, IPersistence
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<PlayerController>(); //get the player controller script
         playerSpawnPosition = GameObject.FindWithTag("PlayerSpawnPos"); //get the player spawn position
+    }
+
+    public void Start()
+    {
+        if (RedCoinManager.instance == null)
+        {
+            RedCoinImage.enabled = false;
+            redCoinsRemainingText.enabled = false;
+        }
     }
 
     public void loadSettings()
@@ -209,6 +221,14 @@ public class gameManager : MonoBehaviour, IPersistence
         {
             coinCount += amount;
             coinCountText.text = coinCount.ToString("F0");
+        }
+    }
+
+    public void updateRedCoinUI()
+    {
+        if (RedCoinManager.instance != null)
+        {
+            redCoinsRemainingText.text = RedCoinManager.instance.redCoinCount.ToString();
         }
     }
 
