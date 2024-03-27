@@ -354,7 +354,7 @@ MonoBehaviour:
   shootPos4: {fileID: 0}
   headPos: {fileID: 2767606587513454377}
   enemyAudio: {fileID: 7730321198043470222}
-  HP: 100
+  HP: 60
   viewCone: 150
   shootCone: 150
   targetFaceSpeed: 15
