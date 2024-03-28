@@ -9570,9 +9570,9 @@ MonoBehaviour:
   livesCountText: {fileID: 6877005626979135921}
   musicMenuAudioSource: {fileID: 8264466567345930354}
   waterCountText: {fileID: 1887179123204682085}
-  sensitivityTextX: {fileID: 3250114288279455127}
+  sensitivityTextX: {fileID: 7395225383121451003}
   sensitivitySliderX: {fileID: 8813984763492630599}
-  sensitivityTextY: {fileID: 7115864909036758222}
+  sensitivityTextY: {fileID: 4997617615610394093}
   sensitivitySliderY: {fileID: 7213560309263818071}
   RedCoinImage: {fileID: 2065261688743954756}
   playerHPCircle: {fileID: 7371761194677513177}
