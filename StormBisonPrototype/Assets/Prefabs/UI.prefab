@@ -4062,7 +4062,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1966465293553933459}
   - component: {fileID: 2913206217601053247}
-  - component: {fileID: 8420755077064760364}
   m_Layer: 5
   m_Name: Music Volume Slider
   m_TagString: Untagged
@@ -4145,23 +4144,6 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &8420755077064760364
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3283132235121860459}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eedeeb4b2d794214595bea7d5db5b02c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  volumeParameter: MusicVolume
-  mixer: {fileID: 24100000, guid: 1de03fd35f777a64da630cf6dbddfbd4, type: 2}
-  slider: {fileID: 2913206217601053247}
-  multiplier: 30
-  toggle: {fileID: 5459462617241922855}
 --- !u!1 &3287135754518923415
 GameObject:
   m_ObjectHideFlags: 0
@@ -6021,7 +6003,6 @@ GameObject:
   m_Component:
   - component: {fileID: 477354990245097012}
   - component: {fileID: 346871961103228761}
-  - component: {fileID: 90404870452740306}
   m_Layer: 5
   m_Name: SFX Volume Slider
   m_TagString: Untagged
@@ -6104,23 +6085,6 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &90404870452740306
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4297508143947574346}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eedeeb4b2d794214595bea7d5db5b02c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  volumeParameter: SFXVolume
-  mixer: {fileID: 24100000, guid: 1de03fd35f777a64da630cf6dbddfbd4, type: 2}
-  slider: {fileID: 346871961103228761}
-  multiplier: 30
-  toggle: {fileID: 1833512707317823944}
 --- !u!1 &4353762480181321280
 GameObject:
   m_ObjectHideFlags: 0
@@ -11187,7 +11151,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5225408291450489008}
   - component: {fileID: 6273179088444942167}
-  - component: {fileID: 57894012041280237}
   m_Layer: 5
   m_Name: Master Volume Slider
   m_TagString: Untagged
@@ -11270,23 +11233,6 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &57894012041280237
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8015368071654957881}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eedeeb4b2d794214595bea7d5db5b02c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  volumeParameter: MasterVolume
-  mixer: {fileID: 24100000, guid: 1de03fd35f777a64da630cf6dbddfbd4, type: 2}
-  slider: {fileID: 6273179088444942167}
-  multiplier: 30
-  toggle: {fileID: 3145935934677638345}
 --- !u!1 &8064049650233748583
 GameObject:
   m_ObjectHideFlags: 0
