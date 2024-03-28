@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine;
 using System.Reflection;
 using Unity.VisualScripting;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
 {
@@ -288,7 +289,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
                 PlayJumpSound(1); //play the second sound in the list
                 ProcessJump(jump2Force); //process a jump with the jump 2 force
             }
-            else if (groundedTimer <= groundedJumpCutOffTime && canJump && currentJumps == 2 && jumpTimer <= jump3Time && Input.GetButtonDown("Jump")) //if the player can jump, presses jump, is on their third jump, and the jump timer is less then jump 3 combo allowed time
+            else if (groundedTimer <= groundedJumpCutOffTime && canJump && currentJumps == 2 && jumpTimer <= jump3Time && (SceneManager.GetActiveScene().name != ("MainLobby")) && Input.GetButtonDown("Jump")) //if the player can jump, presses jump, is on their third jump, and the jump timer is less then jump 3 combo allowed time
             {
                 PlayJumpSound(2); //play the third sound in the list
                 ProcessJump(jump3Force); //process a jump with the jump 3 force
