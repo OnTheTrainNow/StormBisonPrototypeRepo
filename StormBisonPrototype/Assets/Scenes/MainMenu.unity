@@ -836,7 +836,7 @@ GameObject:
   - component: {fileID: 111237891}
   - component: {fileID: 111237892}
   m_Layer: 5
-  m_Name: Toggle
+  m_Name: Music Toggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6451,6 +6451,9 @@ GameObject:
   - component: {fileID: 1057094768}
   - component: {fileID: 1057094767}
   - component: {fileID: 1057094769}
+  - component: {fileID: 1057094772}
+  - component: {fileID: 1057094771}
+  - component: {fileID: 1057094770}
   m_Layer: 0
   m_Name: MenuController
   m_TagString: Untagged
@@ -6594,6 +6597,57 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1057094770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1057094766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eedeeb4b2d794214595bea7d5db5b02c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volumeParameter: SFXVolume
+  mixer: {fileID: 24100000, guid: 1de03fd35f777a64da630cf6dbddfbd4, type: 2}
+  slider: {fileID: 35929663}
+  multiplier: 30
+  toggle: {fileID: 1911278458}
+--- !u!114 &1057094771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1057094766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eedeeb4b2d794214595bea7d5db5b02c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volumeParameter: MusicVolume
+  mixer: {fileID: 24100000, guid: 1de03fd35f777a64da630cf6dbddfbd4, type: 2}
+  slider: {fileID: 1128167360}
+  multiplier: 30
+  toggle: {fileID: 111237892}
+--- !u!114 &1057094772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1057094766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eedeeb4b2d794214595bea7d5db5b02c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volumeParameter: MasterVolume
+  mixer: {fileID: 24100000, guid: 1de03fd35f777a64da630cf6dbddfbd4, type: 2}
+  slider: {fileID: 1738608894}
+  multiplier: 30
+  toggle: {fileID: 1729078500}
 --- !u!1 &1079470921
 GameObject:
   m_ObjectHideFlags: 0
@@ -10709,7 +10763,7 @@ GameObject:
   - component: {fileID: 1729078499}
   - component: {fileID: 1729078500}
   m_Layer: 5
-  m_Name: Toggle
+  m_Name: Master Toggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11822,7 +11876,7 @@ GameObject:
   - component: {fileID: 1911278457}
   - component: {fileID: 1911278458}
   m_Layer: 5
-  m_Name: Toggle
+  m_Name: SFX Toggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

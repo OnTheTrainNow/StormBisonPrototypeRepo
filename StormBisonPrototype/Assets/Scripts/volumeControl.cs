@@ -16,8 +16,15 @@ public class volumeControl : MonoBehaviour
 
     private void Awake()
     {
-        slider.onValueChanged.AddListener(HandleSliderValueChanged);
-        toggle.onValueChanged.AddListener(HandleToggleValueChanged);
+        if (slider && toggle)
+        {
+            slider.onValueChanged.AddListener(HandleSliderValueChanged);
+            toggle.onValueChanged.AddListener(HandleToggleValueChanged);
+        } 
+        else if(slider && toggle == null)
+        {
+            
+        }
     }
 
     void Start()
