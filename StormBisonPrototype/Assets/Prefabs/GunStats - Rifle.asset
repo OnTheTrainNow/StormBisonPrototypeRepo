@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shootDamage: 8
   shootRange: 150
-  firingRate: 3
+  firingRate: 1.5
   gunUsage: 12
   pelletDmg: 0
   pellets: 0
