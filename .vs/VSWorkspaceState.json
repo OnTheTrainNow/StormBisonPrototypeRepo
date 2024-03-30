@@ -8,6 +8,6 @@
     "\\StormBisonPrototype\\Assets\\Scripts\\Interfaces",
     "\\StormBisonPrototype\\ProjectSettings"
   ],
-  "SelectedNode": "\\StormBisonPrototype\\Assets\\Crouch.cs",
+  "SelectedNode": "\\StormBisonPrototype\\Assets\\Scripts\\DataPersistence\\DataManager.cs",
   "PreviewInSolutionExplorer": false
 }
