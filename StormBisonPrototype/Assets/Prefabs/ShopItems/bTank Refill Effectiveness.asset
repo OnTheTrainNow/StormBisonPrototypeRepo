@@ -16,4 +16,4 @@ MonoBehaviour:
   itemUpgradeSprite: {fileID: 21300000, guid: 168190fe8ac578e4eb85fcbc5a42202c, type: 3}
   description: Increases the speed of which you refill your tank from permanent water
     sources
-  price: 100
+  price: 35

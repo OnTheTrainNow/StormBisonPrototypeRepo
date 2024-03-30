@@ -186,7 +186,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         {
             //Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootRange, Color.blue); //show the rayCast for debug purposes
 
-            ProcessCrouch(); //process if the player is crouching (the player can only crouch/sprint when unpaused)
+            //ProcessCrouch(); //process if the player is crouching (the player can only crouch/sprint when unpaused)
             ProcessSprint(); //process if the player is moving
             ProcessMovement(); //process any current movement
 
@@ -346,25 +346,11 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         isPlayingSteps = false;
     }
 
-    private void ProcessCrouch()
-    {
-        if (isSliding || isSprinting || isJumping || isJetPacking) { return; }
-        if (Input.GetButtonDown("Crouch")) //if the player pressed the crouch button 
-        {
-            if (!isCrouched) //if they arent crouched
-            {
-                isCrouched = true; //set crouched bool to true
-                playerController.height = crouchControllerHeight; //reduce the controller and collider height
-                playerCollider.height = crouchColliderHeight;
-            }
-            else if (isCrouched) //if they are crouching already
-            {
-                isCrouched = false; //set crouched bool to false
-                playerController.height = defaultControllerHeight; //set the controller and collider heights back to default
-                playerCollider.height = defaultColliderHeight;
-            }
-        }
-    }
+    //private void ProcessCrouch()
+    //{
+    //    if (isSliding || isSprinting || isJumping || isJetPacking) { return; }
+        
+    //}
 
     private void ProcessSprint()
     {
