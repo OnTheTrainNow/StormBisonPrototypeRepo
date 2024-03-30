@@ -1,4 +1,3 @@
-using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,24 +5,19 @@ using UnityEngine;
 public class Crouch : MonoBehaviour
 {
     [SerializeField] CharacterController playerController;
-    [SerializeField] public float crouchSpeed;
+    [SerializeField] float crouchSpeed;
     [SerializeField] float normalHeight;
     [SerializeField] float crouchHeight;
     [SerializeField] Vector3 offset;
     [SerializeField] Transform player;
-    public bool crouch;
+    bool crouching;
     void Update()
-    {
-        Crouching();
-    }
-
-    public void Crouching()
     {
         if (Input.GetKeyDown(KeyCode.C)) //if the player pressed the crouch button 
         {
-            crouch = !crouch;
+            crouching = !crouching;
         }
-        if (crouch == true)
+        if (crouching == true)
         {
             playerController.height = playerController.height - crouchSpeed * Time.deltaTime;
             if (playerController.height <= crouchHeight)
@@ -31,12 +25,14 @@ public class Crouch : MonoBehaviour
                 playerController.height = crouchHeight;
             }
         }
-        if (crouch == false)
+        if (crouching == false)
         {
             playerController.height = playerController.height + crouchSpeed * Time.deltaTime;
             if (playerController.height < normalHeight)
             {
+                player.gameObject.SetActive(false);
                 player.position = player.position + offset * Time.deltaTime;
+                player.gameObject.SetActive(true);
             }
             if (playerController.height >= normalHeight)
             {

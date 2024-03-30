@@ -129,8 +129,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
     //crouch/sprint values
     float defaultControllerHeight; //the regular controller height (these need to be set at start)
     float defaultColliderHeight; //the regular collider height
-    Crouch crouching;
-    public bool isCrouching; //a bool to determine if the player is currently crouched or not
+    bool isCrouched; //a bool to determine if the player is currently crouched or not
     bool isSprinting;
     bool isSliding;
 
@@ -187,7 +186,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         {
             //Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootRange, Color.blue); //show the rayCast for debug purposes
 
-            ProcessCrouch(); //process if the player is crouching (the player can only crouch/sprint when unpaused)
+            //ProcessCrouch(); //process if the player is crouching (the player can only crouch/sprint when unpaused)
             ProcessSprint(); //process if the player is moving
             ProcessMovement(); //process any current movement
 
@@ -347,16 +346,15 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         isPlayingSteps = false;
     }
 
-    private void ProcessCrouch()
-    {
-        if (isSliding || isSprinting || isJumping || isJetPacking) { return; }
-        isCrouching = crouching;
-
-    }
+    //private void ProcessCrouch()
+    //{
+    //    if (isSliding || isSprinting || isJumping || isJetPacking) { return; }
+        
+    //}
 
     private void ProcessSprint()
     {
-        if (isCrouching) { return; }
+        if (isCrouched) { return; }
         if (isSpeedChangeable) //if the speed is changeable
         {
             if (Input.GetKey(KeyCode.LeftShift)) //check if the player is sprinting
@@ -387,14 +385,14 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
 
             isSprinting = false; //the player is no longer considered sprinting       
             currentSpeed = sprintSpeed * slideSpeedTuner; //set the current speed to faster than sprint (it will drop quickly)
-            isCrouching = true; //set crouched bool to true
+            isCrouched = true; //set crouched bool to true
             playerController.height = crouchControllerHeight; //reduce the controller and collider height
             playerCollider.height = crouchColliderHeight; //reduce the collider height
         }
         else if (isSliding && Input.GetButtonDown("Crouch")) //this cancels the slide early
         {
             characterMovementSource.Stop();
-            isCrouching = false; //set crouched bool to false
+            isCrouched = false; //set crouched bool to false
             isSliding = false; //uncrouching stops sliding
             playerController.height = defaultControllerHeight; //set the controller and collider heights back to default
             playerCollider.height = defaultColliderHeight; //reset the collider height
@@ -439,7 +437,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         canJump = false;
         isSliding = false;
 
-        isCrouching = false;
+        isCrouched = false;
         playerController.height = defaultControllerHeight; //set the controller and collider heights back to default
         playerCollider.height = defaultColliderHeight; //reset the collider height
 
@@ -462,7 +460,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
             {
                 characterMovementSource.Stop();
                 isSliding = false; //disable sliding
-                isCrouching = false; //disable crouching
+                isCrouched = false; //disable crouching
                 playerController.height = defaultControllerHeight; //set the controller and collider heights back to default
                 playerCollider.height = defaultColliderHeight; //reset the collider height
             }
@@ -518,7 +516,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         {
             characterMovementSource.Stop();
             isSliding = false; //disable sliding
-            isCrouching = false; //disable crouching
+            isCrouched = false; //disable crouching
             playerController.height = defaultControllerHeight; //set the controller and collider heights back to default
             playerCollider.height = defaultColliderHeight; //reset the collider height
         }
@@ -956,7 +954,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         {
             characterMovementSource.Stop();
             isSliding = false; //disable sliding
-            isCrouching = false; //disable crouching
+            isCrouched = false; //disable crouching
             playerController.height = defaultControllerHeight; //set the controller and collider heights back to default
             playerCollider.height = defaultColliderHeight; //reset the collider height
         }
@@ -977,7 +975,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPushBack, IKillBox
         {
             characterMovementSource.Stop();
             isSliding = false; //disable sliding
-            isCrouching = false; //disable crouching
+            isCrouched = false; //disable crouching
             playerController.height = defaultControllerHeight; //set the controller and collider heights back to default
             playerCollider.height = defaultColliderHeight; //reset the collider height
         }
