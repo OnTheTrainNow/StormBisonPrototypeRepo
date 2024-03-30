@@ -39166,10 +39166,6 @@ PrefabInstance:
       propertyPath: pelletsSpreadAngle
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3901616942316194201, guid: fbf486c5c2e000c409108f5bcdd19c49, type: 3}
-      propertyPath: crouchControllerHeight
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6226555909364080644, guid: fbf486c5c2e000c409108f5bcdd19c49, type: 3}
       propertyPath: m_Mesh
       value: 
