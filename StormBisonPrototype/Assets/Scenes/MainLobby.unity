@@ -39783,7 +39783,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6703296200182705250, guid: fbf486c5c2e000c409108f5bcdd19c49, type: 3}
       propertyPath: crouchSpeed
-      value: 20
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8214468546571601349, guid: fbf486c5c2e000c409108f5bcdd19c49, type: 3}
       propertyPath: m_LocalPosition.x

@@ -19,7 +19,7 @@ public class Crouch : MonoBehaviour
 
     public void Crouching()
     {
-        if (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.LeftControl)) //if the player pressed the crouch button 
+        if (Input.GetKeyDown(KeyCode.C)) //if the player pressed the crouch button 
         {
             crouch = !crouch;
         }
