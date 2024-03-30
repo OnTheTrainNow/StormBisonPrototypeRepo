@@ -39456,7 +39456,8 @@ PrefabInstance:
       propertyPath: m_text
       value: 'This is the bosses island.
 
-        You can use that flag pole as cover.'
+        The boss will drop his own star
+        for defeating him.'
       objectReference: {fileID: 0}
     - target: {fileID: 6928893448522593164, guid: c519b78693e7c254c912b2dc908785de, type: 3}
       propertyPath: m_Mesh
@@ -42152,10 +42153,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4936426232572654255, guid: c519b78693e7c254c912b2dc908785de, type: 3}
       propertyPath: m_text
-      value: 'Defeat all the enemies in the level to win.
+      value: 'Defeat all the enemies in the level to recieve a star.
 
-        You can get weapons
-        from gun blocks.'
+        You
+        can get weapons from gun blocks.'
       objectReference: {fileID: 0}
     - target: {fileID: 6928893448522593164, guid: c519b78693e7c254c912b2dc908785de, type: 3}
       propertyPath: m_Mesh
