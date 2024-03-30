@@ -1025,7 +1025,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8214468546571601349}
   - component: {fileID: 6200049770122797364}
-  - component: {fileID: 6703296200182705250}
   - component: {fileID: 3901616942316194201}
   - component: {fileID: 6581359598466913242}
   - component: {fileID: 7022742002639814754}
@@ -1076,24 +1075,6 @@ MonoBehaviour:
   interactableLayerMask:
     serializedVersion: 2
     m_Bits: 512
---- !u!114 &6703296200182705250
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8325518595973490225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 960af9c30760ec84296aa31c36100615, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerController: {fileID: 4013128310524657863}
-  crouchSpeed: 4
-  normalHeight: 2
-  crouchHeight: 0.1
-  offset: {x: 0, y: 0.1, z: 0}
-  player: {fileID: 8214468546571601349}
 --- !u!114 &3901616942316194201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1107,7 +1088,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: 4013128310524657863}
-  playerCollider: {fileID: 5066876187180697240}
+  playerCollider: {fileID: 0}
   playerDummy: {fileID: 8425801050575664778, guid: 79f0551ad3eb5bf4f88d962606679a24, type: 3}
   HP: 10
   movementSpeed: 5
@@ -1130,7 +1111,7 @@ MonoBehaviour:
   jump3Time: 2
   gravity: -20
   pushBackResolve: 5
-  crouchControllerHeight: 0
+  crouchControllerHeight: 1
   crouchColliderHeight: 1
   slideSpeedTuner: 2.5
   slideSpeedFallOff: 2
@@ -1140,9 +1121,9 @@ MonoBehaviour:
   shootDamage: 0
   shootRange: 0
   firingRate: 0
-  pelletDmg: 0
-  pellets: 0
-  pelletsSpreadAngle: 0
+  pelletDmg: 0.4
+  pellets: 8
+  pelletsSpreadAngle: 0.1
   JetPackShootRange: 15
   JetPackShootDamage: 1
   JetPackFiringRate: 0.2

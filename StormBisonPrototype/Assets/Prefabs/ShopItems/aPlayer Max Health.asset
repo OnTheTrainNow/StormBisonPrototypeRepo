@@ -15,4 +15,4 @@ MonoBehaviour:
   itemName: Max Health Upgrade
   itemUpgradeSprite: {fileID: 21300000, guid: 3c105fa4d9af7124287ce24ba560a57c, type: 3}
   description: Increases your max health
-  price: 65
+  price: 100
