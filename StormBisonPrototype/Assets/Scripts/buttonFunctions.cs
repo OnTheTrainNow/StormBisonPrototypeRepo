@@ -136,6 +136,8 @@ public class buttonFunctions : MonoBehaviour
     public void quit()
     {
         onClickSFX();
+
+        if(Application.platform == RuntimePlatform.WebGLPlayer) { return; }
         Application.Quit();
     }
 
