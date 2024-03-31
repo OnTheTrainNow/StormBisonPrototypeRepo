@@ -8,6 +8,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 963661440163517589, guid: 1dea0cdbb01acb047beb8b99ba8a11c2, type: 3}
+      propertyPath: m_Time
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 963661440163517589, guid: 1dea0cdbb01acb047beb8b99ba8a11c2, type: 3}
+      propertyPath: m_Parameters.colorGradient.key0.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 963661440163517589, guid: 1dea0cdbb01acb047beb8b99ba8a11c2, type: 3}
+      propertyPath: m_Parameters.colorGradient.key0.g
+      value: 0.78286225
+      objectReference: {fileID: 0}
+    - target: {fileID: 963661440163517589, guid: 1dea0cdbb01acb047beb8b99ba8a11c2, type: 3}
+      propertyPath: m_Parameters.colorGradient.key0.r
+      value: 0.5943395
+      objectReference: {fileID: 0}
+    - target: {fileID: 963661440163517589, guid: 1dea0cdbb01acb047beb8b99ba8a11c2, type: 3}
+      propertyPath: m_Parameters.colorGradient.key1.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 963661440163517589, guid: 1dea0cdbb01acb047beb8b99ba8a11c2, type: 3}
+      propertyPath: m_Parameters.colorGradient.key1.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 963661440163517589, guid: 1dea0cdbb01acb047beb8b99ba8a11c2, type: 3}
+      propertyPath: m_Parameters.colorGradient.key1.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3366793934916183301, guid: 1dea0cdbb01acb047beb8b99ba8a11c2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -58,7 +86,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6309969512564079822, guid: 1dea0cdbb01acb047beb8b99ba8a11c2, type: 3}
       propertyPath: m_Name
-      value: Bullet Variant
+      value: SniperBullet
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
